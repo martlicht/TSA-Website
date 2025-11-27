@@ -1,0 +1,46 @@
+---
+import Logo from '../ui/Logo.astro';
+import { NAV_ITEMS } from '../../utils/constants';
+import { SITE_CONFIG } from '../../config/site';
+---
+
+<footer class="bg-gray-900 text-gray-300 py-12 px-4 md:px-8">
+	<div class="max-w-7xl mx-auto">
+		<div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+			<!-- Logo y descripción -->
+			<div class="md:col-span-2">
+				<Logo size="md" />
+				<p class="mt-4 text-gray-400 max-w-md">
+					{SITE_CONFIG.description}
+				</p>
+			</div>
+			
+			<!-- Navegación -->
+			<div>
+				<h3 class="text-white font-semibold mb-4">Navigation</h3>
+				<nav class="flex flex-col gap-2">
+					{NAV_ITEMS.map((item) => (
+						<a
+							href={item.href}
+							class="hover:text-primary transition-colors"
+						>
+							{item.label}
+						</a>
+					))}
+				</nav>
+			</div>
+			
+			<!-- Contacto -->
+			<div>
+				<h3 class="text-white font-semibold mb-4">Contact</h3>
+				<p class="text-gray-400">Get in touch with us</p>
+			</div>
+		</div>
+		
+		<!-- Copyright -->
+		<div class="border-t border-gray-800 pt-8 text-center text-gray-400">
+			<p>&copy; {new Date().getFullYear()} {SITE_CONFIG.title}. All rights reserved.</p>
+		</div>
+	</div>
+</footer>
+
