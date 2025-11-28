@@ -1,0 +1,61 @@
+---
+import Button from '../../ui/Button.astro';
+import { SITE_CONFIG } from '../../../config/site';
+import heroBackground from '../../../assets/images/hero-background.webp';
+---
+
+<section
+	class="relative w-full h-[70vh] sm:h-[80vh] md:h-[90vh] min-h-[500px] sm:min-h-[600px] bg-gradient-to-br from-slate-800 to-slate-700 bg-cover bg-center bg-no-repeat flex items-end py-12 sm:py-16"
+	style={`background-image: url(${heroBackground.src});`}
+>
+	<div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent"></div>
+	<div class="relative z-10 max-w-7xl w-full mx-auto text-white pb-6 sm:pb-8 pl-4 sm:pl-8 md:pl-12 pr-4 sm:pr-6 md:pr-16">
+		<h1 class="hero-title scroll-fade-in text-3xl sm:text-4xl md:text-5xl lg:text-[64px] font-semibold mb-4 sm:mb-6 max-w-4xl">
+			Unlock the True Potential of your Outdoor Space
+		</h1>
+		<p class="hero-description scroll-fade-in text-sm sm:text-base md:text-lg lg:text-[20px] mb-6 sm:mb-8 max-w-2xl opacity-95">
+			{SITE_CONFIG.description}
+		</p>
+		<div class="scroll-fade-in flex flex-col sm:flex-row gap-3 sm:gap-4">
+			<Button variant="primary" size="lg" class="w-full sm:w-auto">
+				Get Yours Today
+			</Button>
+			<Button variant="outline" size="lg" class="w-full sm:w-auto">
+				Learn More
+			</Button>
+		</div>
+	</div>
+</section>
+
+<style>
+	.hero-title {
+		font-family: 'Inter', system-ui, sans-serif;
+		font-weight: 600; /* Semi Bold */
+		font-style: normal;
+		line-height: 110%;
+		letter-spacing: -0.02em; /* -2% */
+		vertical-align: middle;
+	}
+
+	@media (min-width: 1024px) {
+		.hero-title {
+			font-size: 64px;
+		}
+	}
+
+	.hero-description {
+		font-family: 'Inter', system-ui, sans-serif;
+		font-weight: 500; /* Medium */
+		font-style: normal;
+		line-height: 140%;
+		letter-spacing: -0.005em; /* -0.5% */
+		vertical-align: middle;
+	}
+
+	@media (min-width: 1024px) {
+		.hero-description {
+			font-size: 20px;
+		}
+	}
+</style>
+

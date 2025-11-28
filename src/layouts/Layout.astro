@@ -1,4 +1,5 @@
 ---
+import { ViewTransitions } from 'astro:transitions';
 import { SITE_CONFIG } from '../config/site';
 
 interface Props {
@@ -16,11 +17,144 @@ const { title, description = SITE_CONFIG.description } = Astro.props;
 		<meta name="description" content={description} />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
 		<meta name="generator" content={Astro.generator} />
 		<title>{title}</title>
+		<ViewTransitions />
 	</head>
 	<body class="font-sans antialiased">
 		<slot />
 	</body>
 </html>
+
+<style is:global>
+	/* Animaciones de scroll globales - fade in con slide up */
+	.scroll-fade-in {
+		opacity: 0;
+		transform: translateY(30px);
+		transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), 
+		            transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+	}
+
+	.scroll-fade-in.visible {
+		opacity: 1;
+		transform: translateY(0);
+	}
+
+	/* Variante más sutil para elementos pequeños */
+	.scroll-fade-in-subtle {
+		opacity: 0;
+		transform: translateY(20px);
+		transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1), 
+		            transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+	}
+
+	.scroll-fade-in-subtle.visible {
+		opacity: 1;
+		transform: translateY(0);
+	}
+</style>
+
+<script is:inline>
+	// Sistema global de animaciones al hacer scroll con animaciones secuenciales
+	(function() {
+		// Verificar si Intersection Observer está disponible
+		if (typeof IntersectionObserver === 'undefined') {
+			// Fallback: mostrar elementos inmediatamente si no hay soporte
+			document.querySelectorAll('.scroll-fade-in, .scroll-fade-in-subtle').forEach(el => {
+				el.classList.add('visible');
+			});
+			return;
+		}
+
+		let animationCounter = 0;
+		const delayBetweenAnimations = 150; // ms entre cada animación
+
+		const observerOptions = {
+			root: null,
+			rootMargin: '0px 0px -50px 0px', // Trigger cuando el elemento está 50px antes de entrar
+			threshold: 0.1
+		};
+
+		const observer = new IntersectionObserver((entries) => {
+			// Filtrar solo los elementos que están entrando en el viewport y que NO han sido animados aún
+			const enteringElements = entries.filter(entry => 
+				entry.isIntersecting && !entry.target.classList.contains('visible')
+			);
+			
+			if (enteringElements.length === 0) return;
+
+			// Ordenar elementos por su posición vertical en la página
+			enteringElements.sort((a, b) => {
+				const rectA = a.target.getBoundingClientRect();
+				const rectB = b.target.getBoundingClientRect();
+				return rectA.top - rectB.top;
+			});
+
+			// Animar elementos secuencialmente
+			enteringElements.forEach((entry, index) => {
+				// Verificar nuevamente que no haya sido animado (por si acaso)
+				if (entry.target.classList.contains('visible')) {
+					observer.unobserve(entry.target);
+					return;
+				}
+
+				const delay = animationCounter * delayBetweenAnimations;
+				animationCounter++;
+
+				setTimeout(() => {
+					// Verificar una vez más antes de animar
+					if (!entry.target.classList.contains('visible')) {
+						entry.target.classList.add('visible');
+					}
+					observer.unobserve(entry.target);
+				}, delay);
+			});
+		}, observerOptions);
+
+		function initScrollAnimations() {
+			// Observar solo elementos que NO han sido animados aún
+			const animatedElements = Array.from(document.querySelectorAll('.scroll-fade-in, .scroll-fade-in-subtle'))
+				.filter(el => !el.classList.contains('visible'));
+			
+			animatedElements.forEach(el => {
+				observer.observe(el);
+			});
+
+			// Para elementos que ya están visibles al cargar (como el Hero)
+			const visibleElements = animatedElements.filter(el => {
+				const rect = el.getBoundingClientRect();
+				return rect.top < window.innerHeight && rect.bottom > 0 && !el.classList.contains('visible');
+			});
+
+			// Ordenar elementos visibles por posición
+			visibleElements.sort((a, b) => {
+				const rectA = a.getBoundingClientRect();
+				const rectB = b.getBoundingClientRect();
+				return rectA.top - rectB.top;
+			});
+
+			// Animar elementos visibles secuencialmente con delay inicial
+			visibleElements.forEach((el, index) => {
+				// Dejar de observar antes de animar para evitar conflictos
+				observer.unobserve(el);
+				
+				setTimeout(() => {
+					if (!el.classList.contains('visible')) {
+						el.classList.add('visible');
+					}
+				}, 200 + (index * delayBetweenAnimations));
+			});
+		}
+
+		// Ejecutar al cargar
+		if (document.readyState === 'loading') {
+			document.addEventListener('DOMContentLoaded', initScrollAnimations);
+		} else {
+			initScrollAnimations();
+		}
+	})();
+</script>
 

@@ -1,26 +1,29 @@
 ---
+import { Image } from "astro:assets";
 import logoImage from "../../assets/icons/tristate-logo 1.svg";
 
 interface Props {
   size?: "sm" | "md" | "lg";
   showText?: boolean;
+  loading?: "eager" | "lazy";
 }
 
-const { size = "md", showText = true } = Astro.props;
+const { size = "md", loading = "eager" } = Astro.props;
 
 const sizeClasses = {
-  sm: { logo: "h-6 w-auto", text: "text-base" },
-  md: { logo: "h-8 w-auto", text: "text-xl" },
-  lg: { logo: "h-12 w-auto", text: "text-2xl" },
+  sm: { logo: "h-10 sm:h-12 w-auto" },
+  md: { logo: "h-12 sm:h-14 w-auto" },
+  lg: { logo: "h-16 sm:h-20 w-auto" },
 };
 
-const { logo: logoSize, text: textSize } = sizeClasses[size];
+const { logo: logoSize } = sizeClasses[size];
 ---
 
-<div class={`flex items-center gap-2 ${textSize} font-semibold text-gray-900`}>
-  <img 
-    src={logoImage.src} 
+<div class={`flex items-center gap-2 ${logoSize}`}>
+  <Image 
+    src={logoImage} 
     alt="Tri State Awnings Logo" 
-    class={`${logoSize} aspect-[158/45] object-contain`}
+    class={`${logoSize} w-auto object-contain`}
+    loading={loading}
   />
 </div>

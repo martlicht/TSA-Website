@@ -1,7 +1,8 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import Header from '../components/sections/landing/Header.astro';
-import Hero from '../components/sections/Hero.astro';
+import Header from '../components/sections/Header.astro';
+import Hero from '../components/sections/landing/Hero.astro';
+import ProductsSection from '../components/sections/landing/ProductsSection.astro';
 import Footer from '../components/sections/Footer.astro';
 import { SITE_CONFIG } from '../config/site';
 ---
@@ -9,6 +10,7 @@ import { SITE_CONFIG } from '../config/site';
 <Layout title={`${SITE_CONFIG.title} - Unlock the True Potential of your Outdoor Space`}>
 	<Header />
 	<Hero />
+	<ProductsSection />
 	<Footer />
 </Layout>
 
