@@ -1,4 +1,5 @@
 ---
+import { Image } from 'astro:assets';
 import SectionContainer from '../../ui/SectionContainer.astro';
 import trackRecordBg from '../../../assets/images/our-track-background.webp';
 import shieldIcon from '../../../assets/icons/Shield.svg';
@@ -39,15 +40,18 @@ const stats: Stat[] = [
 <section class="relative w-screen h-screen min-h-[600px] flex items-center justify-center overflow-hidden">
 	<!-- Background Image with zoom effect -->
 	<div class="absolute inset-0">
-		<img 
-			src={trackRecordBg.src}
+		<Image 
+			src={trackRecordBg}
 			alt="Track Record Background"
 			class="w-full h-full object-cover scale-110"
+			loading="lazy"
+			quality={80}
+			format="webp"
 		/>
 	</div>
 
-	<!-- Overlay: Combined effect to show image through green tint -->
-	<div class="absolute inset-0 bg-gradient-to-br from-[#68C28C]/85 to-[#68C28C]/85"></div>
+	<!-- Overlay: Combined effect to show image through green tint with darker tone -->
+	<div class="absolute inset-0 bg-gradient-to-br from-[#5aad7a]/90 via-[#4a8f66]/85 to-[#3d7254]/90"></div>
 
 	<!-- Content -->
 	<SectionContainer class="relative z-10 text-white">

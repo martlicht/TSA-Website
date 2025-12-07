@@ -1,4 +1,6 @@
 ---
+import { Image } from 'astro:assets';
+
 interface Props {
 	backgroundImage: any;
 	class?: string;
@@ -10,15 +12,18 @@ const { backgroundImage, class: className = '' } = Astro.props;
 <section class={`relative w-full min-h-screen flex items-center justify-center overflow-hidden ${className}`}>
 	<!-- Background Image with zoom effect -->
 	<div class="absolute inset-0">
-		<img 
-			src={backgroundImage.src}
+		<Image 
+			src={backgroundImage}
 			alt="Background"
 			class="w-full h-full object-cover scale-110"
+			loading="lazy"
+			quality={80}
+			format="webp"
 		/>
 	</div>
 
-	<!-- Overlay: Combined effect to show image through green tint -->
-	<div class="absolute inset-0 bg-gradient-to-br from-[#68C28C]/85 to-[#68C28C]/85"></div>
+	<!-- Overlay: Combined effect to show image through green tint with darker tone -->
+	<div class="absolute inset-0 bg-gradient-to-br from-[#5aad7a]/90 via-[#4a8f66]/85 to-[#3d7254]/90"></div>
 
 	<!-- Content Slot -->
 	<div class="relative z-10 w-full">

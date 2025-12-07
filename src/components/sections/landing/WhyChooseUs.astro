@@ -38,10 +38,10 @@ const features: Feature[] = [
 			<div class="space-y-8">
 				<!-- Headline -->
 				<div class="space-y-4">
-					<h2 class="why-choose-headline scroll-fade-in">
+					<h2 class="scroll-fade-in font-semibold text-[2rem] sm:text-[2.5rem] lg:text-[3rem] leading-[120%] tracking-[-0.02em]">
 						Why Choose Us?
 					</h2>
-					<p class="why-choose-subtext text-gray-600">
+					<p class="text-base sm:text-lg leading-[150%] tracking-[-0.002em] text-gray-600">
 						Strength you can count on. Beauty you'll love. Backed by two decades of excellence.
 					</p>
 				</div>
@@ -54,7 +54,7 @@ const features: Feature[] = [
 							style={`animation-delay: ${index * 100}ms;`}
 						>
 							<!-- Icon -->
-							<div class="feature-icon-container flex-shrink-0">
+							<div class="flex-shrink-0 flex items-center justify-center bg-gray-100 rounded-xl p-3 transition-transform duration-300 hover:scale-105">
 								<img 
 									src={feature.icon} 
 									alt={feature.title}
@@ -64,10 +64,10 @@ const features: Feature[] = [
 
 							<!-- Text Content -->
 							<div class="flex-1">
-								<h3 class="feature-title text-lg sm:text-xl font-semibold text-gray-900 mb-2">
+								<h3 class="text-lg sm:text-xl font-semibold leading-[130%] tracking-[-0.01em] text-gray-900 mb-2">
 									{feature.title}
 								</h3>
-								<p class="feature-description text-sm sm:text-base text-gray-600">
+								<p class="text-sm sm:text-base leading-[150%] tracking-[-0.002em] text-gray-600">
 									{feature.description}
 								</p>
 							</div>
@@ -90,79 +90,4 @@ const features: Feature[] = [
 	</SectionContainer>
 </section>
 
-<style>
-	/* Headline Typography */
-	.why-choose-headline {
-		font-family: 'Inter', system-ui, sans-serif;
-		font-weight: 600; /* Semi Bold */
-		font-style: normal;
-		font-size: 2rem; /* 32px - responsive for mobile */
-		line-height: 120%;
-		letter-spacing: -0.02em; /* -2% */
-		color: #000000;
-	}
-
-	@media (min-width: 640px) {
-		.why-choose-headline {
-			font-size: 2.5rem; /* 40px */
-		}
-	}
-
-	@media (min-width: 1024px) {
-		.why-choose-headline {
-			font-size: 3rem; /* 48px */
-		}
-	}
-
-	/* Subtext Typography */
-	.why-choose-subtext {
-		font-family: 'Inter', system-ui, sans-serif;
-		font-weight: 400; /* Regular */
-		font-style: normal;
-		font-size: 1rem; /* 16px */
-		line-height: 150%;
-		letter-spacing: -0.002em; /* -0.2% */
-	}
-
-	@media (min-width: 640px) {
-		.why-choose-subtext {
-			font-size: 1.125rem; /* 18px */
-		}
-	}
-
-	/* Feature Title Typography */
-	.feature-title {
-		font-family: 'Inter', system-ui, sans-serif;
-		font-weight: 600; /* Semi Bold */
-		font-style: normal;
-		line-height: 130%;
-		letter-spacing: -0.01em; /* -1% */
-	}
-
-	/* Feature Description Typography */
-	.feature-description {
-		font-family: 'Inter', system-ui, sans-serif;
-		font-weight: 400; /* Regular */
-		font-style: normal;
-		line-height: 150%;
-		letter-spacing: -0.002em; /* -0.2% */
-	}
-
-	/* Feature Icon Container */
-	.feature-icon-container {
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		background-color: #F3F4F6; /* Light gray background */
-		border-radius: 12px;
-		padding: 0.75rem;
-		transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-	}
-
-	.feature-item:hover .feature-icon-container {
-		transform: scale(1.05);
-	}
-
-	/* Animations handled by global Layout.astro scroll-fade-in system */
-</style>
 

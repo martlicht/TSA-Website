@@ -13,7 +13,7 @@ const {
 	class: className = '',
 } = Astro.props;
 
-const baseClasses = 'inline-flex items-center justify-center button-text rounded-md cursor-pointer transition-all duration-100 focus:outline-none focus:ring-2 focus:ring-offset-2 relative overflow-hidden button-shine';
+const baseClasses = 'inline-flex items-center justify-center font-medium text-[18px] leading-[145%] tracking-[-0.005em] text-center rounded-md cursor-pointer transition-all duration-100 focus:outline-none focus:ring-2 focus:ring-offset-2 relative overflow-hidden button-shine';
 
 const variantClasses = {
 	primary: 'bg-primary text-white hover:bg-primary-dark focus:ring-primary',
@@ -41,41 +41,32 @@ const classes = `${baseClasses} ${variantClasses[variant]} ${sizeClasses[size]} 
 )}
 
 <style>
-	/* Propiedades tipográficas del texto de los botones */
-	.button-text {
-		font-family: 'Inter', system-ui, sans-serif;
-		font-weight: 500; /* Medium */
-		font-style: normal;
-		font-size: 18px;
-		line-height: 145%;
-		letter-spacing: -0.005em; /* -0.5% */
-		text-align: center;
-		vertical-align: middle;
-	}
-
-	/* Efecto de brillo metálico al hacer hover */
+	/* Efecto de brillo metálico diagonal al hacer hover - custom animation */
 	.button-shine::before {
 		content: '';
 		position: absolute;
-		top: 0;
+		top: -100%;
 		left: -100%;
-		width: 100%;
-		height: 100%;
+		width: 200%;
+		height: 200%;
 		background: linear-gradient(
-			90deg,
+			135deg,
 			transparent,
-			rgba(255, 255, 255, 0.4),
-			rgba(255, 255, 255, 0.6),
-			rgba(255, 255, 255, 0.4),
+			transparent 40%,
+			rgba(255, 255, 255, 0.4) 45%,
+			rgba(255, 255, 255, 0.6) 50%,
+			rgba(255, 255, 255, 0.4) 55%,
+			transparent 60%,
 			transparent
 		);
-		transition: left 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+		transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
 		pointer-events: none;
 		z-index: 1;
+		transform: translate(-100%, -100%);
 	}
 
 	.button-shine:hover::before {
-		left: 100%;
+		transform: translate(100%, 100%);
 	}
 
 	/* Asegurar que el contenido esté por encima del brillo */

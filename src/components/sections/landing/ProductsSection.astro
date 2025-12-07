@@ -45,7 +45,7 @@ const products: Product[] = [
 <section class="py-12 sm:py-16 md:py-20 lg:py-24 bg-white">
 	<SectionContainer>
 		<!-- Headline -->
-		<h2 class="products-headline scroll-fade-in text-center mb-8 sm:mb-12 md:mb-16">
+		<h2 class="scroll-fade-in text-center font-medium text-[2rem] sm:text-[2.5rem] lg:text-[48px] leading-[130%] tracking-[-0.02em] mb-8 sm:mb-12 md:mb-16">
 			The Most Innovative{' '}
 			<span class="text-primary">Awning</span> and{' '}
 			<span class="text-primary">Sukkah</span>
@@ -54,7 +54,7 @@ const products: Product[] = [
 		</h2>
 
 		<!-- Products Grid -->
-		<div class="products-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 lg:gap-[34px]">
+		<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 lg:gap-[34px] items-stretch">
 			{products.map((product, index) => (
 				<div class="scroll-fade-in h-full" style={`animation-delay: ${index * 100}ms;`}>
 					<ProductCard
@@ -72,36 +72,4 @@ const products: Product[] = [
 	</SectionContainer>
 </section>
 
-<style>
-	/* Headline Typography - Figma Properties */
-	.products-headline {
-		font-family: 'Inter', system-ui, sans-serif;
-		font-weight: 500; /* Medium */
-		font-style: normal;
-		font-size: 2rem; /* 32px - responsive for mobile */
-		line-height: 130%; /* Figma: 130% */
-		letter-spacing: -0.02em; /* -2% */
-		color: #000000;
-		text-align: center; /* Figma: Center */
-		vertical-align: middle; /* Figma: Middle */
-	}
-
-	@media (min-width: 640px) {
-		.products-headline {
-			font-size: 2.5rem; /* 40px - responsive for tablet */
-		}
-	}
-
-	@media (min-width: 1024px) {
-		.products-headline {
-			font-size: 48px; /* Figma: 48px */
-		}
-	}
-
-	/* Products Grid - Ensure cards stretch to full height */
-	.products-grid {
-		align-items: stretch;
-	}
-
-</style>
 

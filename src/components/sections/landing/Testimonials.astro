@@ -1,0 +1,166 @@
+---
+import SectionContainer from '../../ui/SectionContainer.astro';
+import googleIcon from '../../../assets/icons/google.svg';
+import fiveStarRating from '../../../assets/icons/five-start-rating.svg';
+
+interface Testimonial {
+	quote: string;
+	text: string;
+	author: string;
+}
+
+const testimonials: Testimonial[] = [
+	{
+		quote: '"Awning is beautiful and functional"',
+		text: 'Great company. Awning is beautiful and functional. Robin, a manager at the company is exceptional!!\n\nThank you for a job well done!',
+		author: '- Penina Rosenthal',
+	},
+	{
+		quote: '"Our awning is new but seems to be durable and made with top quality material!"',
+		text: 'What an outstanding experience I had with tristate! From the estimate until installation the staff was friendly, knowledgeable, and reliable.',
+		author: '- Etsy Breuer',
+	},
+	{
+		quote: '"Excellent innovative awning."',
+		text: 'Better than any we have had. easy to use, and the people at tri state were a pleasure to deal with.',
+		author: '- Chaya Cohen',
+	},
+];
+---
+
+<section class="py-16 sm:py-20 md:py-24 lg:py-28 bg-white">
+	<SectionContainer>
+		<!-- Headline -->
+		<div class="text-center mb-12 sm:mb-16">
+			<h2 class="testimonials-headline scroll-fade-in mb-4">
+				What They Say About Our Awnings
+			</h2>
+			<p class="testimonials-subtext scroll-fade-in text-gray-600" style="animation-delay: 100ms;">
+				Here's what people are saying
+			</p>
+		</div>
+
+		<!-- Testimonials Grid -->
+		<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+			{testimonials.map((testimonial, index) => (
+				<div class="testimonial-card scroll-fade-in" style={`animation-delay: ${index * 100}ms;`}>
+					<!-- Header: Stars and Google Icon -->
+					<div class="flex items-center justify-between mb-6">
+						<img 
+							src={fiveStarRating.src}
+							alt="5 star rating"
+							class="h-6"
+						/>
+						<img 
+							src={googleIcon.src}
+							alt="Google"
+							class="h-8"
+						/>
+					</div>
+
+					<!-- Quote -->
+					<h3 class="testimonial-quote text-xl font-semibold mb-4">
+						{testimonial.quote}
+					</h3>
+
+					<!-- Text -->
+					<p class="testimonial-text text-gray-600 mb-6 whitespace-pre-line">
+						{testimonial.text}
+					</p>
+
+					<!-- Author -->
+					<p class="testimonial-author font-medium text-gray-900">
+						{testimonial.author}
+					</p>
+				</div>
+			))}
+		</div>
+	</SectionContainer>
+</section>
+
+<style>
+	/* Testimonials Headline */
+	.testimonials-headline {
+		font-family: 'Inter', system-ui, sans-serif;
+		font-weight: 600;
+		font-size: 2rem;
+		line-height: 120%;
+		letter-spacing: -0.02em;
+		color: #000000;
+	}
+
+	@media (min-width: 640px) {
+		.testimonials-headline {
+			font-size: 2.5rem;
+		}
+	}
+
+	@media (min-width: 1024px) {
+		.testimonials-headline {
+			font-size: 3rem;
+		}
+	}
+
+	/* Testimonials Subtext */
+	.testimonials-subtext {
+		font-family: 'Inter', system-ui, sans-serif;
+		font-weight: 400;
+		font-size: 1.125rem;
+		line-height: 150%;
+		letter-spacing: -0.002em;
+	}
+
+	/* Testimonial Card */
+	.testimonial-card {
+		background: #FFFFFF;
+		border: 1px solid rgba(0, 0, 0, 0.1);
+		border-radius: 16px;
+		padding: 2rem;
+		box-shadow: 
+			0 1px 3px rgba(0, 0, 0, 0.05),
+			0 2px 4px rgba(0, 0, 0, 0.05);
+		transition: 
+			transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+			box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+		display: flex;
+		flex-direction: column;
+		height: 100%;
+	}
+
+	.testimonial-card:hover {
+		transform: translateY(-4px);
+		box-shadow: 
+			0 4px 6px rgba(0, 0, 0, 0.07),
+			0 8px 16px rgba(0, 0, 0, 0.07);
+	}
+
+	/* Testimonial Quote */
+	.testimonial-quote {
+		font-family: 'Inter', system-ui, sans-serif;
+		font-weight: 600;
+		line-height: 130%;
+		letter-spacing: -0.01em;
+		color: #000000;
+	}
+
+	/* Testimonial Text */
+	.testimonial-text {
+		font-family: 'Inter', system-ui, sans-serif;
+		font-weight: 400;
+		font-size: 0.9375rem;
+		line-height: 160%;
+		letter-spacing: -0.002em;
+		flex-grow: 1;
+	}
+
+	/* Testimonial Author */
+	.testimonial-author {
+		font-family: 'Inter', system-ui, sans-serif;
+		font-weight: 500;
+		font-size: 0.9375rem;
+		line-height: 150%;
+		letter-spacing: -0.002em;
+		margin-top: auto;
+	}
+</style>
+

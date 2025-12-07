@@ -1,0 +1,303 @@
+---
+import { Image } from 'astro:assets';
+import SectionContainer from '../../ui/SectionContainer.astro';
+import hero2Background from '../../../assets/images/hero2-bg.webp';
+---
+
+<section class="relative w-full min-h-screen flex items-center justify-center overflow-hidden py-16 sm:py-20">
+	<!-- Background Image -->
+	<div class="absolute inset-0">
+		<Image 
+			src={hero2Background}
+			alt="Contact Background"
+			class="w-full h-full object-cover"
+			loading="eager"
+			quality={80}
+			format="webp"
+		/>
+	</div>
+
+	<!-- Dark Overlay for better contrast -->
+	<div class="absolute inset-0 bg-gradient-to-br from-black/70 via-black/60 to-black/70"></div>
+
+	<!-- Content -->
+	<SectionContainer class="relative z-10">
+		<div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+			<!-- Left: Headline -->
+			<div class="text-white">
+				<h2 class="contact-headline mb-6">
+					Find out how<br />
+					we can<br />
+					transform<br />
+					<span class="text-primary italic">your</span> space.
+				</h2>
+			</div>
+
+			<!-- Right: Form Card -->
+			<div class="contact-form-card bg-white/95 backdrop-blur-sm rounded-3xl p-8 sm:p-10 shadow-2xl">
+				<form id="contact-form" class="space-y-6">
+					<!-- First Name & Last Name -->
+					<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+						<div>
+							<label for="firstName" class="form-label">
+								First name
+							</label>
+							<input
+								type="text"
+								id="firstName"
+								name="firstName"
+								placeholder="First name"
+								required
+								class="form-input"
+							/>
+						</div>
+						<div>
+							<label for="lastName" class="form-label">
+								Last name
+							</label>
+							<input
+								type="text"
+								id="lastName"
+								name="lastName"
+								placeholder="Last name"
+								required
+								class="form-input"
+							/>
+						</div>
+					</div>
+
+					<!-- Email -->
+					<div>
+						<label for="email" class="form-label">
+							Email
+						</label>
+						<input
+							type="email"
+							id="email"
+							name="email"
+							placeholder="you@company.com"
+							required
+							class="form-input"
+						/>
+					</div>
+
+					<!-- Phone Number -->
+					<div>
+						<label for="phone" class="form-label">
+							Phone number
+						</label>
+						<div class="relative">
+							<select
+								id="countryCode"
+								name="countryCode"
+								class="absolute left-3 top-1/2 -translate-y-1/2 bg-transparent border-none text-gray-700 font-medium focus:outline-none pr-8"
+							>
+								<option value="+1">US</option>
+								<option value="+44">UK</option>
+								<option value="+52">MX</option>
+							</select>
+							<input
+								type="tel"
+								id="phone"
+								name="phone"
+								placeholder="+1 (555) 000-0000"
+								required
+								class="form-input pl-20"
+							/>
+						</div>
+					</div>
+
+					<!-- Privacy Policy Checkbox -->
+					<div class="flex items-start gap-3">
+						<input
+							type="checkbox"
+							id="privacyPolicy"
+							name="privacyPolicy"
+							required
+							class="mt-1 w-4 h-4 text-primary border-gray-300 rounded focus:ring-primary focus:ring-2"
+						/>
+						<label for="privacyPolicy" class="text-sm text-gray-600">
+							You agree to our friendly <a href="/privacy-policy" class="text-primary underline hover:text-primary-dark">privacy policy</a>.
+						</label>
+					</div>
+
+					<!-- Submit Button -->
+					<button
+						type="submit"
+						class="w-full bg-primary text-white font-medium text-lg py-4 rounded-lg hover:bg-primary-dark transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+					>
+						Send message
+					</button>
+
+					<!-- Success Message (hidden by default) -->
+					<div id="success-message" class="hidden p-4 bg-green-50 border border-green-200 rounded-lg">
+						<p class="text-green-800 text-center font-medium">
+							✓ Message sent successfully! We'll get back to you soon.
+						</p>
+					</div>
+
+					<!-- Error Message (hidden by default) -->
+					<div id="error-message" class="hidden p-4 bg-red-50 border border-red-200 rounded-lg">
+						<p class="text-red-800 text-center font-medium">
+							✗ Something went wrong. Please try again.
+						</p>
+					</div>
+				</form>
+			</div>
+		</div>
+	</SectionContainer>
+</section>
+
+<style>
+	/* Contact Headline */
+	.contact-headline {
+		font-family: 'Inter', system-ui, sans-serif;
+		font-weight: 700;
+		font-size: 3rem;
+		line-height: 110%;
+		letter-spacing: -0.02em;
+	}
+
+	@media (min-width: 640px) {
+		.contact-headline {
+			font-size: 3.5rem;
+		}
+	}
+
+	@media (min-width: 1024px) {
+		.contact-headline {
+			font-size: 4rem;
+		}
+	}
+
+	/* Form Card */
+	.contact-form-card {
+		max-width: 500px;
+		margin: 0 auto;
+		width: 100%;
+	}
+
+	@media (min-width: 1024px) {
+		.contact-form-card {
+			margin: 0;
+		}
+	}
+
+	/* Form Label */
+	.form-label {
+		display: block;
+		font-family: 'Inter', system-ui, sans-serif;
+		font-weight: 500;
+		font-size: 0.875rem;
+		color: #6B7280;
+		margin-bottom: 0.5rem;
+	}
+
+	/* Form Input */
+	.form-input {
+		width: 100%;
+		padding: 0.875rem 1rem;
+		font-size: 1rem;
+		color: #111827;
+		background-color: #F9FAFB;
+		border: 1px solid #E5E7EB;
+		border-radius: 0.5rem;
+		transition: all 0.2s;
+		font-family: 'Inter', system-ui, sans-serif;
+	}
+
+	.form-input:focus {
+		outline: none;
+		border-color: #68C28C;
+		background-color: #FFFFFF;
+		box-shadow: 0 0 0 3px rgba(104, 194, 140, 0.1);
+	}
+
+	.form-input::placeholder {
+		color: #9CA3AF;
+	}
+</style>
+
+<script>
+	// Contact Form Handler
+	function initContactForm() {
+		const form = document.getElementById('contact-form') as HTMLFormElement;
+		const successMessage = document.getElementById('success-message');
+		const errorMessage = document.getElementById('error-message');
+
+		if (!form) return;
+
+		form.addEventListener('submit', async (e) => {
+			e.preventDefault();
+
+			// Hide previous messages
+			successMessage?.classList.add('hidden');
+			errorMessage?.classList.add('hidden');
+
+			// Get form data
+			const formData = new FormData(form);
+			const data = {
+				firstName: formData.get('firstName'),
+				lastName: formData.get('lastName'),
+				email: formData.get('email'),
+				countryCode: formData.get('countryCode'),
+				phone: formData.get('phone'),
+				privacyPolicy: formData.get('privacyPolicy') === 'on',
+				timestamp: new Date().toISOString(),
+			};
+
+			console.log('Form Data:', data);
+
+			try {
+				// TODO: Replace with actual API endpoint
+				// const response = await fetch('/api/contact', {
+				// 	method: 'POST',
+				// 	headers: {
+				// 		'Content-Type': 'application/json',
+				// 	},
+				// 	body: JSON.stringify(data),
+				// });
+
+				// if (!response.ok) {
+				// 	throw new Error('Failed to send message');
+				// }
+
+				// Simulate successful submission
+				await new Promise(resolve => setTimeout(resolve, 1000));
+
+				// Show success message
+				successMessage?.classList.remove('hidden');
+				
+				// Reset form
+				form.reset();
+
+				// Hide success message after 5 seconds
+				setTimeout(() => {
+					successMessage?.classList.add('hidden');
+				}, 5000);
+
+			} catch (error) {
+				console.error('Error submitting form:', error);
+				
+				// Show error message
+				errorMessage?.classList.remove('hidden');
+
+				// Hide error message after 5 seconds
+				setTimeout(() => {
+					errorMessage?.classList.add('hidden');
+				}, 5000);
+			}
+		});
+	}
+
+	// Initialize on page load
+	if (document.readyState === 'loading') {
+		document.addEventListener('DOMContentLoaded', initContactForm);
+	} else {
+		initContactForm();
+	}
+
+	// Re-initialize after Astro page transitions
+	document.addEventListener('astro:page-load', initContactForm);
+</script>
+

@@ -1,10 +1,27 @@
 ---
+import { Image } from 'astro:assets';
 import SectionContainer from '../../ui/SectionContainer.astro';
 import carousel1 from '../../../assets/images/caurusel1.png';
 import carousel2 from '../../../assets/images/caurusel2.png';
 import carousel3 from '../../../assets/images/caurusel3.png';
+import pool from '../../../assets/images/pool.png';
+import staircase from '../../../assets/images/staircase.png';
+import door from '../../../assets/images/door.png';
+import plexiAwning from '../../../assets/images/plexi_awning.png';
+import rollUpAwning from '../../../assets/images/roll_up_awning.png';
+import vestibule from '../../../assets/images/vestibule.png';
 
-const carouselImages = [carousel1, carousel2, carousel3];
+const carouselImages = [
+	carousel1, 
+	carousel2, 
+	carousel3, 
+	pool, 
+	staircase, 
+	door, 
+	plexiAwning, 
+	rollUpAwning, 
+	vestibule
+];
 ---
 
 <section class="py-12 sm:py-16 md:py-20 lg:py-24 bg-white">
@@ -26,27 +43,18 @@ const carouselImages = [carousel1, carousel2, carousel3];
 		</div>
 
 		<!-- Carousel Container -->
-		<div class="swiper-container overflow-hidden">
+		<div class="swiper-carousel overflow-hidden">
 			<div class="swiper-wrapper">
 				{carouselImages.map((image, index) => (
 					<div class="swiper-slide">
 						<div class="carousel-card rounded-2xl overflow-hidden aspect-[4/3] sm:aspect-video">
-							<img 
-								src={image.src}
+							<Image 
+								src={image}
 								alt={`Gallery image ${index + 1}`}
 								class="w-full h-full object-cover"
-							/>
-						</div>
-					</div>
-				))}
-				<!-- Duplicate slides for seamless infinite loop -->
-				{carouselImages.map((image, index) => (
-					<div class="swiper-slide">
-						<div class="carousel-card rounded-2xl overflow-hidden aspect-[4/3] sm:aspect-video">
-							<img 
-								src={image.src}
-								alt={`Gallery image ${index + 1}`}
-								class="w-full h-full object-cover"
+								loading="lazy"
+								quality={85}
+								format="webp"
 							/>
 						</div>
 					</div>
@@ -75,7 +83,7 @@ const carouselImages = [carousel1, carousel2, carousel3];
 	}
 
 	/* Swiper Container */
-	.swiper-container {
+	.swiper-carousel {
 		width: 100%;
 	}
 
@@ -122,36 +130,57 @@ const carouselImages = [carousel1, carousel2, carousel3];
 	}
 </style>
 
-<!-- Swiper CDN -->
+<!-- Swiper CSS -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
 
 <script>
-	import Swiper from 'swiper/bundle';
+	import Swiper from 'swiper';
+	import { Autoplay, FreeMode } from 'swiper/modules';
 	
-	// Initialize Swiper after DOM is loaded
-	document.addEventListener('DOMContentLoaded', () => {
-		new Swiper('.swiper-container', {
-			slidesPerView: 'auto',
-			spaceBetween: 24,
-			loop: true,
-			speed: 5000,
-			autoplay: {
-				delay: 0,
-				disableOnInteraction: false,
-			},
-			freeMode: {
-				enabled: true,
-				momentum: false,
-			},
-			breakpoints: {
-				640: {
-					spaceBetween: 24,
+	function initCarousel() {
+		const swiperEl = document.querySelector('.swiper-carousel');
+		if (!swiperEl) {
+			console.error('Swiper element not found');
+			return;
+		}
+
+		try {
+			const swiper = new Swiper('.swiper-carousel', {
+				modules: [Autoplay, FreeMode],
+				slidesPerView: 'auto',
+				spaceBetween: 24,
+				loop: true,
+				speed: 3000,
+				autoplay: {
+					delay: 0,
+					disableOnInteraction: false,
 				},
-				320: {
-					spaceBetween: 16,
+				freeMode: true,
+				allowTouchMove: true,
+				grabCursor: true,
+				breakpoints: {
+					320: {
+						spaceBetween: 16,
+					},
+					640: {
+						spaceBetween: 24,
+					}
 				}
-			}
-		});
-	});
+			});
+			console.log('Swiper initialized successfully');
+		} catch (error) {
+			console.error('Error initializing Swiper:', error);
+		}
+	}
+	
+	// Initialize when DOM is ready
+	if (document.readyState === 'loading') {
+		document.addEventListener('DOMContentLoaded', initCarousel);
+	} else {
+		initCarousel();
+	}
+
+	// Re-initialize on Astro page transitions
+	document.addEventListener('astro:page-load', initCarousel);
 </script>
 
