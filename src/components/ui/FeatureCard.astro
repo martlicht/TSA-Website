@@ -1,0 +1,31 @@
+---
+interface Props {
+	number: string;
+	title: string;
+	description: string;
+	delay?: number;
+}
+
+const { number, title, description, delay = 0 } = Astro.props;
+---
+
+<div 
+	class="w-[277px] h-[354px] bg-white/85 backdrop-blur-sm rounded-[24px] px-[38.54px] py-[21px] flex flex-col gap-[9px] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md shadow-sm"
+	style={`animation-delay: ${delay}ms;`}
+>
+	<!-- Number - Figma specs: Bold 40px #68C28C -->
+	<div class="text-[40px] leading-[40px] font-bold text-[#68C28C]">
+		{number}
+	</div>
+	
+	<!-- Title - Figma specs: Bold 40px #68C28C -->
+	<h3 class="text-[40px] leading-[40px] font-bold text-[#68C28C]">
+		{title}
+	</h3>
+
+	<!-- Description - Figma specs: Regular 16px #717972 -->
+	<p class="text-base font-normal text-[#717972] leading-relaxed">
+		{description}
+	</p>
+</div>
+

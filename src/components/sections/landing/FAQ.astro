@@ -1,0 +1,287 @@
+---
+import SectionContainer from '../../ui/SectionContainer.astro';
+
+interface FAQItem {
+	question: string;
+	answer: string;
+}
+
+const faqs: FAQItem[] = [
+	{
+		question: "What's your lead time?",
+		answer: "Our typical lead time is 2-3 weeks from order confirmation to installation. However, this can vary based on the complexity of your project and current demand. We'll provide you with a specific timeline during your consultation.",
+	},
+	{
+		question: "Do you have specs for your products?",
+		answer: "Yes, we have detailed specifications for all our products. Contact us and we'll send you comprehensive technical documentation including dimensions, materials, wind ratings, and installation requirements.",
+	},
+	{
+		question: "Who do you work with?",
+		answer: "We work with homeowners, property managers, architects, and contractors throughout the Tri-State area. Our team has experience with both residential and commercial projects of all sizes.",
+	},
+	{
+		question: "Do you offer delivery?",
+		answer: "Yes, we offer professional delivery and installation services throughout the Tri-State area. Our experienced team ensures your awning is properly installed and ready to use.",
+	},
+	{
+		question: "Do you offer warranties?",
+		answer: "Absolutely! All our products come with comprehensive warranties covering both materials and workmanship. Warranty terms vary by product - contact us for specific details.",
+	},
+	{
+		question: "Do you service residential properties?",
+		answer: "Yes. Check out our sister brand Tri State Awnings. An industry leader in residential canopies for 25 + years.",
+	},
+];
+---
+
+<section class="py-16 sm:py-20 md:py-24 lg:py-28 bg-white">
+	<SectionContainer>
+		<!-- Headline -->
+		<h2 class="faq-headline scroll-fade-in text-center mb-12 sm:mb-16 md:mb-20">
+			Frequently Asked Questions
+		</h2>
+
+		<!-- FAQ Layout: Two Columns -->
+		<div class="flex flex-col lg:flex-row gap-8 lg:gap-12">
+			<!-- Left Column: Questions -->
+			<div class="lg:w-1/2 faq-questions-container">
+				{faqs.map((faq, index) => (
+					<button
+						class="faq-question-btn scroll-fade-in w-full text-left"
+						data-delay={index + 1}
+						data-faq-index={index}
+					>
+						<div class="flex items-center gap-4 p-4 rounded-lg transition-all duration-300 hover:bg-gray-50">
+							<div class="faq-icon flex-shrink-0 w-8 h-8 rounded-full border-2 border-primary flex items-center justify-center transition-all duration-300">
+								<svg class="icon-plus w-4 h-4 text-primary transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+								</svg>
+								<svg class="icon-minus w-4 h-4 text-primary transition-transform duration-300 absolute opacity-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4"></path>
+								</svg>
+							</div>
+							<span class="faq-question-text text-base sm:text-lg font-medium text-gray-900 transition-colors duration-300">
+								{faq.question}
+							</span>
+						</div>
+					</button>
+				))}
+			</div>
+
+			<!-- Right Column: Answer Box with Arrow -->
+			<div class="lg:w-1/2 relative">
+				<!-- Arrow/Triangle pointing to active question -->
+				<div class="faq-arrow hidden lg:block"></div>
+				
+				<div class="faq-answer-container border-2 border-primary rounded-2xl p-6 sm:p-8 bg-white relative">
+					{faqs.map((faq, index) => (
+						<div 
+							class={`faq-answer ${index === 0 ? 'active' : ''}`}
+							data-faq-index={index}
+						>
+							<p class="text-gray-700 text-base sm:text-lg leading-relaxed">
+								{faq.answer}
+							</p>
+						</div>
+					))}
+				</div>
+			</div>
+		</div>
+	</SectionContainer>
+</section>
+
+<style>
+	/* FAQ Headline */
+	.faq-headline {
+		font-family: 'Inter', system-ui, sans-serif;
+		font-weight: 600;
+		font-size: 2rem;
+		line-height: 120%;
+		letter-spacing: -0.02em;
+		color: #000000;
+	}
+
+	@media (min-width: 640px) {
+		.faq-headline {
+			font-size: 2.5rem;
+		}
+	}
+
+	@media (min-width: 1024px) {
+		.faq-headline {
+			font-size: 3rem;
+		}
+	}
+
+	/* FAQ Questions Container - Fixed height to match answer box */
+	.faq-questions-container {
+		display: flex;
+		flex-direction: column;
+		gap: 1rem;
+	}
+
+	/* FAQ Question Button */
+	.faq-question-btn {
+		position: relative;
+		cursor: pointer;
+		border: none;
+		background: transparent;
+	}
+
+	.faq-question-btn.active .faq-icon {
+		background-color: #68C28C;
+		border-color: #68C28C;
+	}
+
+	.faq-question-btn.active .icon-plus {
+		opacity: 0;
+		transform: rotate(90deg);
+	}
+
+	.faq-question-btn.active .icon-minus {
+		opacity: 1;
+		transform: rotate(0deg);
+	}
+
+	.faq-question-btn.active .faq-question-text {
+		color: #68C28C;
+	}
+
+	.faq-question-btn.active svg {
+		color: white;
+	}
+
+	/* FAQ Arrow/Triangle pointing to active question */
+	.faq-arrow {
+		position: absolute;
+		left: -12px;
+		top: 50px; /* Initial position */
+		width: 0;
+		height: 0;
+		border-top: 12px solid transparent;
+		border-bottom: 12px solid transparent;
+		border-right: 12px solid #68C28C;
+		transition: top 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+		z-index: 10;
+	}
+
+	/* FAQ Answer Container - Fixed height */
+	.faq-answer-container {
+		position: relative;
+		overflow: hidden;
+		min-height: 400px;
+		height: 400px;
+		padding-top: 1rem !important; /* Texto más arriba */
+	}
+
+	@media (min-width: 1024px) {
+		.faq-answer-container {
+			min-height: 480px;
+			height: 480px;
+		}
+	}
+
+	/* FAQ Answer - Smooth transitions (fade only, no slide) */
+	.faq-answer {
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		padding: 1.5rem 2rem;
+		opacity: 0;
+		transition: opacity 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+		pointer-events: none;
+	}
+
+	.faq-answer.active {
+		opacity: 1;
+		pointer-events: auto;
+	}
+
+	/* Responsive adjustments */
+	@media (max-width: 1023px) {
+		.faq-answer-container {
+			position: relative;
+			top: 0;
+		}
+	}
+</style>
+
+<script>
+	// FAQ Interactive Functionality with animated arrow
+	function initFAQ() {
+		const questionButtons = document.querySelectorAll<HTMLElement>('.faq-question-btn');
+		const answers = document.querySelectorAll<HTMLElement>('.faq-answer');
+		const arrow = document.querySelector<HTMLElement>('.faq-arrow');
+
+		// Function to update arrow position
+		function updateArrowPosition(button: HTMLElement) {
+			if (!arrow) return;
+			
+			// Get button position relative to viewport
+			const buttonRect = button.getBoundingClientRect();
+			const answerContainer = document.querySelector<HTMLElement>('.faq-answer-container');
+			if (!answerContainer) return;
+			
+			const containerRect = answerContainer.getBoundingClientRect();
+			
+			// Calculate relative position
+			const relativeTop = buttonRect.top - containerRect.top + (buttonRect.height / 2) - 12;
+			
+			// Update arrow position
+			arrow.style.top = `${relativeTop}px`;
+		}
+
+		questionButtons.forEach((button) => {
+			button.addEventListener('click', () => {
+				const index = button.getAttribute('data-faq-index');
+				
+				// Remove active class from all buttons and answers
+				questionButtons.forEach(btn => btn.classList.remove('active'));
+				answers.forEach(answer => answer.classList.remove('active'));
+				
+				// Add active class to clicked button and corresponding answer
+				button.classList.add('active');
+				const activeAnswer = document.querySelector(`.faq-answer[data-faq-index="${index}"]`);
+				if (activeAnswer) {
+					activeAnswer.classList.add('active');
+				}
+
+				// Update arrow position
+				updateArrowPosition(button);
+			});
+		});
+
+		// Set first question as active by default and position arrow
+		if (questionButtons.length > 0) {
+			questionButtons[0].classList.add('active');
+			// Wait for layout to settle before positioning arrow
+			setTimeout(() => {
+				updateArrowPosition(questionButtons[0]);
+			}, 100);
+		}
+
+		// Update arrow position on window resize
+		let resizeTimer: ReturnType<typeof setTimeout>;
+		window.addEventListener('resize', () => {
+			clearTimeout(resizeTimer);
+			resizeTimer = setTimeout(() => {
+				const activeButton = document.querySelector<HTMLElement>('.faq-question-btn.active');
+				if (activeButton) {
+					updateArrowPosition(activeButton);
+				}
+			}, 250);
+		});
+	}
+
+	// Initialize on page load
+	if (document.readyState === 'loading') {
+		document.addEventListener('DOMContentLoaded', initFAQ);
+	} else {
+		initFAQ();
+	}
+
+	// Re-initialize after Astro page transitions
+	document.addEventListener('astro:page-load', initFAQ);
+</script>
+

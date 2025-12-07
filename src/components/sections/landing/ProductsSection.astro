@@ -1,5 +1,6 @@
 ---
 import ProductCard from '../../ui/ProductCard.astro';
+import SectionContainer from '../../ui/SectionContainer.astro';
 import awningImage from '../../../assets/images/awning.webp';
 import pergolofImage from '../../../assets/images/pergolof.webp';
 import sukkahImage from '../../../assets/images/sukkah.webp';
@@ -42,7 +43,7 @@ const products: Product[] = [
 ---
 
 <section class="py-12 sm:py-16 md:py-20 lg:py-24 bg-white">
-	<div class=" mx-auto px-12 sm:px-6 md:px-8 lg:px-20">
+	<SectionContainer>
 		<!-- Headline -->
 		<h2 class="products-headline scroll-fade-in text-center mb-8 sm:mb-12 md:mb-16">
 			The Most Innovative{' '}
@@ -53,7 +54,7 @@ const products: Product[] = [
 		</h2>
 
 		<!-- Products Grid -->
-		<div class="products-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 lg:gap-10">
+		<div class="products-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 lg:gap-[34px]">
 			{products.map((product, index) => (
 				<div class="scroll-fade-in h-full" style={`animation-delay: ${index * 100}ms;`}>
 					<ProductCard
@@ -68,7 +69,7 @@ const products: Product[] = [
 				</div>
 			))}
 		</div>
-	</div>
+	</SectionContainer>
 </section>
 
 <style>

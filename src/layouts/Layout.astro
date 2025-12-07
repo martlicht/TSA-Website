@@ -30,12 +30,38 @@ const { title, description = SITE_CONFIG.description } = Astro.props;
 </html>
 
 <style is:global>
-	/* Animaciones de scroll globales - fade in con slide up */
+	/* Sistema de animaciones centralizado y simétrico */
+	
+	/* Base: Todos los elementos animables empiezan invisibles */
+	.scroll-animate {
+		opacity: 0;
+		transform: translateY(30px);
+		transition: opacity 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94), 
+		            transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+		will-change: opacity, transform;
+	}
+
+	/* Estado visible - se aplica cuando el elemento entra al viewport */
+	.scroll-animate.visible {
+		opacity: 1;
+		transform: translateY(0);
+	}
+
+	/* Variantes de delay para animaciones secuenciales */
+	.scroll-animate[data-delay="1"] { transition-delay: 0.1s; }
+	.scroll-animate[data-delay="2"] { transition-delay: 0.2s; }
+	.scroll-animate[data-delay="3"] { transition-delay: 0.3s; }
+	.scroll-animate[data-delay="4"] { transition-delay: 0.4s; }
+	.scroll-animate[data-delay="5"] { transition-delay: 0.5s; }
+	.scroll-animate[data-delay="6"] { transition-delay: 0.6s; }
+
+	/* Compatibilidad con clases antiguas - migración gradual */
 	.scroll-fade-in {
 		opacity: 0;
 		transform: translateY(30px);
-		transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), 
-		            transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+		transition: opacity 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94), 
+		            transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+		will-change: opacity, transform;
 	}
 
 	.scroll-fade-in.visible {
@@ -43,118 +69,154 @@ const { title, description = SITE_CONFIG.description } = Astro.props;
 		transform: translateY(0);
 	}
 
-	/* Variante más sutil para elementos pequeños */
-	.scroll-fade-in-subtle {
-		opacity: 0;
-		transform: translateY(20px);
-		transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1), 
-		            transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+	/* Animación de hover con efecto focus/shadow - sin elevación */
+	.hover-focus {
+		transition: box-shadow 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 	}
 
-	.scroll-fade-in-subtle.visible {
-		opacity: 1;
-		transform: translateY(0);
+	.hover-focus:hover {
+		box-shadow: 0 0 0 4px rgba(104, 194, 140, 0.1),
+		            0 8px 24px rgba(0, 0, 0, 0.12),
+		            0 4px 8px rgba(0, 0, 0, 0.08);
+	}
+
+	/* Variante con color primario más intenso */
+	.hover-focus-primary {
+		transition: box-shadow 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+	}
+
+	.hover-focus-primary:hover {
+		box-shadow: 0 0 0 3px rgba(104, 194, 140, 0.2),
+		            0 12px 32px rgba(104, 194, 140, 0.15),
+		            0 6px 12px rgba(0, 0, 0, 0.1);
+	}
+
+	/* Variante sutil para elementos blancos */
+	.hover-focus-subtle {
+		transition: box-shadow 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+	}
+
+	.hover-focus-subtle:hover {
+		box-shadow: 0 0 0 2px rgba(104, 194, 140, 0.08),
+		            0 8px 20px rgba(0, 0, 0, 0.08),
+		            0 4px 8px rgba(0, 0, 0, 0.04);
 	}
 </style>
 
 <script is:inline>
-	// Sistema global de animaciones al hacer scroll con animaciones secuenciales
+	/**
+	 * Sistema Global de Animaciones de Scroll v2.0
+	 * - Simétrico: funciona en ambas direcciones (scroll up/down)
+	 * - Robusto: detecta elementos sin importar dónde se abre la página
+	 * - Centralizado: fácil de mantener y configurar
+	 */
 	(function() {
-		// Verificar si Intersection Observer está disponible
+		'use strict';
+
+		// Configuración centralizada
+		const CONFIG = {
+			selectors: '.scroll-animate, .scroll-fade-in',
+			rootMargin: '100px', // Margen simétrico: detecta elementos 100px antes de entrar
+			threshold: 0.1, // 10% del elemento debe ser visible
+			reAnimate: false // false = anima solo una vez, true = anima cada vez que entra
+		};
+
+		// Verificar soporte de IntersectionObserver
 		if (typeof IntersectionObserver === 'undefined') {
-			// Fallback: mostrar elementos inmediatamente si no hay soporte
-			document.querySelectorAll('.scroll-fade-in, .scroll-fade-in-subtle').forEach(el => {
+			// Fallback: mostrar todos los elementos inmediatamente
+			document.querySelectorAll(CONFIG.selectors).forEach(el => {
 				el.classList.add('visible');
 			});
 			return;
 		}
 
-		let animationCounter = 0;
-		const delayBetweenAnimations = 150; // ms entre cada animación
-
-		const observerOptions = {
-			root: null,
-			rootMargin: '0px 0px -50px 0px', // Trigger cuando el elemento está 50px antes de entrar
-			threshold: 0.1
-		};
-
+		// Crear el observer con configuración optimizada
 		const observer = new IntersectionObserver((entries) => {
-			// Filtrar solo los elementos que están entrando en el viewport y que NO han sido animados aún
-			const enteringElements = entries.filter(entry => 
-				entry.isIntersecting && !entry.target.classList.contains('visible')
-			);
-			
-			if (enteringElements.length === 0) return;
-
-			// Ordenar elementos por su posición vertical en la página
-			enteringElements.sort((a, b) => {
-				const rectA = a.target.getBoundingClientRect();
-				const rectB = b.target.getBoundingClientRect();
-				return rectA.top - rectB.top;
-			});
-
-			// Animar elementos secuencialmente
-			enteringElements.forEach((entry, index) => {
-				// Verificar nuevamente que no haya sido animado (por si acaso)
-				if (entry.target.classList.contains('visible')) {
-					observer.unobserve(entry.target);
-					return;
-				}
-
-				const delay = animationCounter * delayBetweenAnimations;
-				animationCounter++;
-
-				setTimeout(() => {
-					// Verificar una vez más antes de animar
-					if (!entry.target.classList.contains('visible')) {
-						entry.target.classList.add('visible');
+			entries.forEach(entry => {
+				// Animar cuando el elemento entra al viewport (sin importar dirección)
+				if (entry.isIntersecting) {
+					// Ya fue animado? Si reAnimate es false, skip
+					if (!CONFIG.reAnimate && entry.target.classList.contains('visible')) {
+						return;
 					}
-					observer.unobserve(entry.target);
-				}, delay);
-			});
-		}, observerOptions);
 
+					// Obtener delay del atributo data-delay o style
+					let delay = 0;
+					
+					// Prioridad 1: data-delay attribute (más limpio)
+					const dataDelay = entry.target.getAttribute('data-delay');
+					if (dataDelay) {
+						delay = parseInt(dataDelay) * 100; // data-delay="1" = 100ms
+					} else {
+						// Prioridad 2: animation-delay en style inline (legacy)
+						const style = entry.target.getAttribute('style');
+						const delayMatch = style && style.match(/animation-delay:\s*(\d+)ms/);
+						if (delayMatch) {
+							delay = parseInt(delayMatch[1]);
+						}
+					}
+
+					// Aplicar animación con delay
+					setTimeout(() => {
+						entry.target.classList.add('visible');
+						
+						// Si reAnimate es false, dejar de observar después de animar
+						if (!CONFIG.reAnimate) {
+							observer.unobserve(entry.target);
+						}
+					}, delay);
+				} else if (CONFIG.reAnimate) {
+					// Si el elemento sale del viewport y reAnimate es true,
+					// remover la clase visible para que se anime de nuevo
+					entry.target.classList.remove('visible');
+				}
+			});
+		}, {
+			root: null,
+			rootMargin: CONFIG.rootMargin,
+			threshold: CONFIG.threshold
+		});
+
+		/**
+		 * Inicializar animaciones
+		 * Observa todos los elementos animables en la página
+		 */
 		function initScrollAnimations() {
-			// Observar solo elementos que NO han sido animados aún
-			const animatedElements = Array.from(document.querySelectorAll('.scroll-fade-in, .scroll-fade-in-subtle'))
-				.filter(el => !el.classList.contains('visible'));
+			// Obtener todos los elementos animables
+			const elements = document.querySelectorAll(CONFIG.selectors);
 			
-			animatedElements.forEach(el => {
+			// Observar cada elemento
+			elements.forEach(el => {
+				// Remover clase visible si reAnimate está activado
+				if (CONFIG.reAnimate) {
+					el.classList.remove('visible');
+				}
+				
+				// Observar el elemento
 				observer.observe(el);
 			});
 
-			// Para elementos que ya están visibles al cargar (como el Hero)
-			const visibleElements = animatedElements.filter(el => {
-				const rect = el.getBoundingClientRect();
-				return rect.top < window.innerHeight && rect.bottom > 0 && !el.classList.contains('visible');
-			});
-
-			// Ordenar elementos visibles por posición
-			visibleElements.sort((a, b) => {
-				const rectA = a.getBoundingClientRect();
-				const rectB = b.getBoundingClientRect();
-				return rectA.top - rectB.top;
-			});
-
-			// Animar elementos visibles secuencialmente con delay inicial
-			visibleElements.forEach((el, index) => {
-				// Dejar de observar antes de animar para evitar conflictos
-				observer.unobserve(el);
-				
-				setTimeout(() => {
-					if (!el.classList.contains('visible')) {
-						el.classList.add('visible');
-					}
-				}, 200 + (index * delayBetweenAnimations));
-			});
+			// Log para debugging (comentar en producción)
+			// console.log(`🎨 Scroll Animations: Observing ${elements.length} elements`);
 		}
 
-		// Ejecutar al cargar
+		/**
+		 * Limpiar observer antes de transiciones de página
+		 */
+		function cleanup() {
+			observer.disconnect();
+		}
+
+		// Inicializar cuando el DOM esté listo
 		if (document.readyState === 'loading') {
 			document.addEventListener('DOMContentLoaded', initScrollAnimations);
 		} else {
 			initScrollAnimations();
 		}
+
+		// Re-inicializar después de transiciones de página (Astro View Transitions)
+		document.addEventListener('astro:page-load', initScrollAnimations);
+		document.addEventListener('astro:before-preparation', cleanup);
 	})();
 </script>
 

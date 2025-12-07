@@ -1,0 +1,298 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { SITE_CONFIG } from '../config/site';
+---
+
+<Layout title={`${SITE_CONFIG.title} - Watch Our Story`}>
+	<!-- Cinema Mode Video Page -->
+	<div class="cinema-container">
+		<!-- Close Button -->
+		<a 
+			href="/#company-video-section"
+			class="close-button"
+			aria-label="Close video"
+		>
+			<svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+				<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+			</svg>
+		</a>
+
+		<!-- Video Container with View Transition -->
+		<div class="video-wrapper" transition:name="company-video">
+			<div class="video-content">
+				<!-- Video Iframe -->
+				<iframe
+					width="100%"
+					height="100%"
+					src="https://www.youtube.com/embed/VFcQss-983k?autoplay=1"
+					title="Tri State Awnings - Company Video"
+					frameborder="0"
+					allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+					allowfullscreen
+					class="cinema-video"
+				></iframe>
+			</div>
+
+			<!-- Video Info -->
+			<div class="video-info">
+				<h1 class="video-title">
+					A <span class="text-primary">Family-Owned</span> Team You Can Trust
+				</h1>
+				<p class="video-description">
+					Real people. Real passion. Real results.
+				</p>
+				<p class="video-subtitle">
+					Watch how we've been building to resist for over 25 years, creating lasting solutions for homes and businesses across the Tri-State area.
+				</p>
+				<div class="video-cta">
+					<a href="/#company-video-section" class="back-button">
+						<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+						</svg>
+						<span>Back to Home</span>
+					</a>
+				</div>
+			</div>
+		</div>
+
+		<!-- Background Overlay -->
+		<div class="cinema-overlay"></div>
+	</div>
+</Layout>
+
+<style>
+	/* Cinema Container - Full Screen with Scroll */
+	.cinema-container {
+		position: fixed;
+		inset: 0;
+		background: #000;
+		display: flex;
+		align-items: flex-start;
+		justify-content: center;
+		z-index: 9999;
+		overflow-y: auto;
+		overflow-x: hidden;
+		padding: 2rem 0;
+	}
+
+	/* Animated Background Overlay */
+	.cinema-overlay {
+		position: absolute;
+		inset: 0;
+		background: radial-gradient(
+			circle at center,
+			rgba(104, 194, 140, 0.1) 0%,
+			rgba(0, 0, 0, 0.95) 70%
+		);
+		animation: pulseGlow 8s ease-in-out infinite;
+		pointer-events: none;
+		z-index: 1;
+	}
+
+	@keyframes pulseGlow {
+		0%, 100% {
+			opacity: 0.3;
+			transform: scale(1);
+		}
+		50% {
+			opacity: 0.6;
+			transform: scale(1.05);
+		}
+	}
+
+	/* Close Button */
+	.close-button {
+		position: absolute;
+		top: 2rem;
+		right: 2rem;
+		z-index: 100;
+		color: white;
+		background: rgba(255, 255, 255, 0.1);
+		backdrop-filter: blur(10px);
+		border-radius: 50%;
+		width: 56px;
+		height: 56px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+		border: 2px solid rgba(255, 255, 255, 0.2);
+	}
+
+	.close-button:hover {
+		background: rgba(104, 194, 140, 0.3);
+		border-color: rgba(104, 194, 140, 0.5);
+		transform: rotate(90deg) scale(1.1);
+	}
+
+	/* Video Wrapper */
+	.video-wrapper {
+		position: relative;
+		z-index: 10;
+		width: 90%;
+		max-width: 1400px;
+		margin: 0 auto;
+		animation: fadeInScale 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+	}
+
+	@keyframes fadeInScale {
+		from {
+			opacity: 0;
+			transform: scale(0.95) translateY(20px);
+		}
+		to {
+			opacity: 1;
+			transform: scale(1) translateY(0);
+		}
+	}
+
+	/* Video Content */
+	.video-content {
+		position: relative;
+		width: 100%;
+		aspect-ratio: 16 / 9;
+		border-radius: 24px;
+		overflow: hidden;
+		box-shadow: 
+			0 0 0 1px rgba(104, 194, 140, 0.2),
+			0 20px 60px rgba(0, 0, 0, 0.8),
+			0 0 80px rgba(104, 194, 140, 0.15);
+		background: #000;
+	}
+
+	.cinema-video {
+		width: 100%;
+		height: 100%;
+		display: block;
+	}
+
+	/* Video Info */
+	.video-info {
+		margin-top: 2rem;
+		text-align: center;
+		color: white;
+		animation: fadeInUp 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.3s backwards;
+		padding: 1.5rem 1rem;
+	}
+
+	@keyframes fadeInUp {
+		from {
+			opacity: 0;
+			transform: translateY(20px);
+		}
+		to {
+			opacity: 1;
+			transform: translateY(0);
+		}
+	}
+
+	.video-title {
+		font-family: 'Inter', system-ui, sans-serif;
+		font-weight: 600;
+		font-size: 1.5rem;
+		line-height: 120%;
+		letter-spacing: -0.02em;
+		margin-bottom: 0.5rem;
+		text-shadow: 0 2px 12px rgba(0, 0, 0, 0.8);
+		color: rgba(255, 255, 255, 0.95);
+	}
+
+	@media (min-width: 768px) {
+		.video-title {
+			font-size: 1.875rem;
+		}
+	}
+
+	@media (min-width: 1024px) {
+		.video-title {
+			font-size: 2.25rem;
+		}
+	}
+
+	.video-description {
+		font-size: 1rem;
+		font-weight: 400;
+		color: rgba(255, 255, 255, 0.8);
+		margin-bottom: 0;
+		text-shadow: 0 2px 12px rgba(0, 0, 0, 0.8);
+	}
+
+	@media (min-width: 768px) {
+		.video-description {
+			font-size: 1.125rem;
+		}
+	}
+
+	.video-subtitle {
+		display: none;
+	}
+
+	/* Video CTA */
+	.video-cta {
+		display: none;
+	}
+
+	/* Responsive Adjustments */
+	@media (max-width: 768px) {
+		.video-wrapper {
+			width: 95%;
+		}
+
+		.close-button {
+			top: 1rem;
+			right: 1rem;
+			width: 48px;
+			height: 48px;
+		}
+
+		.video-content {
+			border-radius: 16px;
+		}
+
+		.video-info {
+			margin-top: 1.5rem;
+			padding: 0 1rem;
+		}
+
+		.video-title {
+			font-size: 1.5rem;
+		}
+
+		.video-description {
+			font-size: 1rem;
+		}
+
+		.video-subtitle {
+			font-size: 0.875rem;
+		}
+	}
+
+	/* Smooth scrollbar for overflow content */
+	.cinema-container::-webkit-scrollbar {
+		width: 8px;
+	}
+
+	.cinema-container::-webkit-scrollbar-track {
+		background: rgba(0, 0, 0, 0.3);
+	}
+
+	.cinema-container::-webkit-scrollbar-thumb {
+		background: rgba(104, 194, 140, 0.5);
+		border-radius: 4px;
+	}
+
+	.cinema-container::-webkit-scrollbar-thumb:hover {
+		background: rgba(104, 194, 140, 0.7);
+	}
+</style>
+
+<script>
+	// Keyboard shortcuts
+	document.addEventListener('keydown', (e) => {
+		// ESC key to close and return to video section
+		if (e.key === 'Escape') {
+			window.location.href = '/#company-video-section';
+		}
+	});
+</script>
+

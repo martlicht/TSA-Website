@@ -3,14 +3,84 @@ import Layout from '../layouts/Layout.astro';
 import Header from '../components/sections/Header.astro';
 import Hero from '../components/sections/landing/Hero.astro';
 import ProductsSection from '../components/sections/landing/ProductsSection.astro';
+import WhyChooseUs from '../components/sections/landing/WhyChooseUs.astro';
+import TrackRecord from '../components/sections/landing/TrackRecord.astro';
+import ChooseProduct from '../components/sections/landing/ChooseProduct.astro';
+import TSABenefits from '../components/sections/landing/TSABenefits.astro';
+import GetInspired from '../components/sections/landing/GetInspired.astro';
+import FAQ from '../components/sections/landing/FAQ.astro';
+import CompanyVideo from '../components/sections/landing/CompanyVideo.astro';
 import Footer from '../components/sections/Footer.astro';
 import { SITE_CONFIG } from '../config/site';
+import builtToResistIcon from '../assets/icons/built_to_resist.svg';
 ---
 
 <Layout title={`${SITE_CONFIG.title} - Unlock the True Potential of your Outdoor Space`}>
 	<Header />
 	<Hero />
 	<ProductsSection />
+	<WhyChooseUs />
+	
+	<!-- Built to Resist Icon - Between sections -->
+	<div class="relative bg-white">
+		<div class="absolute -top-12 right-8 z-30 hidden lg:block ">
+			<img 
+				src={builtToResistIcon.src}
+				alt="Built to Resist"
+				class="w-24 h-24 built-to-resist-animation"
+			/>
+		</div>
+	</div>
+	
+	<TrackRecord />
+	<ChooseProduct />
+	<TSABenefits />
+	<GetInspired />
+	<FAQ />
+	<CompanyVideo />
 	<Footer />
 </Layout>
+
+<style>
+	/* Built to Resist Animation - fast 360 rotation, vibrate, pause, repeat */
+	@keyframes rotateVibrateWait {
+		/* Fast 360 rotation (0-20%) */
+		0% {
+			transform: rotate(0deg);
+		}
+		20% {
+			transform: rotate(360deg);
+		}
+		/* Vibration (20-35%) */
+		22% {
+			transform: rotate(360deg) translateX(-2px);
+		}
+		24% {
+			transform: rotate(360deg) translateX(2px);
+		}
+		26% {
+			transform: rotate(360deg) translateX(-2px);
+		}
+		28% {
+			transform: rotate(360deg) translateX(2px);
+		}
+		30% {
+			transform: rotate(360deg) translateX(-1px);
+		}
+		32% {
+			transform: rotate(360deg) translateX(1px);
+		}
+		35% {
+			transform: rotate(360deg);
+		}
+		/* Wait/pause (35-100%) */
+		100% {
+			transform: rotate(360deg);
+		}
+	}
+	
+	.built-to-resist-animation {
+		animation: rotateVibrateWait 3s ease-in-out infinite;
+	}
+</style>
 

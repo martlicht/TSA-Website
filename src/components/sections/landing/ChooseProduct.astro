@@ -1,0 +1,181 @@
+---
+import SectionContainer from '../../ui/SectionContainer.astro';
+import rollUpImage from '../../../assets/images/roll_up_awning.png';
+import plexiImage from '../../../assets/images/plexi_awning.png';
+import staircaseImage from '../../../assets/images/staircase.png';
+import poolImage from '../../../assets/images/pool.png';
+import doorImage from '../../../assets/images/door.png';
+import vestibuleImage from '../../../assets/images/vestibule.png';
+
+interface ProductOption {
+	title: string;
+	description: string;
+	image: any;
+	ctaText: string;
+}
+
+const products: ProductOption[] = [
+	{
+		title: 'Roll up Awnings',
+		description: 'Call out a feature, benefit, or value of your site or product that can stand on its own.',
+		image: rollUpImage,
+		ctaText: 'Get a Quote',
+	},
+	{
+		title: 'Plexi Awnings',
+		description: 'Call out a feature, benefit, or value of your site or product that can stand on its own.',
+		image: plexiImage,
+		ctaText: 'Get a Quote',
+	},
+	{
+		title: 'Staircase Awnings',
+		description: 'Call out a feature, benefit, or value of your site or product that can stand on its own.',
+		image: staircaseImage,
+		ctaText: 'Get a Quote',
+	},
+	{
+		title: 'Pool Shades',
+		description: 'Call out a feature, benefit, or value of your site or product that can stand on its own.',
+		image: poolImage,
+		ctaText: 'Get a Quote',
+	},
+	{
+		title: 'Door Canopy',
+		description: 'Call out a feature, benefit, or value of your site or product that can stand on its own.',
+		image: doorImage,
+		ctaText: 'Get a Quote',
+	},
+	{
+		title: 'Vestibule',
+		description: 'Call out a feature, benefit, or value of your site or product that can stand on its own.',
+		image: vestibuleImage,
+		ctaText: 'Get a Quote',
+	},
+];
+---
+
+<section class="py-12 sm:py-16 md:py-20 lg:py-24 bg-[#F5F5F5]">
+	<SectionContainer>
+		<!-- Headline -->
+		<div class="text-center mb-12 sm:mb-16">
+			<h2 class="choose-headline mb-4">
+				Choose what feels right
+			</h2>
+			<p class="choose-subtext text-gray-600">
+				Explore our products
+			</p>
+		</div>
+
+		<!-- Products Grid -->
+		<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+			{products.map((product, index) => (
+				<div class="scroll-fade-in" style={`animation-delay: ${index * 120}ms;`}>
+					<div class="product-option-card bg-white rounded-lg overflow-hidden">
+					<!-- Image -->
+					<div class="aspect-[4/3] overflow-hidden">
+						<img 
+							src={product.image.src}
+							alt={product.title}
+							class="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
+						/>
+					</div>
+
+					<!-- Content -->
+					<div class="p-6">
+						<h3 class="product-option-title text-xl font-semibold text-primary mb-3">
+							{product.title}
+						</h3>
+						<p class="product-option-description text-gray-600 mb-4">
+							{product.description}
+						</p>
+						<button class="product-option-cta text-primary font-medium inline-flex items-center gap-2 hover:gap-3 transition-all">
+							{product.ctaText}
+							<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+							</svg>
+						</button>
+					</div>
+					</div>
+				</div>
+			))}
+		</div>
+	</SectionContainer>
+</section>
+
+<style>
+	/* Choose Headline Typography */
+	.choose-headline {
+		font-family: 'Inter', system-ui, sans-serif;
+		font-weight: 600; /* Semi Bold */
+		font-style: normal;
+		font-size: 2rem; /* 32px - responsive for mobile */
+		line-height: 120%;
+		letter-spacing: -0.02em; /* -2% */
+		color: #000000;
+	}
+
+	@media (min-width: 640px) {
+		.choose-headline {
+			font-size: 2.5rem; /* 40px */
+		}
+	}
+
+	@media (min-width: 1024px) {
+		.choose-headline {
+			font-size: 3rem; /* 48px */
+		}
+	}
+
+	/* Subtext Typography */
+	.choose-subtext {
+		font-family: 'Inter', system-ui, sans-serif;
+		font-weight: 400; /* Regular */
+		font-style: normal;
+		font-size: 1rem; /* 16px */
+		line-height: 150%;
+		letter-spacing: -0.002em;
+	}
+
+	@media (min-width: 640px) {
+		.choose-subtext {
+			font-size: 1.125rem; /* 18px */
+		}
+	}
+
+	/* Product Option Card */
+	.product-option-card {
+		/* Smooth hover transition - separate from scroll animation */
+		transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+		            box-shadow 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+		box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+		height: 100%;
+	}
+
+	.product-option-card:hover {
+		transform: translateY(-6px);
+		box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+	}
+
+	/* Product Option Title */
+	.product-option-title {
+		font-family: 'Inter', system-ui, sans-serif;
+		font-weight: 600;
+		line-height: 130%;
+		letter-spacing: -0.01em;
+	}
+
+	/* Product Option Description */
+	.product-option-description {
+		font-family: 'Inter', system-ui, sans-serif;
+		font-weight: 400;
+		font-size: 0.875rem;
+		line-height: 150%;
+		letter-spacing: -0.002em;
+	}
+
+	/* CTA Button */
+	.product-option-cta {
+		transition: gap 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+	}
+</style>
+

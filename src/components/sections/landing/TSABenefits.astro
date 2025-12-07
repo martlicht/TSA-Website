@@ -1,0 +1,83 @@
+---
+import SectionContainer from '../../ui/SectionContainer.astro';
+import GreenBackgroundSection from '../../ui/GreenBackgroundSection.astro';
+import FeatureCard from '../../ui/FeatureCard.astro';
+import tsaAwningBg from '../../../assets/images/right-tsa-awning.webp';
+
+interface Benefit {
+	number: string;
+	title: string;
+	description: string;
+}
+
+const benefits: Benefit[] = [
+	{
+		number: '01',
+		title: 'Safety',
+		description: 'Forget the hassle and expense of planning or DIY manufacturing stress. We manufacture it all and should you need help with post construction or anything else.',
+	},
+	{
+		number: '02',
+		title: 'Space',
+		description: 'Exam expand your home in the easiest way to extend space through outdoor living and provide you with ample storage for things and relaxing with family and friends.',
+	},
+	{
+		number: '03',
+		title: 'Quality',
+		description: 'Uniqueness never gets stale, which means our teams always deliver their best. Our products come with 10-year craftsmanship as they\'re built to last while enjoying outdoor living!',
+	},
+	{
+		number: '04',
+		title: 'Beauty',
+		description: 'Experts craftsman use the latest designs to transform your outdoor space quickly through incredible design options, designs, colors, and textiles to match any outdoor style from classic to modern.',
+	},
+];
+---
+
+<GreenBackgroundSection backgroundImage={tsaAwningBg} class="py-12 sm:py-16 md:py-20 lg:py-24">
+	<SectionContainer class="text-white">
+		<!-- Headline -->
+		<h2 class="benefits-headline text-center mb-12 sm:mb-16 md:mb-20">
+			The right TSA awning<br />
+			will do a lot for your property.
+		</h2>
+
+		<!-- Benefits Grid -->
+		<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
+			{benefits.map((benefit, index) => (
+				<FeatureCard
+					number={benefit.number}
+					title={benefit.title}
+					description={benefit.description}
+					delay={index * 100}
+				/>
+			))}
+		</div>
+	</SectionContainer>
+</GreenBackgroundSection>
+
+<style>
+	/* Benefits Headline Typography */
+	.benefits-headline {
+		font-family: 'Inter', system-ui, sans-serif;
+		font-weight: 600; /* Semi Bold */
+		font-style: normal;
+		font-size: 2rem; /* 32px - responsive for mobile */
+		line-height: 120%;
+		letter-spacing: -0.02em; /* -2% */
+		color: #ffffff;
+	}
+
+	@media (min-width: 640px) {
+		.benefits-headline {
+			font-size: 2.5rem; /* 40px */
+		}
+	}
+
+	@media (min-width: 1024px) {
+		.benefits-headline {
+			font-size: 3rem; /* 48px */
+		}
+	}
+</style>
+

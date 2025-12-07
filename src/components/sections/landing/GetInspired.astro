@@ -1,0 +1,157 @@
+---
+import SectionContainer from '../../ui/SectionContainer.astro';
+import carousel1 from '../../../assets/images/caurusel1.png';
+import carousel2 from '../../../assets/images/caurusel2.png';
+import carousel3 from '../../../assets/images/caurusel3.png';
+
+const carouselImages = [carousel1, carousel2, carousel3];
+---
+
+<section class="py-12 sm:py-16 md:py-20 lg:py-24 bg-white">
+	<SectionContainer>
+		<!-- Text Content -->
+		<div class="mb-12 sm:mb-16">
+			<h2 class="inspired-headline scroll-fade-in text-4xl sm:text-5xl lg:text-6xl font-semibold mb-4">
+				Get <span class="text-primary italic">Inspired</span>
+			</h2>
+			<p class="inspired-subtext scroll-fade-in text-lg sm:text-xl text-gray-600 mb-6" style="animation-delay: 100ms;">
+				See what's possible in our gallery
+			</p>
+			<a href="#" class="scroll-fade-in inline-flex items-center gap-2 text-primary font-medium text-lg hover:gap-3 transition-all" style="animation-delay: 200ms;">
+				Learn more
+				<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+				</svg>
+			</a>
+		</div>
+
+		<!-- Carousel Container -->
+		<div class="swiper-container overflow-hidden">
+			<div class="swiper-wrapper">
+				{carouselImages.map((image, index) => (
+					<div class="swiper-slide">
+						<div class="carousel-card rounded-2xl overflow-hidden aspect-[4/3] sm:aspect-video">
+							<img 
+								src={image.src}
+								alt={`Gallery image ${index + 1}`}
+								class="w-full h-full object-cover"
+							/>
+						</div>
+					</div>
+				))}
+				<!-- Duplicate slides for seamless infinite loop -->
+				{carouselImages.map((image, index) => (
+					<div class="swiper-slide">
+						<div class="carousel-card rounded-2xl overflow-hidden aspect-[4/3] sm:aspect-video">
+							<img 
+								src={image.src}
+								alt={`Gallery image ${index + 1}`}
+								class="w-full h-full object-cover"
+							/>
+						</div>
+					</div>
+				))}
+			</div>
+		</div>
+	</SectionContainer>
+</section>
+
+<style>
+	/* Inspired Headline */
+	.inspired-headline {
+		font-family: 'Inter', system-ui, sans-serif;
+		font-weight: 600;
+		line-height: 1.2;
+		letter-spacing: -0.02em;
+		color: #000000;
+	}
+
+	/* Subtext */
+	.inspired-subtext {
+		font-family: 'Inter', system-ui, sans-serif;
+		font-weight: 400;
+		line-height: 1.5;
+		letter-spacing: -0.002em;
+	}
+
+	/* Swiper Container */
+	.swiper-container {
+		width: 100%;
+	}
+
+	.swiper-wrapper {
+		display: flex;
+		transition-timing-function: linear;
+	}
+
+	.swiper-slide {
+		flex-shrink: 0;
+		width: 400px !important;
+		height: auto;
+	}
+
+	/* Carousel Card - Figma specs */
+	.carousel-card {
+		width: 100%;
+		height: 100%;
+		border: 1px solid rgba(0, 0, 0, 0.1); /* Stroke: #000000 10% */
+		box-shadow: 
+			0 1px 2px rgba(0, 0, 0, 0.05),
+			0 2px 4px rgba(0, 0, 0, 0.05); /* Drop shadows */
+		transition: transform 0.3s ease, box-shadow 0.3s ease;
+	}
+
+	.carousel-card:hover {
+		transform: translateY(-2px);
+		box-shadow: 
+			0 4px 6px rgba(0, 0, 0, 0.07),
+			0 8px 12px rgba(0, 0, 0, 0.07);
+	}
+
+	.carousel-card img {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		display: block;
+	}
+
+	@media (max-width: 640px) {
+		.swiper-slide {
+			width: 300px !important;
+		}
+	}
+</style>
+
+<!-- Swiper CDN -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+
+<script>
+	import Swiper from 'swiper/bundle';
+	
+	// Initialize Swiper after DOM is loaded
+	document.addEventListener('DOMContentLoaded', () => {
+		new Swiper('.swiper-container', {
+			slidesPerView: 'auto',
+			spaceBetween: 24,
+			loop: true,
+			speed: 5000,
+			autoplay: {
+				delay: 0,
+				disableOnInteraction: false,
+			},
+			freeMode: {
+				enabled: true,
+				momentum: false,
+			},
+			breakpoints: {
+				640: {
+					spaceBetween: 24,
+				},
+				320: {
+					spaceBetween: 16,
+				}
+			}
+		});
+	});
+</script>
+

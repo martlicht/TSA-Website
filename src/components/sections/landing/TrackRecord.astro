@@ -1,0 +1,282 @@
+---
+import SectionContainer from '../../ui/SectionContainer.astro';
+import trackRecordBg from '../../../assets/images/our-track-background.webp';
+import shieldIcon from '../../../assets/icons/Shield.svg';
+import checkIcon from '../../../assets/icons/Check_ring.svg';
+import happyIcon from '../../../assets/icons/happy.svg';
+import truckIcon from '../../../assets/icons/package_car.svg';
+
+interface Stat {
+	icon: string;
+	value: string;
+	label: string;
+}
+
+const stats: Stat[] = [
+	{
+		icon: shieldIcon.src,
+		value: '25+',
+		label: 'Years of Experience',
+	},
+	{
+		icon: checkIcon.src,
+		value: '15,000+',
+		label: 'Successful Projects Installed',
+	},
+	{
+		icon: happyIcon.src,
+		value: '10,000+',
+		label: 'Happy Customers',
+	},
+	{
+		icon: truckIcon.src,
+		value: '2 weeks',
+		label: 'Average Turnaround Time',
+	},
+];
+---
+
+<section class="relative w-screen h-screen min-h-[600px] flex items-center justify-center overflow-hidden">
+	<!-- Background Image with zoom effect -->
+	<div class="absolute inset-0">
+		<img 
+			src={trackRecordBg.src}
+			alt="Track Record Background"
+			class="w-full h-full object-cover scale-110"
+		/>
+	</div>
+
+	<!-- Overlay: Combined effect to show image through green tint -->
+	<div class="absolute inset-0 bg-gradient-to-br from-[#68C28C]/85 to-[#68C28C]/85"></div>
+
+	<!-- Content -->
+	<SectionContainer class="relative z-10 text-white">
+		<!-- Headline -->
+		<h2 class="track-record-headline text-center mb-12 sm:mb-16 md:mb-20">
+			Our Track Record at a Glance
+		</h2>
+
+		<!-- Stats Grid -->
+		<div class="stats-grid grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
+			{stats.map((stat, index) => (
+				<div class="stat-card hover-focus-subtle rounded-[24px] text-center flex flex-col items-center justify-center">
+					<!-- Icon -->
+					<div class="stat-icon mb-3">
+						<img 
+							src={stat.icon} 
+							alt={stat.label}
+							class="w-10 h-10"
+						/>
+					</div>
+
+					<!-- Value with CountUp -->
+					<div class="stat-value mb-3" data-target={stat.value}>
+						{stat.value}
+					</div>
+
+					<!-- Label -->
+					<div class="stat-label">
+						{stat.label}
+					</div>
+				</div>
+			))}
+		</div>
+	</SectionContainer>
+</section>
+
+<style>
+	/* Headline Typography */
+	.track-record-headline {
+		font-family: 'Inter', system-ui, sans-serif;
+		font-weight: 600; /* Semi Bold */
+		font-style: normal;
+		font-size: 2rem; /* 32px - responsive for mobile */
+		line-height: 120%;
+		letter-spacing: -0.02em; /* -2% */
+		color: #ffffff;
+	}
+
+	@media (min-width: 640px) {
+		.track-record-headline {
+			font-size: 2.5rem; /* 40px */
+		}
+	}
+
+	@media (min-width: 1024px) {
+		.track-record-headline {
+			font-size: 3rem; /* 48px */
+		}
+	}
+
+	/* Stat Card - Figma exact specs */
+	.stat-card {
+		/* Dual color fill from Figma: white 85% opacity over black 20% opacity */
+		background-color: rgba(255, 255, 255, 0.85);
+		
+		/* Figma dimensions */
+		width: 240px;
+		min-height: 245px;
+		
+		/* Figma padding - adjusted for better text fit */
+		padding: 24px 16px;
+		
+		/* Figma corner radius */
+		border-radius: 24px;
+		
+		/* Base shadow - muy sutil */
+		box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+		
+		/* Nota: hover effect manejado por .hover-focus-subtle (global) */
+	}
+	
+	/* Responsive adjustments */
+	@media (max-width: 1023px) {
+		.stat-card {
+			width: 100%;
+			max-width: 240px;
+			margin: 0 auto;
+		}
+	}
+
+	/* Stat Value Typography - Figma exact specs */
+	.stat-value {
+		font-family: 'Inter', system-ui, sans-serif;
+		font-weight: 500; /* Medium - from Figma */
+		font-style: normal;
+		font-size: 43.99px; /* Figma spec */
+		line-height: auto;
+		letter-spacing: 0%; /* Figma spec */
+		color: #000000; /* Black 100% */
+	}
+
+	/* Stat Label Typography */
+	.stat-label {
+		font-family: 'Inter', system-ui, sans-serif;
+		font-weight: 500; /* Medium - from Figma */
+		font-style: normal;
+		font-size: 16px; /* Figma spec */
+		line-height: auto;
+		letter-spacing: 0%; /* Figma spec */
+		color: #717972; /* Figma color */
+		max-width: 208px; /* Figma text width */
+	}
+
+	/* Background image zoom effect */
+	.scale-110 {
+		transform: scale(1.1);
+	}
+	
+	/* Stats Grid Gap */
+	.stats-grid {
+		gap: 1rem; /* Mobile/tablet gap */
+	}
+	
+	@media (min-width: 1024px) {
+		.stats-grid {
+			gap: 40.11px; /* Figma desktop gap */
+		}
+	}
+</style>
+
+<script>
+	/**
+	 * CountUp Animation for Stats
+	 * Anima los números cuando la sección entra al viewport
+	 */
+	function initCountUp() {
+		const statValues = document.querySelectorAll('.stat-value[data-target]');
+		let hasAnimated = false;
+
+		// Función para animar un número
+		function animateValue(element: HTMLElement, target: string, duration: number = 2000) {
+			const isNumberOnly = /^\d+$/.test(target);
+			const hasPlus = target.includes('+');
+			const hasWeeks = target.toLowerCase().includes('week');
+			
+			let endValue: number;
+			let suffix = '';
+			
+			if (hasWeeks) {
+				// Para "2 weeks", extraer el número
+				endValue = parseInt(target);
+				suffix = ' weeks';
+			} else if (hasPlus) {
+				// Para "25+", "15,000+", etc.
+				endValue = parseInt(target.replace(/[+,]/g, ''));
+				suffix = '+';
+			} else {
+				endValue = parseInt(target.replace(/,/g, ''));
+			}
+
+			const startValue = 0;
+			const startTime = performance.now();
+			
+			// Easing function (ease-out)
+			const easeOutQuart = (t: number): number => 1 - Math.pow(1 - t, 4);
+
+			function update(currentTime: number): void {
+				const elapsed = currentTime - startTime;
+				const progress = Math.min(elapsed / duration, 1);
+				const easedProgress = easeOutQuart(progress);
+				
+				const currentValue = Math.floor(startValue + (endValue - startValue) * easedProgress);
+				
+				// Formatear el número con comas si es necesario
+				let displayValue = currentValue.toLocaleString('en-US');
+				
+				// Agregar sufijo
+				element.textContent = displayValue + suffix;
+				
+				if (progress < 1) {
+					requestAnimationFrame(update);
+				} else {
+					// Asegurar que el valor final sea exacto
+					element.textContent = target;
+				}
+			}
+			
+			requestAnimationFrame(update);
+		}
+
+		// Crear IntersectionObserver para detectar cuando la sección es visible
+		const observer = new IntersectionObserver((entries) => {
+			entries.forEach(entry => {
+				if (entry.isIntersecting && !hasAnimated) {
+					hasAnimated = true;
+					
+					// Animar cada stat con un pequeño delay secuencial
+					statValues.forEach((stat, index) => {
+						const target = stat.getAttribute('data-target');
+						if (target && stat instanceof HTMLElement) {
+							setTimeout(() => {
+								animateValue(stat, target, 2000);
+							}, index * 100); // 100ms de delay entre cada uno
+						}
+					});
+					
+					// Dejar de observar después de animar
+					observer.disconnect();
+				}
+			});
+		}, {
+			threshold: 0.3 // Animar cuando 30% de la sección es visible
+		});
+
+		// Observar la sección de stats
+		const statsSection = document.querySelector('.stats-grid');
+		if (statsSection) {
+			observer.observe(statsSection);
+		}
+	}
+
+	// Inicializar cuando el DOM esté listo
+	if (document.readyState === 'loading') {
+		document.addEventListener('DOMContentLoaded', initCountUp);
+	} else {
+		initCountUp();
+	}
+
+	// Re-inicializar después de transiciones de página (Astro View Transitions)
+	document.addEventListener('astro:page-load', initCountUp);
+</script>
+

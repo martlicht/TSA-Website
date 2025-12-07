@@ -1,5 +1,6 @@
 ---
 import Button from '../../ui/Button.astro';
+import SectionContainer from '../../ui/SectionContainer.astro';
 import { SITE_CONFIG } from '../../../config/site';
 import heroBackground from '../../../assets/images/hero-background.webp';
 ---
@@ -9,14 +10,14 @@ import heroBackground from '../../../assets/images/hero-background.webp';
 	style={`background-image: url(${heroBackground.src});`}
 >
 	<div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent"></div>
-	<div class="relative z-10 max-w-7xl w-full mx-auto text-white pb-6 sm:pb-8 pl-4 sm:pl-8 md:pl-12 pr-4 sm:pr-6 md:pr-16">
-		<h1 class="hero-title scroll-fade-in text-3xl sm:text-4xl md:text-5xl lg:text-[64px] font-semibold mb-4 sm:mb-6 max-w-4xl">
+	<SectionContainer class="relative z-10 text-white pb-6 sm:pb-8">
+		<h1 class="hero-title hero-fade-in text-3xl sm:text-4xl md:text-5xl lg:text-[64px] font-semibold mb-4 sm:mb-6 max-w-4xl">
 			Unlock the True Potential of your Outdoor Space
 		</h1>
-		<p class="hero-description scroll-fade-in text-sm sm:text-base md:text-lg lg:text-[20px] mb-6 sm:mb-8 max-w-2xl opacity-95">
+		<p class="hero-description hero-fade-in text-sm sm:text-base md:text-lg lg:text-[20px] mb-6 sm:mb-8 max-w-2xl opacity-95" style="animation-delay: 0.2s;">
 			{SITE_CONFIG.description}
 		</p>
-		<div class="scroll-fade-in flex flex-col sm:flex-row gap-3 sm:gap-4">
+		<div class="hero-fade-in flex flex-col sm:flex-row gap-3 sm:gap-4" style="animation-delay: 0.4s;">
 			<Button variant="primary" size="lg" class="w-full sm:w-auto">
 				Get Yours Today
 			</Button>
@@ -24,10 +25,24 @@ import heroBackground from '../../../assets/images/hero-background.webp';
 				Learn More
 			</Button>
 		</div>
-	</div>
+	</SectionContainer>
 </section>
 
 <style>
+	/* Hero-specific fade in animation - always triggers on page load */
+	.hero-fade-in {
+		opacity: 0;
+		transform: translateY(20px);
+		animation: heroFadeIn 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+	}
+
+	@keyframes heroFadeIn {
+		to {
+			opacity: 1;
+			transform: translateY(0);
+		}
+	}
+
 	.hero-title {
 		font-family: 'Inter', system-ui, sans-serif;
 		font-weight: 600; /* Semi Bold */

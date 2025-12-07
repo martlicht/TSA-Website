@@ -1,0 +1,151 @@
+---
+import SectionContainer from '../../ui/SectionContainer.astro';
+---
+
+<section id="company-video-section" class="py-16 sm:py-20 md:py-24 lg:py-28 bg-gray-50">
+	<SectionContainer>
+		<div class="flex flex-col lg:flex-row gap-8 lg:gap-12 items-center">
+			<!-- Left Column: Video with Cinema Mode Link -->
+			<div class="w-full lg:w-1/2">
+				<a 
+					href="/watch"
+					class="video-container scroll-fade-in rounded-2xl overflow-hidden shadow-lg block relative group"
+					transition:name="company-video"
+				>
+					<!-- Video Thumbnail -->
+					<img 
+						src="https://img.youtube.com/vi/VFcQss-983k/maxresdefault.jpg"
+						alt="Tri State Awnings - Company Video"
+						class="w-full aspect-video object-cover"
+					/>
+					
+					<!-- Play Button Overlay -->
+					<div class="play-overlay">
+						<div class="play-button">
+							<svg class="w-16 h-16 sm:w-20 sm:h-20" fill="currentColor" viewBox="0 0 24 24">
+								<path d="M8 5v14l11-7z"/>
+							</svg>
+						</div>
+					</div>
+				</a>
+			</div>
+
+			<!-- Right Column: Text Content -->
+			<div class="w-full lg:w-1/2">
+				<h2 class="company-headline scroll-fade-in mb-6" data-delay="1">
+					A <span class="text-primary">Family-Owned</span><br />
+					Team You Can Trust
+				</h2>
+				<p class="company-description scroll-fade-in text-gray-600" data-delay="2">
+					Real people. Real passion. Real results.
+				</p>
+			</div>
+		</div>
+	</SectionContainer>
+</section>
+
+<style>
+	/* Company Headline */
+	.company-headline {
+		font-family: 'Inter', system-ui, sans-serif;
+		font-weight: 600;
+		font-size: 2rem;
+		line-height: 120%;
+		letter-spacing: -0.02em;
+		color: #000000;
+	}
+
+	@media (min-width: 640px) {
+		.company-headline {
+			font-size: 2.5rem;
+		}
+	}
+
+	@media (min-width: 1024px) {
+		.company-headline {
+			font-size: 3rem;
+		}
+	}
+
+	/* Company Description */
+	.company-description {
+		font-family: 'Inter', system-ui, sans-serif;
+		font-weight: 400;
+		font-size: 1.125rem;
+		line-height: 150%;
+		letter-spacing: -0.005em;
+	}
+
+	@media (min-width: 1024px) {
+		.company-description {
+			font-size: 1.25rem;
+		}
+	}
+
+	/* Video Container */
+	.video-container {
+		position: relative;
+		width: 100%;
+		background: #000;
+		cursor: pointer;
+		transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+		            box-shadow 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+	}
+
+	.video-container:hover {
+		transform: scale(1.02);
+		box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3),
+		            0 0 0 4px rgba(104, 194, 140, 0.2);
+	}
+
+	.video-container img {
+		display: block;
+		transition: opacity 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+	}
+
+	.video-container:hover img {
+		opacity: 0.8;
+	}
+
+	/* Play Button Overlay */
+	.play-overlay {
+		position: absolute;
+		inset: 0;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		background: rgba(0, 0, 0, 0.3);
+		transition: background 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+	}
+
+	.video-container:hover .play-overlay {
+		background: rgba(0, 0, 0, 0.5);
+	}
+
+	.play-button {
+		width: 80px;
+		height: 80px;
+		background: rgba(104, 194, 140, 0.9);
+		border-radius: 50%;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		color: white;
+		transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+		box-shadow: 0 8px 24px rgba(104, 194, 140, 0.4);
+	}
+
+	.video-container:hover .play-button {
+		transform: scale(1.15);
+		background: rgba(104, 194, 140, 1);
+		box-shadow: 0 12px 32px rgba(104, 194, 140, 0.6);
+	}
+
+	@media (min-width: 640px) {
+		.play-button {
+			width: 100px;
+			height: 100px;
+		}
+	}
+</style>
+
