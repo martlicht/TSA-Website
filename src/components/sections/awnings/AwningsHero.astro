@@ -1,0 +1,55 @@
+---
+import { Image } from 'astro:assets';
+import Button from '../../ui/Button.astro';
+import SectionContainer from '../../ui/SectionContainer.astro';
+import awningImage from '../../../assets/images/awnings/awning.webp';
+---
+
+<section class="relative w-full min-h-screen flex items-start overflow-x-hidden max-w-[100vw]">
+	<!-- Background Image -->
+	<div class="absolute inset-0">
+		<Image 
+			src={awningImage}
+			alt="Roll up awning installation on residential home"
+			class="w-full h-full object-cover object-[center_50%] sm:object-[center_45%] md:object-[center_40%]"
+			loading="eager"
+			fetchpriority="high"
+			quality={90}
+			format="webp"
+		/>
+	</div>
+
+	<!-- Content Overlay -->
+	<SectionContainer class="relative z-10 pt-32 sm:pt-40 md:pt-48 lg:pt-56 xl:pt-64 pb-20 w-full">
+		<!-- Glassmorphism Content Box - Top-left aligned with standard margins -->
+		<div class="flex flex-col items-start w-full">
+			<div class="max-w-2xl lg:max-w-3xl">
+				<div class="bg-white/85 backdrop-blur-lg rounded-3xl p-6 sm:p-10 md:p-12 lg:p-16 shadow-2xl border border-white/40 awnings-glass-box">
+					<h1 class="scroll-fade-in font-sans text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-6 leading-[1.1] tracking-[-0.02em] text-gray-900">
+						Roll Up <span class="text-primary">Awnings</span>
+					</h1>
+					
+					<p class="scroll-fade-in font-sans text-base sm:text-lg md:text-xl text-gray-700 mb-8 leading-relaxed tracking-[-0.01em]" style="animation-delay: 100ms;">
+						Our most popular product, Tri-State Roll-Up Awnings, are the sturdiest and easiest-to-use awnings on the market. Their durable European-designed fabric and effortless operation make them the top choice for homeowners and businesses alike.
+					</p>
+
+					<div class="scroll-fade-in" style="animation-delay: 200ms;">
+						<Button variant="primary" size="lg">
+							Get Yours Today
+						</Button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</SectionContainer>
+</section>
+
+<style>
+	/* Minimal CSS - only for complex glassmorphism effects not available in Tailwind */
+	.awnings-glass-box {
+		box-shadow: 
+			0 8px 32px rgba(0, 0, 0, 0.12),
+			0 0 0 1px rgba(255, 255, 255, 0.3) inset;
+		-webkit-backdrop-filter: blur(12px);
+	}
+</style>

@@ -1,0 +1,93 @@
+---
+import { Image } from 'astro:assets';
+import SectionContainer from '../../ui/SectionContainer.astro';
+import standoutImage from '../../../assets/images/awnings/standout.webp';
+import highQualityIcon from '../../../assets/icons/high-quality.svg';
+import customSizeIcon from '../../../assets/icons/custom-size.svg';
+import easyToUseIcon from '../../../assets/icons/easy-to-use.svg';
+import yearRoundIcon from '../../../assets/icons/year-round.svg';
+
+interface Feature {
+	icon: typeof highQualityIcon;
+	title: string;
+	description: string;
+}
+
+const features: Feature[] = [
+	{
+		icon: highQualityIcon,
+		title: 'High Quality',
+		description: 'Built with durable materials designed to withstand years of daily use and weather conditions.',
+	},
+	{
+		icon: customSizeIcon,
+		title: 'Custom Sizes & Fabrics',
+		description: 'Every awning is made to measure with a wide selection of fabric colors, patterns, and frame finishes to match your home.',
+	},
+	{
+		icon: easyToUseIcon,
+		title: 'Easy to Use',
+		description: 'Designed for everyday use with a smooth roll-up system that anyone can operate with ease.',
+	},
+	{
+		icon: yearRoundIcon,
+		title: 'Year-Round Weather Protection',
+		description: 'Keeps your patio comfortable by reducing heat, blocking UV rays, and offering rain protection throughout the seasons.',
+	},
+];
+---
+
+<section class="py-12 sm:py-16 md:py-20 lg:py-24 bg-white">
+	<SectionContainer>
+		<div class="flex flex-col lg:flex-row gap-8 lg:gap-12 items-stretch">
+			<!-- Left Column: Text and Features -->
+			<div class="w-full lg:w-1/2 flex flex-col">
+				<!-- Title -->
+				<h2 class="standout-title scroll-fade-in font-sans text-2xl sm:text-3xl md:text-[40px] font-bold mb-8 sm:mb-10 lg:mb-12 leading-[1.3] tracking-[-0.02em] text-black">
+					What Makes Our Roll-Up Awnings <span class="text-primary italic">Stand Out</span>
+				</h2>
+
+				<!-- Features List -->
+				<div class="flex flex-col gap-6 sm:gap-8">
+					{features.map((feature, index) => (
+						<div class="standout-feature scroll-fade-in flex gap-4 sm:gap-6 items-start" style={`animation-delay: ${(index + 1) * 100}ms;`}>
+							<!-- Icon -->
+							<div class="flex-shrink-0 w-14 h-14 sm:w-16 sm:h-16 flex items-start justify-start">
+								<img 
+									src={feature.icon.src} 
+									alt={`${feature.title} icon`}
+									class="w-full h-full object-contain"
+									loading="lazy"
+								/>
+							</div>
+
+							<!-- Content -->
+							<div class="flex-1 min-w-0">
+								<h3 class="standout-feature-title font-sans text-xl sm:text-2xl md:text-2xl font-bold mb-2 text-gray-900">
+									{feature.title}
+								</h3>
+								<p class="standout-feature-description font-sans text-base sm:text-lg text-gray-600 leading-[1.6]">
+									{feature.description}
+								</p>
+							</div>
+						</div>
+					))}
+				</div>
+			</div>
+
+			<!-- Right Column: Image -->
+			<div class="w-full lg:w-1/2 flex flex-col">
+				<div class="standout-image-wrapper rounded-3xl overflow-hidden shadow-xl h-full">
+					<Image 
+						src={standoutImage}
+						alt="Roll-up awning installation on residential patio"
+						class="w-full h-full object-cover"
+						loading="lazy"
+						quality={85}
+						format="webp"
+					/>
+				</div>
+			</div>
+		</div>
+	</SectionContainer>
+</section>

@@ -12,19 +12,19 @@ import rollUpAwning from '../../../assets/images/roll_up_awning.png';
 import vestibule from '../../../assets/images/vestibule.png';
 
 const carouselImages = [
-	carousel1, 
-	carousel2, 
-	carousel3, 
-	pool, 
-	staircase, 
-	door, 
-	plexiAwning, 
-	rollUpAwning, 
-	vestibule
+	{ src: carousel1, alt: 'Retractable awning installation showcasing outdoor living space' },
+	{ src: carousel2, alt: 'Modern patio awning providing shade and protection' },
+	{ src: carousel3, alt: 'Custom awning design enhancing residential exterior' },
+	{ src: pool, alt: 'Pool area with retractable awning for sun protection' },
+	{ src: staircase, alt: 'Staircase area with elegant awning installation' },
+	{ src: door, alt: 'Entryway with decorative awning providing shelter' },
+	{ src: plexiAwning, alt: 'Plexiglass awning offering weather protection' },
+	{ src: rollUpAwning, alt: 'Roll-up retractable awning system' },
+	{ src: vestibule, alt: 'Vestibule entrance with custom awning design' }
 ];
 ---
 
-<section class="py-12 sm:py-16 md:py-20 lg:py-24 bg-white">
+<section class="py-12 sm:py-16 md:py-20 lg:py-24 bg-white overflow-x-hidden">
 	<SectionContainer>
 		<!-- Text Content -->
 		<div class="mb-12 sm:mb-16">
@@ -34,7 +34,7 @@ const carouselImages = [
 			<p class="inspired-subtext scroll-fade-in text-lg sm:text-xl text-gray-600 mb-6" style="animation-delay: 100ms;">
 				See what's possible in our gallery
 			</p>
-			<a href="#" class="scroll-fade-in inline-flex items-center gap-2 text-primary font-medium text-lg hover:gap-3 transition-all" style="animation-delay: 200ms;">
+			<a href="/gallery" class="scroll-fade-in inline-flex items-center gap-2 text-primary font-medium text-lg hover:gap-3 transition-all" style="animation-delay: 200ms;">
 				Learn more
 				<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
@@ -45,16 +45,18 @@ const carouselImages = [
 		<!-- Carousel Container -->
 		<div class="swiper-carousel overflow-hidden">
 			<div class="swiper-wrapper">
-				{carouselImages.map((image, index) => (
+				{carouselImages.map((item, index) => (
 					<div class="swiper-slide">
 						<div class="carousel-card rounded-2xl overflow-hidden aspect-[4/3] sm:aspect-video">
 							<Image 
-								src={image}
-								alt={`Gallery image ${index + 1}`}
+								src={item.src}
+								alt={item.alt}
 								class="w-full h-full object-cover"
 								loading="lazy"
 								quality={85}
 								format="webp"
+								width={400}
+								height={300}
 							/>
 						</div>
 					</div>
@@ -82,14 +84,17 @@ const carouselImages = [
 		letter-spacing: -0.002em;
 	}
 
-	/* Swiper Container */
+	/* Swiper Container - Same margins as SectionContainer */
 	.swiper-carousel {
 		width: 100%;
+		overflow: hidden;
+		position: relative;
 	}
 
 	.swiper-wrapper {
 		display: flex;
 		transition-timing-function: linear;
+		width: fit-content;
 	}
 
 	.swiper-slide {
@@ -128,24 +133,64 @@ const carouselImages = [
 			width: 300px !important;
 		}
 	}
+
+	/* Performance: Reduce repaints during scroll */
+	.swiper-wrapper {
+		will-change: transform;
+	}
+
+	/* Optimize image rendering */
+	.carousel-card img {
+		content-visibility: auto;
+	}
+
+	/* Prevent horizontal scrollbar */
+	section {
+		overflow-x: hidden;
+		max-width: 100vw;
+		position: relative;
+		width: 100%;
+		box-sizing: border-box;
+	}
+
+	/* Ensure carousel doesn't cause overflow */
+	.swiper-carousel {
+		box-sizing: border-box;
+	}
+
+	/* Prevent wrapper from extending beyond viewport */
+	.swiper-wrapper {
+		box-sizing: border-box;
+	}
 </style>
 
-<!-- Swiper CSS -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+<!-- Swiper CSS - Preload for performance -->
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'" />
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" /></noscript>
 
 <script>
 	import Swiper from 'swiper';
 	import { Autoplay, FreeMode } from 'swiper/modules';
 	
+	// @ts-ignore - Swiper instance type
+	let swiperInstance = null;
+	
 	function initCarousel() {
 		const swiperEl = document.querySelector('.swiper-carousel');
 		if (!swiperEl) {
-			console.error('Swiper element not found');
 			return;
 		}
 
+		// Clean up existing instance if it exists
+		// @ts-ignore
+		if (swiperInstance) {
+			// @ts-ignore
+			swiperInstance.destroy(true, true);
+			swiperInstance = null;
+		}
+
 		try {
-			const swiper = new Swiper('.swiper-carousel', {
+			swiperInstance = new Swiper('.swiper-carousel', {
 				modules: [Autoplay, FreeMode],
 				slidesPerView: 'auto',
 				spaceBetween: 24,
@@ -158,6 +203,8 @@ const carouselImages = [
 				freeMode: true,
 				allowTouchMove: true,
 				grabCursor: true,
+				// Performance optimizations
+				watchSlidesProgress: true,
 				breakpoints: {
 					320: {
 						spaceBetween: 16,
@@ -167,9 +214,11 @@ const carouselImages = [
 					}
 				}
 			});
-			console.log('Swiper initialized successfully');
 		} catch (error) {
-			console.error('Error initializing Swiper:', error);
+			// Silent error handling - only log in development
+			if (import.meta.env.DEV) {
+				console.error('Error initializing Swiper:', error);
+			}
 		}
 	}
 	
@@ -182,5 +231,15 @@ const carouselImages = [
 
 	// Re-initialize on Astro page transitions
 	document.addEventListener('astro:page-load', initCarousel);
+	
+	// Cleanup on page unload
+	document.addEventListener('astro:before-preparation', () => {
+		// @ts-ignore
+		if (swiperInstance) {
+			// @ts-ignore
+			swiperInstance.destroy(true, true);
+			swiperInstance = null;
+		}
+	});
 </script>
 

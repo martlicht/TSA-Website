@@ -86,29 +86,39 @@ import hero2Background from '../../../assets/images/hero2-bg.webp';
 						<label for="phone" class="form-label">
 							Phone number
 						</label>
-						<div class="relative">
-							<select
-								id="countryCode"
-								name="countryCode"
-								class="absolute left-3 top-1/2 -translate-y-1/2 bg-transparent border-none text-gray-700 font-medium focus:outline-none pr-8"
-							>
-								<option value="+1">US</option>
-								<option value="+44">UK</option>
-								<option value="+52">MX</option>
-							</select>
+						<div class="phone-input-wrapper">
+							<div class="country-code-selector">
+								<select
+									id="countryCode"
+									name="countryCode"
+									class="country-code-select"
+									aria-label="Country code"
+								>
+									<option value="+1" data-flag="🇺🇸">US</option>
+									<option value="+44" data-flag="🇬🇧">UK</option>
+									<option value="+52" data-flag="🇲🇽">MX</option>
+									<option value="+33" data-flag="🇫🇷">FR</option>
+									<option value="+49" data-flag="🇩🇪">DE</option>
+									<option value="+39" data-flag="🇮🇹">IT</option>
+									<option value="+34" data-flag="🇪🇸">ES</option>
+									<option value="+61" data-flag="🇦🇺">AU</option>
+									<option value="+1" data-flag="🇨🇦">CA</option>
+								</select>
+							</div>
 							<input
 								type="tel"
 								id="phone"
 								name="phone"
-								placeholder="+1 (555) 000-0000"
+								placeholder="(555) 000-0000"
 								required
-								class="form-input pl-20"
+								class="form-input phone-input"
+								maxlength="17"
 							/>
 						</div>
 					</div>
 
 					<!-- Privacy Policy Checkbox -->
-					<div class="flex items-start gap-3">
+					<!-- <div class="flex items-start gap-3">
 						<input
 							type="checkbox"
 							id="privacyPolicy"
@@ -119,7 +129,7 @@ import hero2Background from '../../../assets/images/hero2-bg.webp';
 						<label for="privacyPolicy" class="text-sm text-gray-600">
 							You agree to our friendly <a href="/privacy-policy" class="text-primary underline hover:text-primary-dark">privacy policy</a>.
 						</label>
-					</div>
+					</div> -->
 
 					<!-- Submit Button -->
 					<button
@@ -216,9 +226,163 @@ import hero2Background from '../../../assets/images/hero2-bg.webp';
 	.form-input::placeholder {
 		color: #9CA3AF;
 	}
+
+	/* Phone Input Wrapper */
+	.phone-input-wrapper {
+		position: relative;
+		display: flex;
+		align-items: center;
+		background-color: #F9FAFB;
+		border: 1px solid #E5E7EB;
+		border-radius: 0.5rem;
+		transition: all 0.2s;
+	}
+
+	.phone-input-wrapper:focus-within {
+		border-color: #68C28C;
+		background-color: #FFFFFF;
+		box-shadow: 0 0 0 3px rgba(104, 194, 140, 0.1);
+	}
+
+	/* Country Code Selector */
+	.country-code-selector {
+		position: relative;
+		flex-shrink: 0;
+	}
+
+	.country-code-select {
+		padding: 0.875rem 2.5rem 0.875rem 1rem;
+		font-size: 1rem;
+		color: #111827;
+		background-color: transparent;
+		border: none;
+		border-right: 1px solid #E5E7EB;
+		border-radius: 0.5rem 0 0 0.5rem;
+		font-family: 'Inter', system-ui, sans-serif;
+		font-weight: 500;
+		cursor: pointer;
+		appearance: none;
+		background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%236B7280' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+		background-repeat: no-repeat;
+		background-position: right 0.75rem center;
+		transition: all 0.2s;
+	}
+
+	.country-code-select:hover {
+		background-color: rgba(0, 0, 0, 0.02);
+	}
+
+	.country-code-select:focus {
+		outline: none;
+	}
+
+	.phone-input-wrapper:focus-within .country-code-select {
+		border-right-color: #68C28C;
+	}
+
+	/* Phone Input */
+	.phone-input {
+		flex: 1;
+		border: none;
+		border-radius: 0 0.5rem 0.5rem 0;
+		background-color: transparent;
+		padding-left: 0.75rem;
+	}
+
+	.phone-input:focus {
+		outline: none;
+		box-shadow: none;
+		background-color: transparent;
+	}
+
+	.phone-input-wrapper:focus-within .phone-input {
+		background-color: transparent;
+	}
 </style>
 
 <script>
+	// Phone Number Formatting
+	function formatPhoneNumber(value: string, countryCode: string): string {
+		// Remove all non-digit characters
+		const digits = value.replace(/\D/g, '');
+		
+		// Format based on country code
+		if (countryCode === '+1') {
+			// US/Canada format: (555) 000-0000
+			if (digits.length <= 3) {
+				return digits;
+			} else if (digits.length <= 6) {
+				return `(${digits.slice(0, 3)}) ${digits.slice(3)}`;
+			} else {
+				return `(${digits.slice(0, 3)}) ${digits.slice(3, 6)}-${digits.slice(6, 10)}`;
+			}
+		} else if (countryCode === '+44') {
+			// UK format: 020 0000 0000
+			if (digits.length <= 3) {
+				return digits;
+			} else if (digits.length <= 7) {
+				return `${digits.slice(0, 3)} ${digits.slice(3)}`;
+			} else {
+				return `${digits.slice(0, 3)} ${digits.slice(3, 7)} ${digits.slice(7, 11)}`;
+			}
+		} else {
+			// Default: just add spaces every 3-4 digits
+			return digits.replace(/(\d{3})(\d{3})(\d+)/, '$1 $2 $3').trim();
+		}
+	}
+
+	function updatePhonePlaceholder(countryCode: string) {
+		const phoneInput = document.getElementById('phone') as HTMLInputElement;
+		if (!phoneInput) return;
+
+		const placeholders: Record<string, string> = {
+			'+1': '(555) 000-0000',
+			'+44': '020 0000 0000',
+			'+52': '55 0000 0000',
+			'+33': '01 23 45 67 89',
+			'+49': '030 00000000',
+			'+39': '02 0000 0000',
+			'+34': '912 34 56 78',
+			'+61': '02 0000 0000',
+		};
+
+		phoneInput.placeholder = placeholders[countryCode] || '(555) 000-0000';
+	}
+
+	function initPhoneInput() {
+		const phoneInput = document.getElementById('phone') as HTMLInputElement;
+		const countryCodeSelect = document.getElementById('countryCode') as HTMLSelectElement;
+
+		if (!phoneInput || !countryCodeSelect) return;
+
+		// Update placeholder on country code change
+		countryCodeSelect.addEventListener('change', () => {
+			updatePhonePlaceholder(countryCodeSelect.value);
+			// Clear and reformat phone input when country changes
+			const digits = phoneInput.value.replace(/\D/g, '');
+			phoneInput.value = formatPhoneNumber(digits, countryCodeSelect.value);
+		});
+
+		// Format phone number as user types
+		phoneInput.addEventListener('input', (e) => {
+			const target = e.target as HTMLInputElement;
+			const countryCode = countryCodeSelect.value;
+			const formatted = formatPhoneNumber(target.value, countryCode);
+			target.value = formatted;
+		});
+
+		// Prevent non-digit characters (except formatting)
+		phoneInput.addEventListener('keypress', (e) => {
+			const char = String.fromCharCode(e.which || e.keyCode);
+			if (!/[0-9]/.test(char) && e.which !== 8 && e.which !== 0) {
+				e.preventDefault();
+			}
+		});
+
+		// Initialize placeholder
+		updatePhonePlaceholder(countryCodeSelect.value);
+	}
+
 	// Contact Form Handler
 	function initContactForm() {
 		const form = document.getElementById('contact-form') as HTMLFormElement;
@@ -227,6 +391,9 @@ import hero2Background from '../../../assets/images/hero2-bg.webp';
 
 		if (!form) return;
 
+		// Initialize phone input
+		initPhoneInput();
+
 		form.addEventListener('submit', async (e) => {
 			e.preventDefault();
 
@@ -234,14 +401,31 @@ import hero2Background from '../../../assets/images/hero2-bg.webp';
 			successMessage?.classList.add('hidden');
 			errorMessage?.classList.add('hidden');
 
+			// Validate phone number
+			const phoneInput = document.getElementById('phone') as HTMLInputElement;
+			const countryCode = (document.getElementById('countryCode') as HTMLSelectElement)?.value || '+1';
+			const phoneDigits = phoneInput?.value.replace(/\D/g, '') || '';
+			
+			// Minimum phone number length validation (at least 10 digits for most countries)
+			if (phoneDigits.length < 10) {
+				phoneInput?.setCustomValidity('Please enter a valid phone number');
+				phoneInput?.reportValidity();
+				return;
+			} else {
+				phoneInput?.setCustomValidity('');
+			}
+
 			// Get form data
 			const formData = new FormData(form);
+			const fullPhoneNumber = `${countryCode} ${phoneInput?.value || ''}`;
+			
 			const data = {
 				firstName: formData.get('firstName'),
 				lastName: formData.get('lastName'),
 				email: formData.get('email'),
-				countryCode: formData.get('countryCode'),
-				phone: formData.get('phone'),
+				countryCode: countryCode,
+				phone: phoneInput?.value || '',
+				fullPhoneNumber: fullPhoneNumber,
 				privacyPolicy: formData.get('privacyPolicy') === 'on',
 				timestamp: new Date().toISOString(),
 			};

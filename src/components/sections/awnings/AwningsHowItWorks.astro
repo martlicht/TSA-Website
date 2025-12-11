@@ -1,0 +1,132 @@
+---
+import SectionContainer from '../../ui/SectionContainer.astro';
+
+const videoId = '9sOTT_vS8Nw';
+const videoUrl = `https://www.youtube.com/watch?v=${videoId}`;
+const thumbnailUrl = `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
+---
+
+<section id="how-it-works" class="py-12 sm:py-16 md:py-20 lg:py-24 bg-white">
+	<SectionContainer>
+		<div class="flex flex-col items-center text-center">
+			<!-- Title and Subtitle -->
+			<h2 class="how-it-works-title scroll-fade-in font-sans text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-3 sm:mb-4 text-black">
+				How does it Work?
+			</h2>
+			<p class="how-it-works-subtitle scroll-fade-in font-sans text-lg sm:text-xl md:text-2xl text-gray-600 mb-8 sm:mb-10 lg:mb-12" style="animation-delay: 100ms;">
+				Watch the video
+			</p>
+
+			<!-- Video Container -->
+			<div class="w-full max-w-4xl">
+				<a 
+					href="/watch-awning"
+					class="video-container scroll-fade-in rounded-2xl overflow-hidden shadow-lg block relative group"
+					transition:name="awnings-video"
+					style="animation-delay: 200ms;"
+				>
+					<!-- Video Thumbnail -->
+					<img 
+						src={thumbnailUrl}
+						alt="How to open and close your awning - Operation instructions"
+						class="w-full aspect-video object-cover"
+						loading="lazy"
+					/>
+					
+					<!-- Play Button Overlay -->
+					<div class="play-overlay">
+						<div class="play-button">
+							<svg class="w-16 h-16 sm:w-20 sm:h-20" fill="currentColor" viewBox="0 0 24 24">
+								<path d="M8 5v14l11-7z"/>
+							</svg>
+						</div>
+					</div>
+				</a>
+			</div>
+		</div>
+	</SectionContainer>
+</section>
+
+<style>
+	/* How It Works Title */
+	.how-it-works-title {
+		font-family: 'Inter', system-ui, sans-serif;
+		font-weight: 700;
+		line-height: 1.2;
+		letter-spacing: -0.02em;
+	}
+
+	/* How It Works Subtitle */
+	.how-it-works-subtitle {
+		font-family: 'Inter', system-ui, sans-serif;
+		font-weight: 400;
+		line-height: 1.5;
+		letter-spacing: -0.01em;
+	}
+
+	/* Video Container - Reused from CompanyVideo */
+	.video-container {
+		position: relative;
+		width: 100%;
+		background: #000;
+		cursor: pointer;
+		transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+		            box-shadow 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+	}
+
+	.video-container:hover {
+		transform: scale(1.02);
+		box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3),
+		            0 0 0 4px rgba(104, 194, 140, 0.2);
+	}
+
+	.video-container img {
+		display: block;
+		transition: opacity 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+	}
+
+	.video-container:hover img {
+		opacity: 0.8;
+	}
+
+	/* Play Button Overlay */
+	.play-overlay {
+		position: absolute;
+		inset: 0;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		background: rgba(0, 0, 0, 0.3);
+		transition: background 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+	}
+
+	.video-container:hover .play-overlay {
+		background: rgba(0, 0, 0, 0.5);
+	}
+
+	.play-button {
+		width: 80px;
+		height: 80px;
+		background: rgba(104, 194, 140, 0.9);
+		border-radius: 50%;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		color: white;
+		transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+		box-shadow: 0 8px 24px rgba(104, 194, 140, 0.4);
+	}
+
+	.video-container:hover .play-button {
+		transform: scale(1.15);
+		background: rgba(104, 194, 140, 1);
+		box-shadow: 0 12px 32px rgba(104, 194, 140, 0.6);
+	}
+
+	@media (min-width: 640px) {
+		.play-button {
+			width: 100px;
+			height: 100px;
+		}
+	}
+</style>

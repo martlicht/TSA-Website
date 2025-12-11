@@ -1,222 +1,301 @@
 ---
-import { ViewTransitions } from 'astro:transitions';
-import { SITE_CONFIG } from '../config/site';
+import { ViewTransitions } from "astro:transitions";
+import { SITE_CONFIG, getPageTitle } from "../config/site";
 
 interface Props {
-	title: string;
-	description?: string;
+  title?: string;
+  description?: string;
+  image?: string;
+  noindex?: boolean;
 }
 
-const { title, description = SITE_CONFIG.description } = Astro.props;
+const {
+  title: pageTitle,
+  description = SITE_CONFIG.description,
+  image,
+  noindex = false,
+} = Astro.props;
+
+const fullTitle = getPageTitle(pageTitle);
+const pageUrl = new URL(Astro.url.pathname, SITE_CONFIG.url);
+const ogImage = image || `${SITE_CONFIG.url}/og-image.jpg`;
 ---
 
 <!doctype html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="description" content={description} />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="preconnect" href="https://fonts.googleapis.com" />
-		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-		<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
-		<meta name="generator" content={Astro.generator} />
-		<title>{title}</title>
-		<ViewTransitions />
-	</head>
-	<body class="font-sans antialiased">
-		<slot />
-	</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="generator" content={Astro.generator} />
+
+    <!-- Primary Meta Tags -->
+    <title>{fullTitle}</title>
+    <meta name="title" content={fullTitle} />
+    <meta name="description" content={description} />
+    <meta name="author" content={SITE_CONFIG.author} />
+
+    {noindex && <meta name="robots" content="noindex, nofollow" />}
+
+    <!-- Favicon - ICO tiene prioridad -->
+    <link rel="icon" type="image/x-icon" href="/favicon.svg" />
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.svg" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon.svg" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon.svg" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicon.svg" />
+    <!-- Fallback SVG solo si ICO no está disponible -->
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={pageUrl.toString()} />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:site_name" content={SITE_CONFIG.title} />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content={pageUrl.toString()} />
+    <meta property="twitter:title" content={fullTitle} />
+    <meta property="twitter:description" content={description} />
+    <meta property="twitter:image" content={ogImage} />
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <ViewTransitions />
+  </head>
+  <body class="font-sans antialiased">
+    <slot />
+  </body>
 </html>
 
 <style is:global>
-	/* Sistema de animaciones centralizado y simétrico */
-	
-	/* Base: Todos los elementos animables empiezan invisibles */
-	.scroll-animate {
-		opacity: 0;
-		transform: translateY(30px);
-		transition: opacity 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94), 
-		            transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-		will-change: opacity, transform;
-	}
-
-	/* Estado visible - se aplica cuando el elemento entra al viewport */
-	.scroll-animate.visible {
-		opacity: 1;
-		transform: translateY(0);
-	}
-
-	/* Variantes de delay para animaciones secuenciales */
-	.scroll-animate[data-delay="1"] { transition-delay: 0.1s; }
-	.scroll-animate[data-delay="2"] { transition-delay: 0.2s; }
-	.scroll-animate[data-delay="3"] { transition-delay: 0.3s; }
-	.scroll-animate[data-delay="4"] { transition-delay: 0.4s; }
-	.scroll-animate[data-delay="5"] { transition-delay: 0.5s; }
-	.scroll-animate[data-delay="6"] { transition-delay: 0.6s; }
-
-	/* Compatibilidad con clases antiguas - migración gradual */
-	.scroll-fade-in {
-		opacity: 0;
-		transform: translateY(30px);
-		transition: opacity 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94), 
-		            transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-		will-change: opacity, transform;
-	}
-
-	.scroll-fade-in.visible {
-		opacity: 1;
-		transform: translateY(0);
-	}
-
-	/* Animación de hover con efecto focus/shadow - sin elevación */
-	.hover-focus {
-		transition: box-shadow 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-	}
-
-	.hover-focus:hover {
-		box-shadow: 0 0 0 4px rgba(104, 194, 140, 0.1),
-		            0 8px 24px rgba(0, 0, 0, 0.12),
-		            0 4px 8px rgba(0, 0, 0, 0.08);
-	}
-
-	/* Variante con color primario más intenso */
-	.hover-focus-primary {
-		transition: box-shadow 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-	}
-
-	.hover-focus-primary:hover {
-		box-shadow: 0 0 0 3px rgba(104, 194, 140, 0.2),
-		            0 12px 32px rgba(104, 194, 140, 0.15),
-		            0 6px 12px rgba(0, 0, 0, 0.1);
-	}
-
-	/* Variante sutil para elementos blancos */
-	.hover-focus-subtle {
-		transition: box-shadow 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-	}
-
-	.hover-focus-subtle:hover {
-		box-shadow: 0 0 0 2px rgba(104, 194, 140, 0.08),
-		            0 8px 20px rgba(0, 0, 0, 0.08),
-		            0 4px 8px rgba(0, 0, 0, 0.04);
+	/* Prevent horizontal scrollbar globally */
+	html,
+	body {
+		overflow-x: hidden;
+		max-width: 100vw;
+		width: 100%;
+		position: relative;
 	}
 </style>
 
+<style is:global>
+  /* Sistema de animaciones centralizado y simétrico */
+
+  /* Base: Todos los elementos animables empiezan invisibles */
+  .scroll-animate {
+    opacity: 0;
+    transform: translateY(30px);
+    transition:
+      opacity 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+      transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    will-change: opacity, transform;
+  }
+
+  /* Estado visible - se aplica cuando el elemento entra al viewport */
+  .scroll-animate.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Variantes de delay para animaciones secuenciales */
+  .scroll-animate[data-delay="1"] {
+    transition-delay: 0.1s;
+  }
+  .scroll-animate[data-delay="2"] {
+    transition-delay: 0.2s;
+  }
+  .scroll-animate[data-delay="3"] {
+    transition-delay: 0.3s;
+  }
+  .scroll-animate[data-delay="4"] {
+    transition-delay: 0.4s;
+  }
+  .scroll-animate[data-delay="5"] {
+    transition-delay: 0.5s;
+  }
+  .scroll-animate[data-delay="6"] {
+    transition-delay: 0.6s;
+  }
+
+  /* Compatibilidad con clases antiguas - migración gradual */
+  .scroll-fade-in {
+    opacity: 0;
+    transform: translateY(30px);
+    transition:
+      opacity 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+      transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    will-change: opacity, transform;
+  }
+
+  .scroll-fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Animación de hover con efecto focus/shadow - sin elevación */
+  .hover-focus {
+    transition: box-shadow 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  .hover-focus:hover {
+    box-shadow:
+      0 0 0 4px rgba(104, 194, 140, 0.1),
+      0 8px 24px rgba(0, 0, 0, 0.12),
+      0 4px 8px rgba(0, 0, 0, 0.08);
+  }
+
+  /* Variante con color primario más intenso */
+  .hover-focus-primary {
+    transition: box-shadow 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  .hover-focus-primary:hover {
+    box-shadow:
+      0 0 0 3px rgba(104, 194, 140, 0.2),
+      0 12px 32px rgba(104, 194, 140, 0.15),
+      0 6px 12px rgba(0, 0, 0, 0.1);
+  }
+
+  /* Variante sutil para elementos blancos */
+  .hover-focus-subtle {
+    transition: box-shadow 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  .hover-focus-subtle:hover {
+    box-shadow:
+      0 0 0 2px rgba(104, 194, 140, 0.08),
+      0 8px 20px rgba(0, 0, 0, 0.08),
+      0 4px 8px rgba(0, 0, 0, 0.04);
+  }
+</style>
+
 <script is:inline>
-	/**
-	 * Sistema Global de Animaciones de Scroll v2.0
-	 * - Simétrico: funciona en ambas direcciones (scroll up/down)
-	 * - Robusto: detecta elementos sin importar dónde se abre la página
-	 * - Centralizado: fácil de mantener y configurar
-	 */
-	(function() {
-		'use strict';
+  /**
+   * Sistema Global de Animaciones de Scroll v2.0
+   * - Simétrico: funciona en ambas direcciones (scroll up/down)
+   * - Robusto: detecta elementos sin importar dónde se abre la página
+   * - Centralizado: fácil de mantener y configurar
+   */
+  (function () {
+    "use strict";
 
-		// Configuración centralizada
-		const CONFIG = {
-			selectors: '.scroll-animate, .scroll-fade-in',
-			rootMargin: '100px', // Margen simétrico: detecta elementos 100px antes de entrar
-			threshold: 0.1, // 10% del elemento debe ser visible
-			reAnimate: false // false = anima solo una vez, true = anima cada vez que entra
-		};
+    // Configuración centralizada
+    const CONFIG = {
+      selectors: ".scroll-animate, .scroll-fade-in",
+      rootMargin: "100px", // Margen simétrico: detecta elementos 100px antes de entrar
+      threshold: 0.1, // 10% del elemento debe ser visible
+      reAnimate: false, // false = anima solo una vez, true = anima cada vez que entra
+    };
 
-		// Verificar soporte de IntersectionObserver
-		if (typeof IntersectionObserver === 'undefined') {
-			// Fallback: mostrar todos los elementos inmediatamente
-			document.querySelectorAll(CONFIG.selectors).forEach(el => {
-				el.classList.add('visible');
-			});
-			return;
-		}
+    // Verificar soporte de IntersectionObserver
+    if (typeof IntersectionObserver === "undefined") {
+      // Fallback: mostrar todos los elementos inmediatamente
+      document.querySelectorAll(CONFIG.selectors).forEach((el) => {
+        el.classList.add("visible");
+      });
+      return;
+    }
 
-		// Crear el observer con configuración optimizada
-		const observer = new IntersectionObserver((entries) => {
-			entries.forEach(entry => {
-				// Animar cuando el elemento entra al viewport (sin importar dirección)
-				if (entry.isIntersecting) {
-					// Ya fue animado? Si reAnimate es false, skip
-					if (!CONFIG.reAnimate && entry.target.classList.contains('visible')) {
-						return;
-					}
+    // Crear el observer con configuración optimizada
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          // Animar cuando el elemento entra al viewport (sin importar dirección)
+          if (entry.isIntersecting) {
+            // Ya fue animado? Si reAnimate es false, skip
+            if (
+              !CONFIG.reAnimate &&
+              entry.target.classList.contains("visible")
+            ) {
+              return;
+            }
 
-					// Obtener delay del atributo data-delay o style
-					let delay = 0;
-					
-					// Prioridad 1: data-delay attribute (más limpio)
-					const dataDelay = entry.target.getAttribute('data-delay');
-					if (dataDelay) {
-						delay = parseInt(dataDelay) * 100; // data-delay="1" = 100ms
-					} else {
-						// Prioridad 2: animation-delay en style inline (legacy)
-						const style = entry.target.getAttribute('style');
-						const delayMatch = style && style.match(/animation-delay:\s*(\d+)ms/);
-						if (delayMatch) {
-							delay = parseInt(delayMatch[1]);
-						}
-					}
+            // Obtener delay del atributo data-delay o style
+            let delay = 0;
 
-					// Aplicar animación con delay
-					setTimeout(() => {
-						entry.target.classList.add('visible');
-						
-						// Si reAnimate es false, dejar de observar después de animar
-						if (!CONFIG.reAnimate) {
-							observer.unobserve(entry.target);
-						}
-					}, delay);
-				} else if (CONFIG.reAnimate) {
-					// Si el elemento sale del viewport y reAnimate es true,
-					// remover la clase visible para que se anime de nuevo
-					entry.target.classList.remove('visible');
-				}
-			});
-		}, {
-			root: null,
-			rootMargin: CONFIG.rootMargin,
-			threshold: CONFIG.threshold
-		});
+            // Prioridad 1: data-delay attribute (más limpio)
+            const dataDelay = entry.target.getAttribute("data-delay");
+            if (dataDelay) {
+              delay = parseInt(dataDelay) * 100; // data-delay="1" = 100ms
+            } else {
+              // Prioridad 2: animation-delay en style inline (legacy)
+              const style = entry.target.getAttribute("style");
+              const delayMatch =
+                style && style.match(/animation-delay:\s*(\d+)ms/);
+              if (delayMatch) {
+                delay = parseInt(delayMatch[1]);
+              }
+            }
 
-		/**
-		 * Inicializar animaciones
-		 * Observa todos los elementos animables en la página
-		 */
-		function initScrollAnimations() {
-			// Obtener todos los elementos animables
-			const elements = document.querySelectorAll(CONFIG.selectors);
-			
-			// Observar cada elemento
-			elements.forEach(el => {
-				// Remover clase visible si reAnimate está activado
-				if (CONFIG.reAnimate) {
-					el.classList.remove('visible');
-				}
-				
-				// Observar el elemento
-				observer.observe(el);
-			});
+            // Aplicar animación con delay
+            setTimeout(() => {
+              entry.target.classList.add("visible");
 
-			// Log para debugging (comentar en producción)
-			// console.log(`🎨 Scroll Animations: Observing ${elements.length} elements`);
-		}
+              // Si reAnimate es false, dejar de observar después de animar
+              if (!CONFIG.reAnimate) {
+                observer.unobserve(entry.target);
+              }
+            }, delay);
+          } else if (CONFIG.reAnimate) {
+            // Si el elemento sale del viewport y reAnimate es true,
+            // remover la clase visible para que se anime de nuevo
+            entry.target.classList.remove("visible");
+          }
+        });
+      },
+      {
+        root: null,
+        rootMargin: CONFIG.rootMargin,
+        threshold: CONFIG.threshold,
+      }
+    );
 
-		/**
-		 * Limpiar observer antes de transiciones de página
-		 */
-		function cleanup() {
-			observer.disconnect();
-		}
+    /**
+     * Inicializar animaciones
+     * Observa todos los elementos animables en la página
+     */
+    function initScrollAnimations() {
+      // Obtener todos los elementos animables
+      const elements = document.querySelectorAll(CONFIG.selectors);
 
-		// Inicializar cuando el DOM esté listo
-		if (document.readyState === 'loading') {
-			document.addEventListener('DOMContentLoaded', initScrollAnimations);
-		} else {
-			initScrollAnimations();
-		}
+      // Observar cada elemento
+      elements.forEach((el) => {
+        // Remover clase visible si reAnimate está activado
+        if (CONFIG.reAnimate) {
+          el.classList.remove("visible");
+        }
 
-		// Re-inicializar después de transiciones de página (Astro View Transitions)
-		document.addEventListener('astro:page-load', initScrollAnimations);
-		document.addEventListener('astro:before-preparation', cleanup);
-	})();
+        // Observar el elemento
+        observer.observe(el);
+      });
+
+      // Log para debugging (comentar en producción)
+      // console.log(`🎨 Scroll Animations: Observing ${elements.length} elements`);
+    }
+
+    /**
+     * Limpiar observer antes de transiciones de página
+     */
+    function cleanup() {
+      observer.disconnect();
+    }
+
+    // Inicializar cuando el DOM esté listo
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", initScrollAnimations);
+    } else {
+      initScrollAnimations();
+    }
+
+    // Re-inicializar después de transiciones de página (Astro View Transitions)
+    document.addEventListener("astro:page-load", initScrollAnimations);
+    document.addEventListener("astro:before-preparation", cleanup);
+  })();
 </script>
-
