@@ -6,32 +6,11 @@ interface FAQItem {
 	answer: string;
 }
 
-const faqs: FAQItem[] = [
-	{
-		question: "What's your lead time?",
-		answer: "Our typical lead time is 2-3 weeks from order confirmation to installation. However, this can vary based on the complexity of your project and current demand. We'll provide you with a specific timeline during your consultation.",
-	},
-	{
-		question: "Do you have specs for your products?",
-		answer: "Yes, we have detailed specifications for all our products. Contact us and we'll send you comprehensive technical documentation including dimensions, materials, wind ratings, and installation requirements.",
-	},
-	{
-		question: "Who do you work with?",
-		answer: "We work with homeowners, property managers, architects, and contractors throughout the Tri-State area. Our team has experience with both residential and commercial projects of all sizes.",
-	},
-	{
-		question: "Do you offer delivery?",
-		answer: "Yes, we offer professional delivery and installation services throughout the Tri-State area. Our experienced team ensures your awning is properly installed and ready to use.",
-	},
-	{
-		question: "Do you offer warranties?",
-		answer: "Absolutely! All our products come with comprehensive warranties covering both materials and workmanship. Warranty terms vary by product - contact us for specific details.",
-	},
-	{
-		question: "Do you service residential properties?",
-		answer: "Yes. Check out our sister brand Tri State Awnings. An industry leader in residential canopies for 25 + years.",
-	},
-];
+interface Props {
+	faqs: FAQItem[];
+}
+
+const { faqs } = Astro.props;
 ---
 
 <section class="py-16 sm:py-20 md:py-24 lg:py-28 bg-white">

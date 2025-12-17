@@ -1,16 +1,95 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import Header from '../components/sections/Header.astro';
-import AwningsHero from '../components/sections/awnings/AwningsHero.astro';
-import AwningsStandOut from '../components/sections/awnings/AwningsStandOut.astro';
-import AwningsHowItWorks from '../components/sections/awnings/AwningsHowItWorks.astro';
-import Footer from '../components/sections/Footer.astro';
+import Layout from "../layouts/Layout.astro";
+import Header from "../components/sections/Header.astro";
+import AwningsHero from "../components/sections/awnings/AwningsHero.astro";
+import AwningsStandOut from "../components/sections/awnings/AwningsStandOut.astro";
+import AwningsBuiltStrong from "../components/sections/awnings/AwningsBuiltStrong.astro";
+import AwningsGallery from "../components/sections/awnings/AwningsGallery.astro";
+import AwningsHowItWorks from "../components/sections/awnings/AwningsHowItWorks.astro";
+import AwningsFAQ from "../components/sections/awnings/AwningsFAQ.astro";
+import Footer from "../components/sections/Footer.astro";
+import Testimonials from "../components/sections/landing/Testimonials.astro";
+import ContactForm from "../components/sections/landing/ContactForm.astro";
 ---
 
 <Layout title="Roll Up Awnings">
-	<Header />
-	<AwningsHero />
-	<AwningsStandOut />
-	<AwningsHowItWorks />
-	<Footer />
+  <Header />
+  <AwningsHero />
+  <AwningsStandOut />
+  <AwningsBuiltStrong />
+  <AwningsHowItWorks />
+  <AwningsGallery />
+  <AwningsFAQ />
+  <Testimonials />
+  <ContactForm />
+  <Footer />
 </Layout>
+
+<style>
+  /* Enhanced View Transition Styles for awnings page */
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation-duration: 0.6s;
+    animation-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  ::view-transition-old(root) {
+    animation-name: slide-out-reverse;
+  }
+
+  ::view-transition-new(root) {
+    animation-name: slide-in-reverse;
+  }
+
+  /* Shared element transitions for gallery images */
+  ::view-transition-group(*) {
+    animation-duration: 0.6s;
+    animation-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  /* Smooth morphing for gallery images */
+  ::view-transition-group(gallery-image-0),
+  ::view-transition-group(gallery-image-1),
+  ::view-transition-group(gallery-image-2),
+  ::view-transition-group(gallery-image-3),
+  ::view-transition-group(gallery-image-4),
+  ::view-transition-group(gallery-image-5),
+  ::view-transition-group(gallery-image-6) {
+    animation-duration: 0.8s;
+    animation-timing-function: cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  /* Header transition */
+  ::view-transition-group(gallery-header) {
+    animation-duration: 0.7s;
+    animation-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  /* Button morph transition */
+  ::view-transition-group(see-more-button) {
+    animation-duration: 0.5s;
+    animation-timing-function: cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  @keyframes slide-out-reverse {
+    from {
+      opacity: 1;
+      transform: translateX(0) scale(1);
+    }
+    to {
+      opacity: 0;
+      transform: translateX(20px) scale(0.98);
+    }
+  }
+
+  @keyframes slide-in-reverse {
+    from {
+      opacity: 0;
+      transform: translateX(-20px) scale(0.98);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0) scale(1);
+    }
+  }
+</style>

@@ -1,0 +1,133 @@
+---
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+import { Masonry } from 'astro-masonry';
+import SectionContainer from '../../ui/SectionContainer.astro';
+import Button from '../../ui/Button.astro';
+
+// Cargar dinámicamente todas las imágenes de la carpeta awnings
+const imageModules = import.meta.glob<{ default: ImageMetadata }>('../../../assets/images/awnings/*.{webp,png,jpg,jpeg}', {
+	eager: true
+});
+
+// Convertir a array y filtrar solo imágenes (excluir videos)
+// Obtener dimensiones para calcular aspect ratio y prevenir CLS
+const galleryImages = Object.entries(imageModules)
+	.map(([path, module]) => {
+		const image = module.default;
+		const aspectRatio = image.width && image.height ? image.width / image.height : 1.5; // Default 3:2 si no hay dimensiones
+		return {
+			src: image,
+			alt: `Roll-up awning installation - ${path.split('/').pop()?.replace(/\.(webp|png|jpg|jpeg)$/i, '') || 'Gallery image'}`,
+			aspectRatio,
+			width: image.width,
+			height: image.height,
+		};
+	})
+	.filter(img => img.src); // Asegurar que tenemos una imagen válida
+
+const INITIAL_DISPLAY_COUNT = 7;
+---
+
+<section id="gallery-section" class="py-12 sm:py-16 md:py-20 lg:py-24 bg-white">
+	<SectionContainer>
+		<!-- Header with View Transition -->
+		<div class="text-center mb-12 sm:mb-16" transition:name="gallery-header">
+			<h2 class="scroll-fade-in font-sans font-semibold text-4xl sm:text-5xl lg:text-6xl mb-4 text-black">
+				Envision the <span class="text-primary italic">Look</span>
+			</h2>
+			<p class="scroll-fade-in font-sans text-lg sm:text-xl text-gray-600" data-delay="1">
+				Explore projects from customers who transformed their spaces with our roll-up awnings.
+			</p>
+		</div>
+
+		<!-- Gallery Grid - Masonry Style -->
+		<div class="mb-8 sm:mb-12">
+			<Masonry
+				breakpointCols={{
+					default: 3,
+					1024: 3,
+					640: 2,
+					500: 1,
+				}}
+				class="flex gap-4 sm:gap-6 lg:gap-8"
+				columnClass="flex flex-col gap-4 sm:gap-6 lg:gap-8"
+				sortByHeight={false}
+			>
+				{galleryImages.map((image, index) => (
+					<div 
+						class={`gallery-item scroll-fade-in w-full ${index >= INITIAL_DISPLAY_COUNT ? 'hidden' : 'visible'}`}
+						data-index={index}
+						style={`animation-delay: ${index * 50}ms;`}
+					>
+					<a 
+						href={`/awning-gallery-viewer?index=${index}`}
+						class="gallery-image-wrapper w-full relative group cursor-pointer overflow-hidden rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 block"
+						style={`aspect-ratio: ${image.aspectRatio}; min-height: 200px;`}
+						transition:name={`gallery-image-${index}`}
+					>
+						<Image 
+							src={image.src}
+							alt={image.alt}
+							width={image.width}
+							height={image.height}
+							class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+							loading={index < 3 ? "eager" : "lazy"}
+							decoding="async"
+							quality={85}
+							format="webp"
+						/>
+						<!-- Overlay on hover -->
+						<div class="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300 pointer-events-none"></div>
+					</a>
+					</div>
+				))}
+			</Masonry>
+		</div>
+
+		<!-- See More Button with View Transition -->
+		{galleryImages.length > INITIAL_DISPLAY_COUNT && (
+			<div class="text-center mt-8 sm:mt-12">
+				<a 
+					href={`/awning-gallery-viewer?index=${INITIAL_DISPLAY_COUNT}`}
+					class="see-more-btn scroll-fade-in inline-block"
+					data-delay="2"
+					transition:name="see-more-button"
+				>
+					<Button variant="primary" size="lg">
+						See more
+					</Button>
+				</a>
+			</div>
+		)}
+	</SectionContainer>
+</section>
+
+<script>
+	// Script para re-dispatch el evento resize para astro-masonry en page-load
+	document.addEventListener('astro:page-load', () => {
+		window.dispatchEvent(new Event('resize'));
+	});
+</script>
+
+<style>
+	/* Gallery Item Animation */
+	.gallery-item {
+		opacity: 0;
+		transform: translateY(30px);
+		transition:
+			opacity 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+			transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+		width: 100%;
+	}
+
+	.gallery-item.visible {
+		opacity: 1;
+		transform: translateY(0);
+	}
+
+	.gallery-item.hidden {
+		display: none;
+	}
+</style>
+

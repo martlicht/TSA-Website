@@ -13,6 +13,7 @@
     "@sentry/astro": "^10.27.0",
     "@spotlightjs/astro": "^3.2.6",
     "astro": "^4.0.0",
+    "astro-masonry": "^1.2.2",
     "swiper": "^12.0.3"
   },
   "devDependencies": {
