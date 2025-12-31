@@ -9,24 +9,24 @@ import quickIcon from '../../../assets/icons/quick.svg';
 interface Feature {
 	title: string;
 	description: string;
-	icon: string;
+	icon: any;
 }
 
 const features: Feature[] = [
 	{
 		title: 'Licensed and Expertise',
 		description: 'Professional installation by certified local experts',
-		icon: licensedIcon.src,
+		icon: licensedIcon,
 	},
 	{
 		title: 'Premium Fabrics, Built to Last',
 		description: 'High-quality materials with comprehensive warranties',
-		icon: premiumIcon.src,
+		icon: premiumIcon,
 	},
 	{
 		title: 'Quick delivery and Assembly',
 		description: 'Our process ensures your awning is ready to enjoy in no time.',
-		icon: quickIcon.src,
+		icon: quickIcon,
 	},
 ];
 ---
@@ -55,7 +55,7 @@ const features: Feature[] = [
 						>
 							<!-- Icon -->
 							<div class="flex-shrink-0 flex items-center justify-center bg-gray-100 rounded-xl p-3 transition-transform duration-300 hover:scale-105">
-								<img 
+								<Image 
 									src={feature.icon} 
 									alt={feature.title}
 									class="w-16 h-16 sm:w-20 sm:h-20"
@@ -79,10 +79,11 @@ const features: Feature[] = [
 			<!-- Right Image -->
 			<div class="scroll-fade-in lg:order-last order-first">
 				<div class="relative rounded-2xl overflow-hidden shadow-xl">
-					<img 
-						src={porchImage.src}
+					<Image 
+						src={porchImage}
 						alt="Beautiful outdoor porch with awning"
 						class="w-full h-auto object-cover"
+						loading="lazy"
 					/>
 				</div>
 			</div>

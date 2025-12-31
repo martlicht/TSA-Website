@@ -8,29 +8,29 @@ import happyIcon from '../../../assets/icons/happy.svg';
 import truckIcon from '../../../assets/icons/package_car.svg';
 
 interface Stat {
-	icon: string;
+	icon: any;
 	value: string;
 	label: string;
 }
 
 const stats: Stat[] = [
 	{
-		icon: shieldIcon.src,
+		icon: shieldIcon,
 		value: '25+',
 		label: 'Years of Experience',
 	},
 	{
-		icon: checkIcon.src,
+		icon: checkIcon,
 		value: '15,000+',
 		label: 'Successful Projects Installed',
 	},
 	{
-		icon: happyIcon.src,
+		icon: happyIcon,
 		value: '10,000+',
 		label: 'Happy Customers',
 	},
 	{
-		icon: truckIcon.src,
+		icon: truckIcon,
 		value: '2 weeks',
 		label: 'Average Turnaround Time',
 	},
@@ -66,7 +66,7 @@ const stats: Stat[] = [
 				<div class="stat-card hover-focus-subtle rounded-[24px] text-center flex flex-col items-center justify-center">
 					<!-- Icon -->
 					<div class="stat-icon mb-3">
-						<img 
+						<Image 
 							src={stat.icon} 
 							alt={stat.label}
 							class="w-10 h-10"

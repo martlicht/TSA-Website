@@ -1,4 +1,5 @@
 ---
+import { Image } from 'astro:assets';
 import SectionContainer from '../../ui/SectionContainer.astro';
 
 const videoId = '9sOTT_vS8Nw';
@@ -26,9 +27,11 @@ const thumbnailUrl = `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
 					style="animation-delay: 200ms;"
 				>
 					<!-- Video Thumbnail -->
-					<img 
+					<Image 
 						src={thumbnailUrl}
 						alt="How to open and close your awning - Operation instructions"
+						width={1280}
+						height={720}
 						class="w-full aspect-video object-cover"
 						loading="lazy"
 					/>

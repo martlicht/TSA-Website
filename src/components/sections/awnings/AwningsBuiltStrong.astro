@@ -1,43 +1,51 @@
 ---
-import SectionContainer from '../../ui/SectionContainer.astro';
-import rollingUpVideo from '../../../assets/images/awnings/rolling-up.mp4';
+import { Image } from "astro:assets";
+import SectionContainer from "../../ui/SectionContainer.astro";
+import rollingUpGif from "../../../assets/images/awnings/rolling-up.gif";
 ---
 
-<section class="relative w-screen h-screen min-h-[600px] flex flex-col overflow-hidden">
-	<!-- Container for video and overlay layers -->
-	<div class="relative flex-1 w-full h-full flex items-center justify-center">
-		<!-- Background Video Layer -->
-		<div class="absolute inset-0 w-full h-full">
-			<video 
-				autoplay 
-				muted 
-				loop 
-				playsinline
-				class="w-full h-full object-cover scale-110"
-			>
-				<source src={rollingUpVideo} type="video/mp4" />
-			</video>
-		</div>
+<section
+  class="relative w-screen h-screen min-h-[600px] flex flex-col overflow-hidden"
+>
+  <!-- Container for video and overlay layers -->
+  <div class="relative flex-1 w-full h-full flex items-center justify-center ">
+    <!-- Background GIF Layer -->
+    <div class="absolute inset-0 w-full h-full">
+      <Image
+        src={rollingUpGif}
+        alt="Rolling up awning animation"
+        class="w-full h-full object-cover scale-110"
+      />
+    </div>
 
-		<!-- Green Filter Overlay Layer -->
-		<div class="absolute inset-0 w-full h-full bg-gradient-to-br from-[#5aad7a]/90 via-[#4a8f66]/85 to-[#3d7254]/90"></div>
+    <!-- Green Filter Overlay Layer -->
+    <div
+      class="absolute inset-0 w-full h-full bg-gradient-to-br from-[#5aad7a]/90 via-[#4a8f66]/85 to-[#3d7254]/90"
+    >
+    </div>
 
-		<!-- Content Layer -->
-		<div class="relative z-10 w-full flex items-center justify-center">
-			<SectionContainer class="text-white">
-				<div class="text-center">
-					<!-- First Line -->
-					<h2 class="scroll-fade-in font-sans font-semibold text-2xl sm:text-[2.5rem] lg:text-[3rem] xl:text-[3.5rem] leading-[120%] tracking-[-0.02em] mb-6">
-						<span class="text-black font-semibold">Built</span> <span class="text-white font-extrabold italic">Strong.</span>
-					</h2>
-					
-					<!-- Second Line -->
-					<h2 class="scroll-fade-in font-sans font-semibold text-2xl sm:text-[2.5rem] lg:text-[3rem] xl:text-[3.5rem] leading-[120%] tracking-[-0.02em]" data-delay="1">
-						<span class="text-black font-semibold">Designed to Be</span> <span class="text-white font-extrabold italic">Effortless.</span>
-					</h2>
-				</div>
-			</SectionContainer>
-		</div>
-	</div>
+    <!-- Content Layer -->
+    <div class="relative z-10 w-full flex items-center justify-center">
+      <SectionContainer class="text-white">
+        <div class="text-center">
+          <!-- First Line -->
+          <h2
+            class="scroll-fade-in font-sans font-semibold text-2xl sm:text-[2.5rem] lg:text-[3rem] xl:text-[3.5rem] leading-[120%] tracking-[-0.02em] mb-6"
+          >
+            <span class="text-black font-semibold">Built</span>
+            <span class="text-white font-extrabold italic">Strong.</span>
+          </h2>
+
+          <!-- Second Line -->
+          <h2
+            class="scroll-fade-in font-sans font-semibold text-2xl sm:text-[2.5rem] lg:text-[3rem] xl:text-[3.5rem] leading-[120%] tracking-[-0.02em]"
+            data-delay="1"
+          >
+            <span class="text-black font-semibold">Designed to Be</span>
+            <span class="text-white font-extrabold italic">Effortless.</span>
+          </h2>
+        </div>
+      </SectionContainer>
+    </div>
+  </div>
 </section>
-

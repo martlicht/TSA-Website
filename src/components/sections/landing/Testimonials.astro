@@ -1,4 +1,5 @@
 ---
+import { Image } from 'astro:assets';
 import SectionContainer from '../../ui/SectionContainer.astro';
 import googleIcon from '../../../assets/icons/google.svg';
 import fiveStarRating from '../../../assets/icons/five-start-rating.svg';
@@ -46,15 +47,15 @@ const testimonials: Testimonial[] = [
 				<div class="testimonial-card scroll-fade-in" style={`animation-delay: ${index * 100}ms;`}>
 					<!-- Header: Stars and Google Icon -->
 					<div class="flex items-center justify-between mb-6">
-						<img 
-							src={fiveStarRating.src}
+						<Image 
+							src={fiveStarRating}
 							alt="5 star rating"
-							class="h-6"
+							class="h-6 w-auto"
 						/>
-						<img 
-							src={googleIcon.src}
+						<Image 
+							src={googleIcon}
 							alt="Google"
-							class="h-8"
+							class="h-8 w-auto"
 						/>
 					</div>
 
