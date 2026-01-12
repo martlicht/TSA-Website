@@ -10,6 +10,24 @@ import AwningsFAQ from "../components/sections/awnings/AwningsFAQ.astro";
 import Footer from "../components/sections/Footer.astro";
 import Testimonials from "../components/sections/landing/Testimonials.astro";
 import ContactForm from "../components/sections/landing/ContactForm.astro";
+
+const awningsTestimonials = [
+	{
+		quote: '"Awning is beautiful and functional"',
+		text: 'Great company. Awning is beautiful and functional. Robin, a manager at the company is exceptional!!\n\nThank you for a job well done!',
+		author: '- Penina Rosenthal',
+	},
+	{
+		quote: '"Our awning is new but seems to be durable and made with top quality material!"',
+		text: 'What an outstanding experience I had with tristate! From the estimate until installation the staff was friendly, knowledgeable, and reliable.',
+		author: '- Etsy Breuer',
+	},
+	{
+		quote: '"Excellent innovative awning."',
+		text: 'Better than any we have had. easy to use, and the people at tri state were a pleasure to deal with.',
+		author: '- Chaya Cohen',
+	},
+];
 ---
 
 <Layout title="Roll Up Awnings">
@@ -20,7 +38,7 @@ import ContactForm from "../components/sections/landing/ContactForm.astro";
   <AwningsHowItWorks /> 
   <AwningsGallery />
   <AwningsFAQ />
-  <Testimonials />
+  <Testimonials testimonials={awningsTestimonials} />
   <ContactForm />
   <Footer />
 </Layout>

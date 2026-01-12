@@ -5,7 +5,7 @@
 export const SITE_CONFIG = {
 	title: 'Tri State Awnings',
 	tagline: 'Retractable, stylish awnings built to last',
-	description: 'Retractable, stylish awnings built to last — installed with zero hassle. Trusted across Tri State Area.',
+	description: 'Roll-up, stylish awnings built to last — installed with zero hassle. Trusted across the Tri State Area.',
 	url: 'https://tristateawnings.com',
 	author: 'Tri State Awnings',
 } as const;

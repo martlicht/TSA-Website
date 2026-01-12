@@ -18,37 +18,37 @@ interface ProductOption {
 const products: ProductOption[] = [
 	{
 		title: 'Roll up Awnings',
-		description: 'Call out a feature, benefit, or value of your site or product that can stand on its own.',
+		description: 'Provide sun and weather coverage that can be easily rolled up when not needed.',
 		image: rollUpImage,
 		ctaText: 'Get a Quote',
 	},
 	{
 		title: 'Plexi Awnings',
-		description: 'Call out a feature, benefit, or value of your site or product that can stand on its own.',
+		description: 'Keep entrances bright and welcoming with durable, clear awnings built to last.',
 		image: plexiImage,
 		ctaText: 'Get a Quote',
 	},
 	{
 		title: 'Staircase Awnings',
-		description: 'Call out a feature, benefit, or value of your site or product that can stand on its own.',
+		description: 'Guard steps from rain, snow, and ice, improving safety and longevity.',
 		image: staircaseImage,
 		ctaText: 'Get a Quote',
 	},
 	{
 		title: 'Pool Shades',
-		description: 'Call out a feature, benefit, or value of your site or product that can stand on its own.',
+		description: 'Add beauty and privacy, with the ability to roll up during wind or winter.',
 		image: poolImage,
 		ctaText: 'Get a Quote',
 	},
 	{
 		title: 'Door Canopy',
-		description: 'Call out a feature, benefit, or value of your site or product that can stand on its own.',
+		description: 'A sleek, durable canopy that adds style and functionality to your entrance.',
 		image: doorImage,
 		ctaText: 'Get a Quote',
 	},
 	{
 		title: 'Vestibule',
-		description: 'Call out a feature, benefit, or value of your site or product that can stand on its own.',
+		description: 'Block wind, reduce heat loss, and create a more comfortable, protected entryway.',
 		image: vestibuleImage,
 		ctaText: 'Get a Quote',
 	},
@@ -90,7 +90,10 @@ const products: ProductOption[] = [
 						<p class="product-option-description text-gray-600 mb-4">
 							{product.description}
 						</p>
-						<button class="product-option-cta text-primary font-medium inline-flex items-center gap-2 hover:gap-3 transition-all">
+						<button 
+							class="product-option-cta text-primary font-medium inline-flex items-center gap-2 hover:gap-3 transition-all"
+							data-product={product.title}
+						>
 							{product.ctaText}
 							<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
@@ -180,4 +183,78 @@ const products: ProductOption[] = [
 		transition: gap 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 	}
 </style>
+
+<script>
+	/**
+	 * Product Selection Handler
+	 * When user clicks "Get a Quote", scroll to form and check the corresponding product
+	 */
+	function initProductSelection() {
+		const ctaButtons = document.querySelectorAll('.product-option-cta[data-product]');
+		
+		// Map product titles to checkbox values in the form
+		const productMap: Record<string, string> = {
+			'Roll up Awnings': 'Roll Up Awning',
+			'Plexi Awnings': 'Plexi Awnings',
+			'Staircase Awnings': 'Staircase Awnings',
+			'Pool Shades': 'Pool Shades',
+			'Door Canopy': 'Canopies',
+			'Vestibule': 'Vestibules',
+		};
+		
+		ctaButtons.forEach((button) => {
+			button.addEventListener('click', (e) => {
+				e.preventDefault();
+				
+				const productTitle = button.getAttribute('data-product');
+				if (!productTitle) return;
+				
+				// Get the mapped checkbox value
+				const checkboxValue = productMap[productTitle] || productTitle;
+				
+				// Find and check the corresponding checkbox in the contact form
+				const checkboxes = document.querySelectorAll('input[name="products"]') as NodeListOf<HTMLInputElement>;
+				checkboxes.forEach((checkbox) => {
+					if (checkbox.value === checkboxValue) {
+						checkbox.checked = true;
+						
+						// Add a visual feedback (optional - brief highlight)
+						const label = checkbox.closest('.checkbox-label');
+						if (label) {
+							label.classList.add('checkbox-selected');
+							setTimeout(() => {
+								label?.classList.remove('checkbox-selected');
+							}, 2000);
+						}
+					}
+				});
+				
+				// Scroll to contact form
+				const contactForm = document.getElementById('contact-form-section');
+				if (contactForm) {
+					contactForm.scrollIntoView({ 
+						behavior: 'smooth',
+						block: 'start'
+					});
+					
+					// Focus on first name input after scroll
+					setTimeout(() => {
+						const firstNameInput = document.getElementById('firstName') as HTMLInputElement;
+						firstNameInput?.focus();
+					}, 800);
+				}
+			});
+		});
+	}
+	
+	// Initialize on page load
+	if (document.readyState === 'loading') {
+		document.addEventListener('DOMContentLoaded', initProductSelection);
+	} else {
+		initProductSelection();
+	}
+	
+	// Re-initialize after Astro page transitions
+	document.addEventListener('astro:page-load', initProductSelection);
+</script>
 
