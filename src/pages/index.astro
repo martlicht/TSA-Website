@@ -43,6 +43,24 @@ import ContactForm from '../components/sections/landing/ContactForm.astro';
 import Footer from '../components/sections/Footer.astro';
 import { SITE_CONFIG } from '../config/site';
 import builtToResistIcon from '../assets/icons/built_to_resist.svg';
+
+const landingTestimonials = [
+	{
+		quote: '"The number One choice to do your Sukkah!"',
+		text: 'Thank you Tri State Awning for the professional and precise work to the last Detail. They are honest with pricing and a pleasure to deal with.',
+		author: '- Moshe G.',
+	},
+	{
+		quote: '"I\'m very satisfied with the outcome and would highly recommend their services."',
+		text: 'Their professionalism and quality of service were evident throughout the entire process. A special thank you to Jacob Weiss, who was a pleasure to work with and made everything run smoothly.',
+		author: '- Mordechai Zev Feldman',
+	},
+	{
+		quote: '"Excellent service and workmanship."',
+		text: 'They arrived at 8:30 a.m. and installed a 10\' x 24\' awning in 2 hours. Very professional crew and they helpfully answered a few questions I had.',
+		author: '- SJH',
+	},
+];
 ---
 
 <Layout title="Unlock the True Potential of your Outdoor Space">
@@ -68,7 +86,7 @@ import builtToResistIcon from '../assets/icons/built_to_resist.svg';
 	<GetInspired />
 	<FAQ faqs={landingFAQs} />
 	<CompanyVideo />
-	<Testimonials />
+	<Testimonials testimonials={landingTestimonials} />
 	<ContactForm />
 	<Footer />
 </Layout>

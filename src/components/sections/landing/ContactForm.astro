@@ -106,19 +106,62 @@ import hero2Background from "../../../assets/images/awnings/hero2-bg.webp";
              <div id="phone-error" class="field-error hidden"></div>
            </div>
 
+          <!-- Products Interest Checkboxes -->
+          <div>
+            <label class="form-label mb-3">What products are you interested in?</label>
+            <div class="grid grid-cols-2 gap-3">
+              <label class="checkbox-label">
+                <input type="checkbox" name="products" value="Roll Up Awning" class="checkbox-input" />
+                <span class="checkbox-text">Roll Up Awning</span>
+              </label>
+              <label class="checkbox-label">
+                <input type="checkbox" name="products" value="Instant Sukkah" class="checkbox-input" />
+                <span class="checkbox-text">Instant Sukkah</span>
+              </label>
+              <label class="checkbox-label">
+                <input type="checkbox" name="products" value="Pergoloft" class="checkbox-input" />
+                <span class="checkbox-text">Pergoloft</span>
+              </label>
+              <label class="checkbox-label">
+                <input type="checkbox" name="products" value="Plexi Awnings" class="checkbox-input" />
+                <span class="checkbox-text">Plexi Awnings</span>
+              </label>
+              <label class="checkbox-label">
+                <input type="checkbox" name="products" value="Staircase Awnings" class="checkbox-input" />
+                <span class="checkbox-text">Staircase Awnings</span>
+              </label>
+              <label class="checkbox-label">
+                <input type="checkbox" name="products" value="Pool Shades" class="checkbox-input" />
+                <span class="checkbox-text">Pool Shades</span>
+              </label>
+              <label class="checkbox-label">
+                <input type="checkbox" name="products" value="Canopies" class="checkbox-input" />
+                <span class="checkbox-text">Canopies</span>
+              </label>
+              <label class="checkbox-label">
+                <input type="checkbox" name="products" value="Vestibules" class="checkbox-input" />
+                <span class="checkbox-text">Vestibules</span>
+              </label>
+              <label class="checkbox-label col-span-2">
+                <input type="checkbox" name="products" value="Other" class="checkbox-input" />
+                <span class="checkbox-text">Other</span>
+              </label>
+            </div>
+          </div>
+
           <!-- Privacy Policy Checkbox -->
-          <!-- <div class="flex items-start gap-3">
-						<input
-							type="checkbox"
-							id="privacyPolicy"
-							name="privacyPolicy"
-							required
-							class="mt-1 w-4 h-4 text-primary border-gray-300 rounded focus:ring-primary focus:ring-2"
-						/>
-						<label for="privacyPolicy" class="text-sm text-gray-600">
-							You agree to our friendly <a href="/privacy-policy" class="text-primary underline hover:text-primary-dark">privacy policy</a>.
-						</label>
-					</div> -->
+          <div class="flex items-start gap-3">
+            <input
+              type="checkbox"
+              id="privacyPolicy"
+              name="privacyPolicy"
+              required
+              class="mt-1 w-4 h-4 text-primary border-gray-300 rounded focus:ring-primary focus:ring-2 cursor-pointer"
+            />
+            <label for="privacyPolicy" class="text-sm text-gray-600">
+              You agree to our friendly <a href="/privacy-policy" class="text-primary underline hover:text-primary-dark">privacy policy</a>.
+            </label>
+          </div>
 
           <!-- Submit Button -->
           <button
@@ -295,6 +338,86 @@ import hero2Background from "../../../assets/images/awnings/hero2-bg.webp";
      border-color: #dc2626;
      background-color: #fef2f2;
    }
+
+   /* Checkbox Label */
+   .checkbox-label {
+     display: flex;
+     align-items: center;
+     gap: 0.5rem;
+     cursor: pointer;
+     padding: 0.5rem;
+     border-radius: 0.375rem;
+     transition: background-color 0.2s;
+   }
+
+   .checkbox-label:hover {
+     background-color: #f9fafb;
+   }
+
+   /* Checkbox Input */
+   .checkbox-input {
+     width: 1.125rem;
+     height: 1.125rem;
+     border: 2px solid #d1d5db;
+     border-radius: 0.25rem;
+     cursor: pointer;
+     flex-shrink: 0;
+     appearance: none;
+     -webkit-appearance: none;
+     -moz-appearance: none;
+     background-color: #ffffff;
+     position: relative;
+     transition: all 0.2s ease;
+   }
+
+   .checkbox-input:hover {
+     border-color: #68c28c;
+   }
+
+   .checkbox-input:checked {
+     background-color: #68c28c;
+     border-color: #68c28c;
+   }
+
+   .checkbox-input:checked::after {
+     content: '';
+     position: absolute;
+     left: 0.25rem;
+     top: 0.0625rem;
+     width: 0.375rem;
+     height: 0.625rem;
+     border: solid white;
+     border-width: 0 2px 2px 0;
+     transform: rotate(45deg);
+   }
+
+   .checkbox-input:focus {
+     outline: none;
+     box-shadow: 0 0 0 3px rgba(104, 194, 140, 0.2);
+     border-color: #68c28c;
+   }
+
+   /* Checkbox Text */
+   .checkbox-text {
+     font-family: "Inter", system-ui, sans-serif;
+     font-size: 0.875rem;
+     color: #374151;
+     user-select: none;
+   }
+
+   /* Checkbox Selected Animation */
+   .checkbox-selected {
+     animation: checkboxHighlight 2s ease-out;
+   }
+
+   @keyframes checkboxHighlight {
+     0% {
+       background-color: rgba(104, 194, 140, 0.3);
+     }
+     100% {
+       background-color: transparent;
+     }
+   }
  </style>
 
 <script>
@@ -426,17 +549,19 @@ import hero2Background from "../../../assets/images/awnings/hero2-bg.webp";
       const phoneDigits = phoneInput?.value.replace(/\D/g, "") || "";
       const countryCode = "+1"; // Always US/Canada
 
-      // Minimum phone number length validation (10 digits for US/Canada)
-      if (phoneDigits.length < 10) {
-        phoneInput?.setCustomValidity("Please enter a valid phone number");
-        phoneInput?.reportValidity();
+      // Minimum phone number length validation (7 digits minimum for flexibility)
+      if (phoneDigits.length < 7) {
+        showFieldError("phone", "Please enter a valid phone number (at least 7 digits)");
+        phoneInput?.focus();
         return;
-      } else {
-        phoneInput?.setCustomValidity("");
       }
 
       // Get form data
       const formData = new FormData(form);
+
+      // Get selected products
+      const selectedProducts = Array.from(formData.getAll("products")) as string[];
+      const productsString = selectedProducts.length > 0 ? selectedProducts.join(", ") : "";
 
       // Prepare data for backend API (matching Postman snippet exactly)
       // Send phone number without country code (e.g., "4540122222")
@@ -447,6 +572,7 @@ import hero2Background from "../../../assets/images/awnings/hero2-bg.webp";
         phone_number: phoneDigits,
         phone_country_code: "US",
         source: "tristateawnings.com",
+        products_interest: productsString,
       });
 
       try {
