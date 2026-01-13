@@ -1,0 +1,112 @@
+---
+import { Image } from "astro:assets";
+import Button from "../../ui/Button.astro";
+import SectionContainer from "../../ui/SectionContainer.astro";
+import heroImage from "../../../assets/images/pergoloft/pergoloft-hero.webp";
+---
+
+<section class="relative w-full min-h-screen flex items-center overflow-hidden">
+  <!-- Background Image -->
+  <div class="absolute inset-0">
+    <Image
+      src={heroImage}
+      alt="Pergoloft glass roof system on modern patio"
+      class="w-full h-full object-cover"
+      loading="eager"
+      fetchpriority="high"
+      quality={90}
+      format="webp"
+    />
+    <!-- Gradient overlay for better text contrast -->
+    <div
+      class="absolute inset-0 bg-gradient-to-r from-black/70 via-black/40 to-transparent"
+    >
+    </div>
+  </div>
+
+  <!-- Content -->
+  <SectionContainer class="relative z-10 pt-32 sm:pt-40 md:pt-48 pb-20">
+    <div class="max-w-2xl lg:max-w-3xl">
+      <h1
+        class="font-sans text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-6 leading-[1.05] tracking-[-0.02em] text-white animate-fade-in-up"
+      >
+        The <span class="text-primary">Pergoloft</span>
+      </h1>
+
+      <p
+        class="text-lg sm:text-xl md:text-2xl text-white/90 mb-4 leading-relaxed font-light animate-fade-in-up animation-delay-100"
+      >
+        Where Architecture Meets Innovation
+      </p>
+
+      <p
+        class="text-base sm:text-lg text-white/75 mb-10 leading-relaxed max-w-xl animate-fade-in-up animation-delay-200"
+      >
+        Experience the ultimate outdoor living space with our Pergoloft system —
+        a stunning glass roof pergola that delivers year-round comfort, rain or
+        shine, with unmatched elegance and durability.
+      </p>
+
+      <div
+        class="flex flex-col sm:flex-row gap-4 animate-fade-in-up animation-delay-300"
+      >
+        <Button variant="primary" size="lg" href="#contact-form-section">
+          Request a Consultation
+        </Button>
+        <Button
+          variant="outline"
+          size="lg"
+          href="#features-section"
+          class="border-white text-white hover:bg-white hover:text-gray-900"
+        >
+          Explore Features
+        </Button>
+      </div>
+    </div>
+  </SectionContainer>
+</section>
+
+<style>
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes fade-in-up {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .animate-fade-in {
+    animation: fade-in 0.8s ease-out forwards;
+  }
+
+  .animate-fade-in-up {
+    animation: fade-in-up 0.8s ease-out forwards;
+  }
+
+  .animation-delay-100 {
+    animation-delay: 0.1s;
+    opacity: 0;
+  }
+
+  .animation-delay-200 {
+    animation-delay: 0.2s;
+    opacity: 0;
+  }
+
+  .animation-delay-300 {
+    animation-delay: 0.3s;
+    opacity: 0;
+  }
+</style>

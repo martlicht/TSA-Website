@@ -1,0 +1,110 @@
+---
+import { Image } from 'astro:assets';
+import SectionContainer from '../../ui/SectionContainer.astro';
+import benefitImage from '../../../assets/images/pergoloft/pergoloft-image-b.webp';
+---
+
+<section class="py-16 sm:py-20 md:py-24 lg:py-32 bg-white">
+	<SectionContainer>
+		<!-- Header -->
+		<div class="text-center mb-12 sm:mb-16 lg:mb-20">
+			<span class="inline-block text-primary font-semibold text-sm uppercase tracking-wider mb-4">The Smart Investment</span>
+			<h2 class="scroll-fade-in font-sans text-3xl sm:text-4xl md:text-5xl font-bold mb-4 text-gray-900 max-w-3xl mx-auto">
+				Why Homeowners Choose <span class="text-primary">Pergoloft</span>
+			</h2>
+		</div>
+
+		<div class="flex flex-col lg:flex-row gap-12 lg:gap-16 items-center">
+			<!-- Left: Benefits Cards -->
+			<div class="w-full lg:w-1/2 space-y-4 sm:space-y-6">
+				<!-- Benefit 1 -->
+				<div class="scroll-fade-in bg-gray-50 rounded-2xl p-6 sm:p-8 hover:bg-gray-100 transition-colors group">
+					<div class="flex items-start gap-4">
+						<div class="flex-shrink-0 w-14 h-14 bg-primary/10 rounded-xl flex items-center justify-center group-hover:bg-primary/20 transition-colors">
+							<svg class="w-7 h-7 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+							</svg>
+						</div>
+						<div>
+							<h3 class="font-bold text-xl text-gray-900 mb-2">Instant Value Addition</h3>
+							<p class="text-gray-600 leading-relaxed">Increase your property value by up to 15% with a premium outdoor living space that impresses from day one.</p>
+						</div>
+					</div>
+				</div>
+
+				<!-- Benefit 2 -->
+				<div class="scroll-fade-in bg-gray-50 rounded-2xl p-6 sm:p-8 hover:bg-gray-100 transition-colors group" style="animation-delay: 100ms;">
+					<div class="flex items-start gap-4">
+						<div class="flex-shrink-0 w-14 h-14 bg-primary/10 rounded-xl flex items-center justify-center group-hover:bg-primary/20 transition-colors">
+							<svg class="w-7 h-7 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+							</svg>
+						</div>
+						<div>
+							<h3 class="font-bold text-xl text-gray-900 mb-2">Zero Maintenance Costs</h3>
+							<p class="text-gray-600 leading-relaxed">Unlike wooden pergolas that require annual staining or fabric awnings that need replacement, Pergoloft is virtually maintenance-free.</p>
+						</div>
+					</div>
+				</div>
+
+				<!-- Benefit 3 -->
+				<div class="scroll-fade-in bg-gray-50 rounded-2xl p-6 sm:p-8 hover:bg-gray-100 transition-colors group" style="animation-delay: 200ms;">
+					<div class="flex items-start gap-4">
+						<div class="flex-shrink-0 w-14 h-14 bg-primary/10 rounded-xl flex items-center justify-center group-hover:bg-primary/20 transition-colors">
+							<svg class="w-7 h-7 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+							</svg>
+						</div>
+						<div>
+							<h3 class="font-bold text-xl text-gray-900 mb-2">Eco-Friendly Design</h3>
+							<p class="text-gray-600 leading-relaxed">Reduce energy costs by creating natural shade that keeps your home cooler in summer, while maximizing natural light indoors.</p>
+						</div>
+					</div>
+				</div>
+
+				<!-- Benefit 4 -->
+				<div class="scroll-fade-in bg-gray-50 rounded-2xl p-6 sm:p-8 hover:bg-gray-100 transition-colors group" style="animation-delay: 300ms;">
+					<div class="flex items-start gap-4">
+						<div class="flex-shrink-0 w-14 h-14 bg-primary/10 rounded-xl flex items-center justify-center group-hover:bg-primary/20 transition-colors">
+							<svg class="w-7 h-7 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+							</svg>
+						</div>
+						<div>
+							<h3 class="font-bold text-xl text-gray-900 mb-2">Year-Round Enjoyment</h3>
+							<p class="text-gray-600 leading-relaxed">Host barbecues in the rain, enjoy coffee during snow, or stargaze under clear panels. Every season becomes outdoor season.</p>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- Right: Image -->
+			<div class="w-full lg:w-1/2">
+				<div class="scroll-fade-in relative rounded-3xl overflow-hidden shadow-2xl" style="animation-delay: 150ms;">
+					<Image 
+						src={benefitImage}
+						alt="Homeowners enjoying their Pergoloft outdoor space"
+						class="w-full h-full object-cover aspect-[3/4] sm:aspect-[4/5]"
+						loading="lazy"
+						quality={90}
+						format="webp"
+					/>
+					<!-- Testimonial Card -->
+					<div class="absolute bottom-6 left-6 right-6 bg-white rounded-2xl p-5 shadow-xl">
+						<div class="flex items-start gap-4">
+							<div class="text-primary">
+								<svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24">
+									<path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/>
+								</svg>
+							</div>
+							<div>
+								<p class="text-gray-700 text-sm sm:text-base mb-2">"Our Pergoloft transformed our backyard into a living room. We use it every single day, rain or shine."</p>
+								<p class="text-gray-500 text-sm font-medium">— The Morrison Family, Westchester NY</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</SectionContainer>
+</section>

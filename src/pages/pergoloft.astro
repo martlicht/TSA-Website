@@ -1,0 +1,44 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Header from "../components/sections/Header.astro";
+import Footer from "../components/sections/Footer.astro";
+import PergoloftHero from "../components/sections/pergoloft/PergoloftHero.astro";
+import PergoloftFeatures from "../components/sections/pergoloft/PergoloftFeatures.astro";
+import PergoloftShowcase from "../components/sections/pergoloft/PergoloftShowcase.astro";
+import PergoloftBenefits from "../components/sections/pergoloft/PergoloftBenefits.astro";
+import PergoloftGallery from "../components/sections/pergoloft/PergoloftGallery.astro";
+import PergoloftFAQ from "../components/sections/pergoloft/PergoloftFAQ.astro";
+import Testimonials from "../components/sections/landing/Testimonials.astro";
+import ContactForm from "../components/sections/landing/ContactForm.astro";
+
+const pergoloftTestimonials = [
+	{
+		quote: '"A game-changer for our outdoor living"',
+		text: 'The Pergoloft has completely transformed how we use our backyard. Even during the rainiest weeks, we can still enjoy our morning coffee outside. The quality is exceptional.',
+		author: '- Michael & Sarah T.',
+	},
+	{
+		quote: '"Worth every penny"',
+		text: 'We looked at traditional pergolas and fabric covers, but the Pergoloft was in a different league. The glass panels let in so much light while keeping us dry. Our neighbors are jealous!',
+		author: '- David K., Westchester',
+	},
+	{
+		quote: '"Professional from start to finish"',
+		text: 'The Tri State team was incredible. From the consultation to the one-day installation, everything was seamless. The Pergoloft looks stunning and works perfectly.',
+		author: '- Jennifer M., Long Island',
+	},
+];
+---
+
+<Layout title="Pergoloft - Premium Glass Pergola System | Tri State Awnings">
+	<Header />
+	<PergoloftHero />
+	<PergoloftFeatures />
+	<PergoloftShowcase />
+	<PergoloftBenefits />
+	<PergoloftGallery />
+	<PergoloftFAQ />
+	<Testimonials testimonials={pergoloftTestimonials} />
+	<ContactForm />
+	<Footer />
+</Layout>
