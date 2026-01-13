@@ -1,0 +1,55 @@
+---
+import { Image } from 'astro:assets';
+import SectionContainer from '../../ui/SectionContainer.astro';
+import showcaseImage from '../../../assets/images/pergoloft/pergoloft-image-a.webp';
+---
+
+<section class="relative py-20 sm:py-24 md:py-32 lg:py-40 overflow-hidden bg-gray-900">
+	<!-- Background Image with overlay -->
+	<div class="absolute inset-0">
+		<Image 
+			src={showcaseImage}
+			alt="Pergoloft installation showcasing outdoor living space"
+			class="w-full h-full object-cover opacity-40"
+			loading="lazy"
+			quality={80}
+			format="webp"
+		/>
+		<div class="absolute inset-0 bg-gradient-to-b from-gray-900/80 via-gray-900/60 to-gray-900/80"></div>
+	</div>
+
+	<SectionContainer class="relative z-10">
+		<div class="max-w-4xl mx-auto text-center">
+			<!-- Headline -->
+			<h2 class="scroll-fade-in font-sans text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight tracking-[-0.02em] text-white">
+				<span class="block text-white/80 font-medium text-xl sm:text-2xl mb-2">Experience the Difference</span>
+				365 Days of<br />
+				<span class="text-primary italic">Perfect Weather</span>
+			</h2>
+
+			<p class="scroll-fade-in text-lg sm:text-xl text-white/70 mb-12 max-w-2xl mx-auto leading-relaxed" style="animation-delay: 100ms;">
+				Rain or shine, the Pergoloft transforms your outdoor space into a year-round sanctuary. Entertain guests, relax with family, or simply enjoy the view — whatever the forecast.
+			</p>
+
+			<!-- Stats Grid -->
+			<div class="scroll-fade-in grid grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8" style="animation-delay: 200ms;">
+				<div class="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-6 hover:bg-white/10 transition-colors">
+					<span class="block text-4xl sm:text-5xl font-bold text-primary mb-2">50+</span>
+					<span class="text-white/70 text-sm sm:text-base">Wind MPH Resistance</span>
+				</div>
+				<div class="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-6 hover:bg-white/10 transition-colors">
+					<span class="block text-4xl sm:text-5xl font-bold text-primary mb-2">8mm</span>
+					<span class="text-white/70 text-sm sm:text-base">Tempered Glass</span>
+				</div>
+				<div class="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-6 hover:bg-white/10 transition-colors">
+					<span class="block text-4xl sm:text-5xl font-bold text-primary mb-2">100%</span>
+					<span class="text-white/70 text-sm sm:text-base">Leak-Proof</span>
+				</div>
+				<div class="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-6 hover:bg-white/10 transition-colors">
+					<span class="block text-4xl sm:text-5xl font-bold text-primary mb-2">1 Day</span>
+					<span class="text-white/70 text-sm sm:text-base">Installation</span>
+				</div>
+			</div>
+		</div>
+	</SectionContainer>
+</section>

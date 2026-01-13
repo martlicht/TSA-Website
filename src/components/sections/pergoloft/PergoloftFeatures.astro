@@ -1,0 +1,111 @@
+---
+import { Image } from 'astro:assets';
+import SectionContainer from '../../ui/SectionContainer.astro';
+import featureImage from '../../../assets/images/pergoloft/pergoloft-image.webp';
+---
+
+<section id="features-section" class="py-16 sm:py-20 md:py-24 lg:py-32 bg-white">
+	<SectionContainer>
+		<div class="flex flex-col lg:flex-row gap-12 lg:gap-16 xl:gap-24 items-center">
+			<!-- Left Column: Image -->
+			<div class="w-full lg:w-1/2 order-2 lg:order-1">
+				<div class="relative rounded-3xl overflow-hidden shadow-2xl">
+					<Image 
+						src={featureImage}
+						alt="Pergoloft glass pergola system showcasing modern design"
+						class="w-full h-full object-cover aspect-[4/3]"
+						loading="lazy"
+						quality={90}
+						format="webp"
+					/>
+					<!-- Floating Stats Card -->
+					<div class="absolute bottom-6 left-6 right-6 bg-white/95 backdrop-blur-sm rounded-2xl p-5 shadow-xl">
+						<div class="grid grid-cols-3 gap-4 text-center">
+							<div>
+								<span class="block text-2xl sm:text-3xl font-bold text-primary">25+</span>
+								<span class="text-xs sm:text-sm text-gray-600">Years Warranty</span>
+							</div>
+							<div class="border-x border-gray-200">
+								<span class="block text-2xl sm:text-3xl font-bold text-primary">100%</span>
+								<span class="text-xs sm:text-sm text-gray-600">Waterproof</span>
+							</div>
+							<div>
+								<span class="block text-2xl sm:text-3xl font-bold text-primary">UV</span>
+								<span class="text-xs sm:text-sm text-gray-600">Protected Glass</span>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- Right Column: Content -->
+			<div class="w-full lg:w-1/2 order-1 lg:order-2">
+				<span class="inline-block text-primary font-semibold text-sm uppercase tracking-wider mb-4">Why Choose Pergoloft</span>
+				
+				<h2 class="scroll-fade-in font-sans text-3xl sm:text-4xl md:text-5xl font-bold mb-6 leading-tight tracking-[-0.02em] text-gray-900">
+					Elevate Your Outdoor<br />
+					<span class="text-primary">Living Experience</span>
+				</h2>
+
+				<p class="scroll-fade-in text-gray-600 text-lg mb-10 leading-relaxed" style="animation-delay: 100ms;">
+					The Pergoloft is more than just a pergola — it's a complete outdoor transformation. With its innovative glass roof system and premium aluminum frame, you get the perfect blend of natural light, weather protection, and architectural beauty.
+				</p>
+
+				<!-- Features List -->
+				<div class="space-y-6">
+					<!-- Feature 1 -->
+					<div class="scroll-fade-in flex gap-4 items-start" style="animation-delay: 150ms;">
+						<div class="flex-shrink-0 w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center">
+							<svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
+							</svg>
+						</div>
+						<div>
+							<h3 class="font-bold text-lg text-gray-900 mb-1">Natural Light, No Compromise</h3>
+							<p class="text-gray-600">Tempered glass panels flood your space with sunlight while blocking harmful UV rays and keeping you dry.</p>
+						</div>
+					</div>
+
+					<!-- Feature 2 -->
+					<div class="scroll-fade-in flex gap-4 items-start" style="animation-delay: 200ms;">
+						<div class="flex-shrink-0 w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center">
+							<svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path>
+							</svg>
+						</div>
+						<div>
+							<h3 class="font-bold text-lg text-gray-900 mb-1">Engineered for Excellence</h3>
+							<p class="text-gray-600">Aircraft-grade aluminum frame designed to withstand extreme weather conditions and last a lifetime.</p>
+						</div>
+					</div>
+
+					<!-- Feature 3 -->
+					<div class="scroll-fade-in flex gap-4 items-start" style="animation-delay: 250ms;">
+						<div class="flex-shrink-0 w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center">
+							<svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z"></path>
+							</svg>
+						</div>
+						<div>
+							<h3 class="font-bold text-lg text-gray-900 mb-1">Fully Customizable</h3>
+							<p class="text-gray-600">Choose your dimensions, frame color, and glass type to perfectly match your home's architecture.</p>
+						</div>
+					</div>
+
+					<!-- Feature 4 -->
+					<div class="scroll-fade-in flex gap-4 items-start" style="animation-delay: 300ms;">
+						<div class="flex-shrink-0 w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center">
+							<svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+							</svg>
+						</div>
+						<div>
+							<h3 class="font-bold text-lg text-gray-900 mb-1">Professional Installation</h3>
+							<p class="text-gray-600">Our certified technicians ensure precise installation with minimal disruption to your home.</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</SectionContainer>
+</section>
