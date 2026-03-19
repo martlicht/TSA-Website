@@ -1,7 +1,74 @@
 ---
 import { Image } from "astro:assets";
+import type { ImageMetadata } from "astro";
 import SectionContainer from "../../ui/SectionContainer.astro";
 import hero2Background from "../../../assets/images/awnings/hero2-bg.webp";
+
+interface Props {
+  description?: string;
+  backgroundImage?: ImageMetadata;
+  backgroundAlt?: string;
+}
+
+const {
+  description,
+  backgroundImage = hero2Background,
+  backgroundAlt = "Contact Background",
+} = Astro.props;
+
+const HIGHLIGHT_CLASS = "contact-headline-accent";
+
+function escapeHtml(s: string): string {
+  return s
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;");
+}
+
+/** Si ya incluye HTML, se usa tal cual; si no, se añaden &lt;br /&gt; por \n y el span en la última línea. */
+function looksLikeHtml(s: string): boolean {
+  return /<\s*[a-z!/?]/i.test(s);
+}
+
+function headlineHtmlFromPlainText(text: string): string {
+  const segments = text.split("\n");
+  const wrap = (inner: string) =>
+    `<span class="${HIGHLIGHT_CLASS}">${inner}</span>`;
+
+  let out = "";
+  segments.forEach((segment, i) => {
+    const line = segment.trim();
+    const isLast = i === segments.length - 1;
+
+    if (!isLast) {
+      if (line) out += escapeHtml(line);
+      out += "<br />";
+      return;
+    }
+
+    const words = line.split(/\s+/).filter(Boolean);
+    if (words.length === 0) return;
+    if (words.length === 1) {
+      out += wrap(escapeHtml(words[0]));
+      return;
+    }
+    if (words.length === 2) {
+      out += `${wrap(escapeHtml(words[0]))} ${escapeHtml(words[1])}`;
+      return;
+    }
+    const last = words.pop()!;
+    out += `${escapeHtml(words.join(" "))} ${wrap(escapeHtml(last))}`;
+  });
+
+  return out;
+}
+
+const descriptionHtml = description
+  ? looksLikeHtml(description)
+    ? description
+    : headlineHtmlFromPlainText(description)
+  : null;
 ---
 
 <section
@@ -11,8 +78,8 @@ import hero2Background from "../../../assets/images/awnings/hero2-bg.webp";
   <!-- Background Image -->
   <div class="absolute inset-0">
     <Image
-      src={hero2Background}
-      alt="Contact Background"
+      src={backgroundImage}
+      alt={backgroundAlt}
       class="w-full h-full object-cover"
       loading="lazy"
       quality={80}
@@ -31,12 +98,16 @@ import hero2Background from "../../../assets/images/awnings/hero2-bg.webp";
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
       <!-- Left: Headline -->
       <div class="text-white">
-        <h2 class="contact-headline mb-6">
-          Find out how<br />
-          we can<br />
-          transform<br />
-          <span class="text-primary italic">your</span> space.
-        </h2>
+        {descriptionHtml ? (
+          <h2 class="contact-headline mb-6" set:html={descriptionHtml} />
+        ) : (
+          <h2 class="contact-headline mb-6">
+            Find out how<br />
+            we can<br />
+            transform<br />
+            <span class={`${HIGHLIGHT_CLASS}`}>your</span> space.
+          </h2>
+        )}
       </div>
 
       <!-- Right: Form Card -->
@@ -204,6 +275,22 @@ import hero2Background from "../../../assets/images/awnings/hero2-bg.webp";
     font-size: 3rem;
     line-height: 110%;
     letter-spacing: -0.02em;
+  }
+
+  /* :global → aplica también al HTML inyectado con set:html */
+  .contact-headline :global(.contact-headline-accent) {
+    @apply text-primary;
+    display: inline-block;
+  }
+
+  .contact-headline :global(.contact-headline-accent)::after {
+    content: "";
+    display: block;
+    width: 100%;
+    margin-top: 0.1em;
+    height: clamp(8px, 0.28em, 12px);
+    background-color: currentColor;
+    border-radius: 1px;
   }
 
   @media (min-width: 640px) {

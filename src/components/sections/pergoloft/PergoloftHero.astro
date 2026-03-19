@@ -1,6 +1,5 @@
 ---
 import { Image } from "astro:assets";
-import Button from "../../ui/Button.astro";
 import SectionContainer from "../../ui/SectionContainer.astro";
 import heroImage from "../../../assets/images/pergoloft/pergoloft-hero.webp";
 ---
@@ -26,47 +25,41 @@ import heroImage from "../../../assets/images/pergoloft/pergoloft-hero.webp";
 
   <!-- Content -->
   <SectionContainer class="relative z-10 pt-32 sm:pt-40 md:pt-48 pb-20">
-    <div class="max-w-2xl lg:max-w-3xl">
+    <div class="mx-auto text-center">
       <h1
-        class="font-sans text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-6 leading-[1.05] tracking-[-0.02em] text-white animate-fade-in-up"
+        class="font-sans text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold mb-8 leading-[1.05] tracking-[-0.02em] text-white animate-fade-in-up"
       >
-        The <span class="text-primary">Pergoloft</span>
+        The PergoLoft
       </h1>
 
       <p
-        class="text-lg sm:text-xl md:text-2xl text-white/90 mb-4 leading-relaxed font-light animate-fade-in-up animation-delay-100"
+        class="hero-description text-white mb-10 max-w-4xl mx-auto animate-fade-in-up animation-delay-100"
       >
-        Where Architecture Meets Innovation
+        The latest awning innovation from Tri-State Awnings, the PergoLoft
+        combines awning functionality with a luxurious pergola aesthetic.
       </p>
 
-      <p
-        class="text-base sm:text-lg text-white/75 mb-10 leading-relaxed max-w-xl animate-fade-in-up animation-delay-200"
-      >
-        Experience the ultimate outdoor living space with our Pergoloft system —
-        a stunning glass roof pergola that delivers year-round comfort, rain or
-        shine, with unmatched elegance and durability.
-      </p>
-
-      <div
-        class="flex flex-col sm:flex-row gap-4 animate-fade-in-up animation-delay-300"
-      >
-        <Button variant="primary" size="lg" href="#contact-form-section">
-          Request a Consultation
-        </Button>
-        <Button
-          variant="outline"
-          size="lg"
-          href="#features-section"
-          class="border-white text-white hover:bg-white hover:text-gray-900"
+      <div class="flex justify-center animate-fade-in-up animation-delay-200">
+        <a
+          href="#contact-form-section"
+          class="inline-flex items-center justify-center px-10 py-4 text-lg font-medium text-white bg-black/30 border-2 border-white rounded-xl hover:bg-black/40 transition-colors"
         >
-          Explore Features
-        </Button>
+          Get yours!
+        </a>
       </div>
     </div>
   </SectionContainer>
 </section>
 
 <style>
+  .hero-description {
+    font-family: "Inter", system-ui, sans-serif;
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 140%;
+    letter-spacing: -0.005em;
+  }
+
   @keyframes fade-in {
     from {
       opacity: 0;
@@ -102,11 +95,6 @@ import heroImage from "../../../assets/images/pergoloft/pergoloft-hero.webp";
 
   .animation-delay-200 {
     animation-delay: 0.2s;
-    opacity: 0;
-  }
-
-  .animation-delay-300 {
-    animation-delay: 0.3s;
     opacity: 0;
   }
 </style>

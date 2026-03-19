@@ -1,0 +1,24 @@
+---
+import SectionContainer from '../../ui/SectionContainer.astro';
+---
+
+<section class="py-16 sm:py-20 md:py-24 lg:py-32 bg-white">
+	<SectionContainer>
+		<div class="flex flex-col lg:flex-row gap-12 lg:gap-16 xl:gap-20 items-start max-w-6xl mx-auto">
+			<!-- Left Column: Title (top-aligned, wide enough for 2 lines) -->
+			<div class="lg:w-[44%] flex-shrink-0 text-left lg:min-w-[420px]">
+				<h2 class="font-sans text-3xl sm:text-4xl md:text-[52px] font-medium leading-[1.05] tracking-[-0.02em] text-gray-900 w-full">
+					<span class="block whitespace-nowrap">Where Outdoor Living</span>
+					Meets <span class="text-[#A2D7A5] font-medium">Luxury</span>
+				</h2>
+			</div>
+
+			<!-- Right Column: Description (wider, top-aligned with first line of title) -->
+			<div class="lg:w-[56%] lg:flex-grow text-left">
+				<p class="text-gray-600 text-base sm:text-lg leading-relaxed max-w-[620px]">
+					A thoughtful combination of polycarbonate, aluminum, and premium vinyl fabric. Experience the convenience of a roll-up awning, the resilience of structural aluminum, and the sophistication of a pergola.
+				</p>
+			</div>
+		</div>
+	</SectionContainer>
+</section>

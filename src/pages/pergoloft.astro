@@ -3,8 +3,10 @@ import Layout from "../layouts/Layout.astro";
 import Header from "../components/sections/Header.astro";
 import Footer from "../components/sections/Footer.astro";
 import PergoloftHero from "../components/sections/pergoloft/PergoloftHero.astro";
+import PergoloftIntro from "../components/sections/pergoloft/PergoloftIntro.astro";
 import PergoloftFeatures from "../components/sections/pergoloft/PergoloftFeatures.astro";
 import PergoloftShowcase from "../components/sections/pergoloft/PergoloftShowcase.astro";
+import PergoloftSukkah from "../components/sections/pergoloft/PergoloftSukkah.astro";
 import PergoloftBenefits from "../components/sections/pergoloft/PergoloftBenefits.astro";
 import PergoloftGallery from "../components/sections/pergoloft/PergoloftGallery.astro";
 import PergoloftFAQ from "../components/sections/pergoloft/PergoloftFAQ.astro";
@@ -33,12 +35,14 @@ const pergoloftTestimonials = [
 <Layout title="Pergoloft - Premium Glass Pergola System | Tri State Awnings">
 	<Header />
 	<PergoloftHero />
+	<PergoloftIntro />
 	<PergoloftFeatures />
 	<PergoloftShowcase />
-	<PergoloftBenefits />
+	<PergoloftSukkah />
+	<!-- <PergoloftBenefits /> -->
 	<PergoloftGallery />
 	<PergoloftFAQ />
-	<Testimonials testimonials={pergoloftTestimonials} />
-	<ContactForm />
+	<!-- <Testimonials testimonials={pergoloftTestimonials} /> -->
+	<ContactForm description="Experience Your Luxury Outdoor Space with PergoLoft" />
 	<Footer />
 </Layout>
