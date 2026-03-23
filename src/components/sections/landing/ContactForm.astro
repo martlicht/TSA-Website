@@ -177,6 +177,22 @@ const descriptionHtml = description
              <div id="phone-error" class="field-error hidden"></div>
            </div>
 
+           <!-- Zip code -->
+           <div>
+             <label for="zipcode" class="form-label"> Zip code </label>
+             <input
+               type="text"
+               id="zipcode"
+               name="zipcode"
+               placeholder="e.g. 10001 (optional)"
+               class="form-input"
+               inputmode="numeric"
+               autocomplete="postal-code"
+               maxlength="5"
+             />
+             <div id="zipcode-error" class="field-error hidden"></div>
+           </div>
+
           <!-- Products Interest Checkboxes -->
           <div>
             <label class="form-label mb-3">What products are you interested in?</label>
@@ -559,6 +575,16 @@ const descriptionHtml = description
     });
   }
 
+  function initZipcodeInput() {
+    const zipInput = document.getElementById("zipcode") as HTMLInputElement;
+    if (!zipInput) return;
+
+    zipInput.addEventListener("input", () => {
+      const digits = zipInput.value.replace(/\D/g, "").slice(0, 5);
+      zipInput.value = digits;
+    });
+  }
+
    // Helper function to show field errors
    function showFieldError(fieldName: string, message: string) {
      const errorElement = document.getElementById(`${fieldName}-error`);
@@ -595,6 +621,7 @@ const descriptionHtml = description
      last_name: "lastName",
      email: "email",
      phone_number: "phone",
+     zip_code: "zipcode",
    };
 
    // Contact Form Handler
@@ -608,6 +635,7 @@ const descriptionHtml = description
 
      // Initialize phone input
      initPhoneInput();
+     initZipcodeInput();
 
      // Clear field errors when user starts typing
      const formInputs = form.querySelectorAll("input");
@@ -646,6 +674,18 @@ const descriptionHtml = description
       // Get form data
       const formData = new FormData(form);
 
+      const zipValue = String(formData.get("zipcode") ?? "").trim();
+      const zipOk = zipValue === "" || /^\d{1,5}$/.test(zipValue);
+      if (!zipOk) {
+        const zipInput = document.getElementById("zipcode") as HTMLInputElement;
+        showFieldError(
+          "zipcode",
+          "ZIP code must be numbers only, up to 5 digits"
+        );
+        zipInput?.focus();
+        return;
+      }
+
       // Get selected products
       const selectedProducts = Array.from(formData.getAll("products")) as string[];
       const productsString = selectedProducts.length > 0 ? selectedProducts.join(", ") : "";
@@ -658,6 +698,7 @@ const descriptionHtml = description
         email: formData.get("email") as string,
         phone_number: phoneDigits,
         phone_country_code: "US",
+        zip_code: zipValue,
         source: "tristateawnings.com",
         products_interest: productsString,
       });

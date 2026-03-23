@@ -1,9 +1,9 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import { Image } from 'astro:assets';
-import { allGalleryImages } from '../data/awningGallery';
+import { pergoloftGalleryImages } from '../data/pergoloftGallery';
 
-const galleryImages = allGalleryImages;
+const galleryImages = pergoloftGalleryImages;
 
 // Obtener el índice de la imagen desde la URL
 const url = Astro.url;
@@ -11,12 +11,12 @@ const imageIndex = parseInt(url.searchParams.get('index') || '0');
 const currentImageIndex = Math.max(0, Math.min(imageIndex, galleryImages.length - 1));
 ---
 
-<Layout title="Awning Gallery">
+<Layout title="Pergoloft Gallery">
 	<!-- Cinema Mode Gallery Viewer -->
 	<div class="cinema-container" id="gallery-viewer">
 		<!-- Close Button -->
 		<a 
-			href="/awnings#gallery-section"
+			href="/pergoloft#gallery-section"
 			class="close-button"
 			aria-label="Close gallery"
 		>
@@ -196,7 +196,7 @@ const currentImageIndex = Math.max(0, Math.min(imageIndex, galleryImages.length 
 	// Keyboard navigation
 	document.addEventListener('keydown', (e) => {
 		if (e.key === 'Escape') {
-			window.location.href = '/awnings#gallery-section';
+			window.location.href = '/pergoloft#gallery-section';
 		} else if (e.key === 'ArrowLeft') {
 			prevImage();
 		} else if (e.key === 'ArrowRight') {

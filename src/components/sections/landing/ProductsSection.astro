@@ -1,9 +1,12 @@
 ---
 import ProductCard from '../../ui/ProductCard.astro';
+import ProductBannerCard from '../../ui/ProductBannerCard.astro';
 import SectionContainer from '../../ui/SectionContainer.astro';
 import awningImage from '../../../assets/images/awning.webp';
-import pergoloftImage from '../../../assets/images/pergoloft/pergoloft-image.webp';
-import sukkahImage from '../../../assets/images/sukkah.webp';
+/** Placeholder — swap this import for your architectural canopies asset */
+import architecturalCanopiesImage from '../../../assets/images/canopie-product.png';
+import pergoloftImage from '../../../assets/images/pergoloft/pergoloft-product.png';
+import sukkahImage from '../../../assets/images/sukkah-product.png';
 
 interface Product {
 	title: string;
@@ -69,6 +72,16 @@ const products: Product[] = [
 				</div>
 			))}
 		</div>
+
+		<div class="mt-6 sm:mt-8 lg:mt-[34px] scroll-fade-in">
+			<ProductBannerCard
+				title="Architectural Canopies"
+				description="Explore outdoor solutions designed for restaurants, businesses, and commercial spaces."
+				image={architecturalCanopiesImage}
+				href="https://apexcanopies.com/"
+			/>
+		</div>
+		<!-- Full-width banner -->
 	</SectionContainer>
 </section>
 

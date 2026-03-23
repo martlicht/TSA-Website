@@ -1,70 +1,323 @@
 ---
-import { Image } from 'astro:assets';
-import type { ImageMetadata } from 'astro';
-import SectionContainer from '../../ui/SectionContainer.astro';
+import { Image } from "astro:assets";
+import Button from "../../ui/Button.astro";
+import PergoloftImageA from "../../../assets/images/pergoloft/pergoloft-action-A.png";
+import PergoloftImageB from "../../../assets/images/pergoloft/pergoloft-action-B.png";
+import PergoloftImageC from "../../../assets/images/pergoloft/pergoloft-action-C.png";
+import PergoloftImageD from "../../../assets/images/pergoloft/pergoloft-action-D.png";
+import { pergoloftGalleryImages } from "../../../data/pergoloftGallery";
 
-// Import all Pergoloft images dynamically
-const imageModules = import.meta.glob<{ default: ImageMetadata }>('../../../assets/images/pergoloft/*.{webp,png,jpg,jpeg}', {
-	eager: true
-});
+/** Orden: A = arriba-izq, B = abajo-izq, C = arriba-der, D = abajo-der */
+const previewImages = [
+  {
+    src: PergoloftImageA,
+    alt: "Pergoloft glass pergola installation",
+    viewerIndex: 0,
+  },
+  {
+    src: PergoloftImageB,
+    alt: "Pergoloft glass pergola installation",
+    viewerIndex: 1,
+  },
+  {
+    src: PergoloftImageC,
+    alt: "Pergoloft glass pergola installation",
+    viewerIndex: 2,
+  },
+  {
+    src: PergoloftImageD,
+    alt: "Pergoloft glass pergola installation",
+    viewerIndex: 3,
+  },
+];
 
-// Filter out hero image and convert to array
-const galleryImages = Object.entries(imageModules)
-	.filter(([path]) => !path.includes('hero'))
-	.map(([path, module]) => {
-		const image = module.default;
-		const aspectRatio = image.width && image.height ? image.width / image.height : 1.5;
-		return {
-			src: image,
-			alt: `Pergoloft glass pergola installation - ${path.split('/').pop()?.replace(/\.(webp|png|jpg|jpeg)$/i, '') || 'Gallery image'}`,
-			aspectRatio,
-			width: image.width,
-			height: image.height,
-		};
-	});
+/** Proporciones nativas por tile (ancho×alto) — mismo orden que previewImages */
+const tileAspectClasses = [
+  "aspect-[594/485]",
+  "aspect-[594/382]",
+  "aspect-[526/300]",
+  "aspect-[526/567]",
+] as const;
+
+const hasExtendedGallery = pergoloftGalleryImages.length > 0;
 ---
 
-<section id="gallery-section" class="py-16 sm:py-20 md:py-24 lg:py-32 bg-gray-50">
-	<SectionContainer>
-		<!-- Header -->
-		<div class="text-center mb-12 sm:mb-16">
-			<span class="inline-block text-primary font-semibold text-sm uppercase tracking-wider mb-4">Our Portfolio</span>
-			<h2 class="scroll-fade-in font-sans text-3xl sm:text-4xl md:text-5xl lg:text-5xl font-medium mb-4 text-gray-900">
-				See It In <span class="text-primary italic">Action</span>
-			</h2>
-			<p class="scroll-fade-in text-gray-600 text-lg md:text-2xl  mx-auto font-medium" style="animation-delay: 100ms;">
-				Browse our collection of stunning Pergoloft installations across the Tri-State area.
-			</p>
-		</div>
+<section
+  id="gallery-section"
+  class="py-16 sm:py-20 md:py-24 lg:py-32 bg-gray-50"
+>
+  <div
+    class="text-center mb-12 sm:mb-16"
+    transition:name="pergoloft-gallery-header"
+  >
+    <span
+      class="inline-block text-primary font-semibold text-sm uppercase tracking-wider mb-4"
+      >Our Portfolio</span
+    >
 
-		<!-- Gallery Grid -->
-		<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
-			{galleryImages.map((image, index) => (
-				<div 
-					class={`scroll-fade-in group relative overflow-hidden rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 ${index === 0 ? 'sm:col-span-2 sm:row-span-2' : ''}`}
-					style={`animation-delay: ${index * 80}ms;`}
-				>
-					<div class={`relative ${index === 0 ? 'aspect-[4/3] sm:aspect-square' : 'aspect-[4/3]'}`}>
-						<Image 
-							src={image.src}
-							alt={image.alt}
-							class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-							loading="lazy"
-							quality={85}
-							format="webp"
-						/>
-						<!-- Hover Overlay -->
-						<div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-							<div class="absolute bottom-4 left-4 right-4">
-								<p class="text-white font-medium text-sm sm:text-base">View Installation</p>
-							</div>
-						</div>
-						<!-- Corner Accent -->
-						<div class="absolute top-4 right-4 w-3 h-3 border-t-2 border-r-2 border-white/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-						<div class="absolute bottom-4 left-4 w-3 h-3 border-b-2 border-l-2 border-white/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-					</div>
-				</div>
-			))}
-		</div>
-	</SectionContainer>
+    <h2
+      class="scroll-fade-in font-sans text-3xl sm:text-4xl md:text-5xl lg:text-5xl font-medium mb-4 text-gray-900"
+    >
+      See It In <span class="text-primary italic">Action</span>
+    </h2>
+
+    <p
+      class="scroll-fade-in text-gray-600 text-lg md:text-2xl mx-auto font-medium"
+      style="animation-delay: 100ms;"
+    >
+      Browse our collection of stunning Pergoloft installations across the
+      Tri-State area.
+    </p>
+  </div>
+
+  <!-- Mosaico: cada tile con aspect-ratio nativo (px); altura total intrínseca -->
+  <div class="pergoloft-mosaic max-w-5xl mx-auto w-full">
+    <div
+      class="hidden sm:grid sm:grid-cols-2 gap-4 md:gap-5 lg:gap-6 items-start"
+    >
+      <div class="flex min-w-0 flex-col gap-4 md:gap-5 lg:gap-6">
+        {
+          [0, 1].map((slot) => {
+            const image = previewImages[slot];
+            return (
+              <a
+                href={`/pergoloft-gallery-viewer?index=${image.viewerIndex}`}
+                class:list={[
+                  "scroll-fade-in group relative block w-full overflow-hidden rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500",
+                  tileAspectClasses[slot],
+                ]}
+                style={`animation-delay: ${slot * 80}ms;`}
+                transition:name={`gallery-image-${slot}`}
+              >
+                <Image
+                  src={image.src}
+                  alt={image.alt}
+                  class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
+                  loading="lazy"
+                  quality={85}
+                  format="webp"
+                />
+                <div class="mosaic-overlay" />
+              </a>
+            );
+          })
+        }
+      </div>
+      <div class="flex min-w-0 flex-col gap-4 md:gap-5 lg:gap-6">
+        {
+          [2, 3].map((slot) => {
+            const image = previewImages[slot];
+            return (
+              <a
+                href={`/pergoloft-gallery-viewer?index=${image.viewerIndex}`}
+                class:list={[
+                  "scroll-fade-in group relative block w-full overflow-hidden rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500",
+                  tileAspectClasses[slot],
+                ]}
+                style={`animation-delay: ${slot * 80}ms;`}
+                transition:name={`gallery-image-${slot}`}
+              >
+                <Image
+                  src={image.src}
+                  alt={image.alt}
+                  class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
+                  loading="lazy"
+                  quality={85}
+                  format="webp"
+                />
+                <div class="mosaic-overlay" />
+              </a>
+            );
+          })
+        }
+      </div>
+    </div>
+
+    <!-- Móvil: mismo orden A → B → C → D -->
+    <div class="flex flex-col gap-4 sm:hidden">
+      {
+        previewImages.map((image, layoutIndex) => {
+          return (
+            <a
+              href={`/pergoloft-gallery-viewer?index=${image.viewerIndex}`}
+              class:list={[
+                "scroll-fade-in group relative overflow-hidden rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 block",
+                tileAspectClasses[layoutIndex],
+              ]}
+              style={`animation-delay: ${layoutIndex * 80}ms;`}
+              transition:name={`gallery-image-mobile-${layoutIndex}`}
+            >
+              <Image
+                src={image.src}
+                alt={image.alt}
+                class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
+                loading="lazy"
+                quality={85}
+                format="webp"
+              />
+              <div class="mosaic-overlay" />
+            </a>
+          );
+        })
+      }
+    </div>
+
+    {
+      hasExtendedGallery && (
+        <div class="text-center mt-10 sm:mt-12">
+          <Button
+            variant="primary"
+            size="lg"
+            class="pergoloft-see-more-trigger"
+            transition:name="pergoloft-see-more-button"
+          >
+            See more
+          </Button>
+        </div>
+      )
+    }
+  </div>
+
+  {
+    hasExtendedGallery && (
+      <dialog
+        id="pergoloft-gallery-more-dialog"
+        class="pergoloft-more-dialog max-h-[90vh] w-[min(100%,42rem)] max-w-[calc(100vw-2rem)] rounded-2xl border-0 bg-white p-0 shadow-2xl"
+        aria-labelledby="pergoloft-more-dialog-title"
+      >
+        <div class="flex max-h-[90vh] flex-col">
+          <div
+            class="flex shrink-0 items-center justify-between gap-4 border-b border-gray-100 px-5 py-4 sm:px-6"
+          >
+            <h3
+              id="pergoloft-more-dialog-title"
+              class="font-sans text-lg font-semibold text-gray-900 sm:text-xl"
+            >
+              Gallery
+            </h3>
+            <button
+              type="button"
+              class="pergoloft-more-dialog-close rounded-lg p-2 text-gray-500 transition hover:bg-gray-100 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-primary"
+              aria-label="Close gallery"
+            >
+              <svg
+                class="h-6 w-6"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                aria-hidden="true"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M6 18L18 6M6 6l12 12"></path>
+              </svg>
+            </button>
+          </div>
+          <div
+            class="min-h-0 flex-1 overflow-y-auto overscroll-contain px-5 py-4 sm:px-6 sm:py-5"
+          >
+            <div class="grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4">
+              {
+                pergoloftGalleryImages.map((item, globalIndex) => (
+                  <a
+                    href={`/pergoloft-gallery-viewer?index=${globalIndex}`}
+                    class="group relative aspect-[4/3] overflow-hidden rounded-xl shadow-md ring-1 ring-black/5 transition hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                  >
+                    <Image
+                      src={item.src}
+                      alt={item.alt}
+                      width={item.width}
+                      height={item.height}
+                      class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                      loading="lazy"
+                      quality={80}
+                      format="webp"
+                    />
+                  </a>
+                ))
+              }
+            </div>
+          </div>
+        </div>
+      </dialog>
+    )
+  }
 </section>
+
+<style>
+  .mosaic-overlay {
+    pointer-events: none;
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to top,
+      rgba(0, 0, 0, 0.55) 0%,
+      transparent 45%
+    );
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .group:hover .mosaic-overlay {
+    opacity: 1;
+  }
+
+  .pergoloft-more-dialog::backdrop {
+    background: rgba(17, 24, 39, 0.55);
+    backdrop-filter: blur(4px);
+  }
+</style>
+
+<script>
+  function getMoreDialog(): HTMLDialogElement | null {
+    return document.getElementById(
+      "pergoloft-gallery-more-dialog",
+    ) as HTMLDialogElement | null;
+  }
+
+  function openPergoloftMoreDialog() {
+    getMoreDialog()?.showModal();
+  }
+
+  function closePergoloftMoreDialog() {
+    getMoreDialog()?.close();
+  }
+
+  function handleDocumentClick(e: MouseEvent) {
+    const t = e.target as HTMLElement | null;
+    if (!t) return;
+    if (t.closest(".pergoloft-see-more-trigger")) {
+      e.preventDefault();
+      openPergoloftMoreDialog();
+      return;
+    }
+    if (t.closest(".pergoloft-more-dialog-close")) {
+      e.preventDefault();
+      closePergoloftMoreDialog();
+      return;
+    }
+    if (
+      t.id === "pergoloft-gallery-more-dialog" &&
+      e.target === t
+    ) {
+      closePergoloftMoreDialog();
+    }
+  }
+
+  function handleDocumentKeydown(e: KeyboardEvent) {
+    if (e.key !== "Escape") return;
+    const dialog = document.getElementById(
+      "pergoloft-gallery-more-dialog",
+    ) as HTMLDialogElement | null;
+    if (dialog?.open) closePergoloftMoreDialog();
+  }
+
+  const w = window as Window & { __pergoloftGalleryModalListeners?: boolean };
+  if (!w.__pergoloftGalleryModalListeners) {
+    w.__pergoloftGalleryModalListeners = true;
+    document.addEventListener("click", handleDocumentClick);
+    document.addEventListener("keydown", handleDocumentKeydown);
+  }
+</script>

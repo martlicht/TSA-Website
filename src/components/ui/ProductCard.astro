@@ -40,7 +40,7 @@ const {
 
     <!-- Dark Overlay for better text contrast -->
     <div
-      class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent"
+      class="absolute inset-0 bg-gradient-to-t from-black/50 via-black/0 to-transparent"
     >
     </div>
 
@@ -84,11 +84,10 @@ const {
     background-color: #ffffff;
     border-radius: 13.81px;
     border: 0.86px solid rgba(0, 0, 0, 0.1); /* #000000 with 10% opacity */
-    /* First shadow: X: 0, Y: 5.18px, Blur: 10.36px, Spread: 0, Color: #000000, Opacity: 3% */
-    /* Second shadow: X: 0, Y: 3.45px, Blur: 6.91px, Spread: 0, Color: #000000, Opacity: 2% */
+    /* Soft, diffuse shadow — large blur, low opacity (looser than tight drop shadows) */
     box-shadow:
-      0 5.18px 10.36px 0 rgba(0, 0, 0, 0.03),
-      0 3.45px 6.91px 0 rgba(0, 0, 0, 0.02);
+      0 8px 28px rgba(0, 0, 0, 0),
+      0 16px 48px rgba(0, 0, 0, 0);
     transition:
       transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
       box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -99,7 +98,7 @@ const {
 
   /* Metallic shine effect for product cards - same as buttons */
   .product-card-shine::before {
-    content: '';
+    content: "";
     position: absolute;
     top: 0;
     left: -100%;
@@ -125,12 +124,9 @@ const {
 
   .product-card:hover {
     transform: translateY(-4px);
-    /* Enhanced shadows on hover while maintaining Figma base shadows */
     box-shadow:
-      0 5.18px 10.36px 0 rgba(0, 0, 0, 0.03),
-      0 3.45px 6.91px 0 rgba(0, 0, 0, 0.02),
-      0 20px 25px -5px rgba(0, 0, 0, 0.1),
-      0 10px 10px -5px rgba(0, 0, 0, 0.04);
+      0 12px 36px rgba(0, 0, 0, 0),
+      0 24px 56px rgba(0, 0, 0, 0.07);
   }
 
   /* Product Card Title Typography */

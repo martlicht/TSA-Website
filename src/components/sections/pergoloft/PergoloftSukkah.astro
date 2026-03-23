@@ -2,6 +2,7 @@
 import { Image } from "astro:assets";
 import SectionContainer from "../../ui/SectionContainer.astro";
 import sukkahImage from "../../../assets/images/pergoloft/pergoloft-image-g.webp";
+import SukkahPergoloftImage from "../../../assets/images/pergoloft/sukkah-pergoloft.png";
 ---
 
 <section class="py-20 sm:py-24 md:py-28 bg-[#f5f6f6]">
@@ -10,18 +11,18 @@ import sukkahImage from "../../../assets/images/pergoloft/pergoloft-image-g.webp
       class="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-[1fr_1.18fr] gap-10 lg:gap-14 items-start"
     >
       <div class="text-left max-w-[31rem]">
-        <p class="text-primary/90 text-xs font-medium uppercase tracking-[0.1em] mb-5">
+        <p class="text-primary/90 text-xs font-medium uppercase tracking-[0.1em] mb-10">
           Next Level Experience
         </p>
 
         <h2
-          class="font-sans text-4xl sm:text-5xl md:text-[40px] font-medium leading-[1.04] tracking-[-0.02em] text-gray-900 mb-9"
+          class="font-sans text-4xl sm:text-5xl md:text-[40px] font-medium leading-[2.04] tracking-[-0.02em] text-gray-900 mb-12"
         >
           Seamless Integration with <br />
           <span class="text-primary italic">The Instant Sukkah</span>
         </h2>
 
-        <div class="space-y-7 text-gray-600 text-lg sm:text-xl leading-[1.45] max-w-[34ch]">
+        <div class="space-y-7 text-gray-600 text-xl sm:text-xl leading-[1.45] max-w-[34ch]">
           <p>
             Designed for combined functionality and ease, the Instant Sukkah is
             the only structure that brings interior design outdoors in less than
@@ -39,9 +40,9 @@ import sukkahImage from "../../../assets/images/pergoloft/pergoloft-image-g.webp
       <div class="lg:pt-12 h-full">
         <div class="rounded-[24px] overflow-hidden shadow-lg h-full " >
           <Image
-            src={sukkahImage}
+            src={SukkahPergoloftImage}
             alt="Pergoloft integrated with Instant Sukkah enclosure"
-            class="w-full h-full object-cover aspect-[16/10]"
+            class="w-full h-full object-cover aspect-[16/14]"
             loading="lazy"
             quality={90}
             format="webp"
