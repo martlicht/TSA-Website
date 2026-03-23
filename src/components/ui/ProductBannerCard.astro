@@ -31,9 +31,7 @@ const {
       class="absolute inset-0 h-full w-full object-cover transition-transform duration-500 hover:scale-105"
       loading="lazy"
     />
-    <div
-      class="pointer-events-none absolute inset-0 bg-gradient-to-b from-transparent via-black/10  to-black/0"
-    >
+    <div class="pointer-events-none absolute inset-0 product-banner-gradient" aria-hidden="true">
     </div>
     <div
       class="relative z-10 flex min-h-[260px] flex-col justify-end gap-6 p-6 sm:min-h-[300px] sm:p-8 md:min-h-[320px] md:flex-row md:items-end md:justify-between"
@@ -84,5 +82,16 @@ const {
   .product-banner-title,
   .product-banner-description {
     font-family: "Inter", system-ui, sans-serif;
+  }
+
+  /* Sombra solo abajo: arriba transparente, abajo oscuro para contraste del texto */
+  .product-banner-gradient {
+    background: linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0) 0%,
+      rgba(0, 0, 0, 0) 38%,
+      rgba(0, 0, 0, 0.45) 72%,
+      rgba(0, 0, 0, 0.78) 100%
+    );
   }
 </style>
