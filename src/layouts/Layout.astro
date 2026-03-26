@@ -1,6 +1,7 @@
 ---
 import { ViewTransitions } from "astro:transitions";
 import { SITE_CONFIG, getPageTitle } from "../config/site";
+import Analytics from '@vercel/analytics/astro'
 
 interface Props {
   title?: string;
@@ -69,6 +70,7 @@ const ogImage = image || `${SITE_CONFIG.url}/og-image.jpg`;
     />
 
     <ViewTransitions />
+    <Analytics />
   </head>
   <body class="font-sans antialiased">
     <slot />
