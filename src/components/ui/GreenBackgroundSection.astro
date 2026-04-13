@@ -9,7 +9,7 @@ interface Props {
 const { backgroundImage, class: className = '' } = Astro.props;
 ---
 
-<section class={`relative w-full min-h-screen flex items-center justify-center overflow-hidden ${className}`}>
+<section class={`relative w-full min-h-screen flex items-start justify-center overflow-hidden md:items-center ${className}`}>
 	<!-- Background Image with zoom effect -->
 	<div class="absolute inset-0">
 		<Image 

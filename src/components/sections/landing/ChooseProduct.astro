@@ -55,10 +55,10 @@ const products: ProductOption[] = [
 ];
 ---
 
-<section id="choose-product-section" class="py-12 sm:py-16 md:py-20 lg:py-24 bg-[#F5F5F5]">
+<section id="choose-product-section" class="py-10 sm:py-16 md:py-20 lg:py-24 bg-[#F5F5F5]">
 	<SectionContainer>
 		<!-- Headline -->
-		<div class="text-center mb-12 sm:mb-16">
+		<div class="text-center mb-8 sm:mb-12 md:mb-16">
 			<h2 class="choose-headline mb-4">
 				Choose what feels right
 			</h2>
@@ -68,7 +68,7 @@ const products: ProductOption[] = [
 		</div>
 
 		<!-- Products Grid -->
-		<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+		<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8">
 			{products.map((product, index) => (
 				<div class="scroll-fade-in" style={`animation-delay: ${index * 120}ms;`}>
 					<div class="product-option-card bg-white rounded-lg overflow-hidden">
@@ -83,7 +83,7 @@ const products: ProductOption[] = [
 					</div>
 
 					<!-- Content -->
-					<div class="p-6">
+					<div class="p-4 sm:p-6">
 						<h3 class="product-option-title text-xl font-semibold text-primary mb-3">
 							{product.title}
 						</h3>
@@ -110,7 +110,7 @@ const products: ProductOption[] = [
 <style>
 	/* Choose Headline Typography */
 	.choose-headline {
-		font-family: 'Inter', system-ui, sans-serif;
+		font-family: 'Urbanist', system-ui, sans-serif;
 		font-weight: 600; /* Semi Bold */
 		font-style: normal;
 		font-size: 2rem; /* 32px - responsive for mobile */
@@ -133,7 +133,7 @@ const products: ProductOption[] = [
 
 	/* Subtext Typography */
 	.choose-subtext {
-		font-family: 'Inter', system-ui, sans-serif;
+		font-family: 'Urbanist', system-ui, sans-serif;
 		font-weight: 400; /* Regular */
 		font-style: normal;
 		font-size: 1rem; /* 16px */
@@ -163,7 +163,7 @@ const products: ProductOption[] = [
 
 	/* Product Option Title */
 	.product-option-title {
-		font-family: 'Inter', system-ui, sans-serif;
+		font-family: 'Urbanist', system-ui, sans-serif;
 		font-weight: 600;
 		line-height: 130%;
 		letter-spacing: -0.01em;
@@ -171,7 +171,7 @@ const products: ProductOption[] = [
 
 	/* Product Option Description */
 	.product-option-description {
-		font-family: 'Inter', system-ui, sans-serif;
+		font-family: 'Urbanist', system-ui, sans-serif;
 		font-weight: 400;
 		font-size: 0.875rem;
 		line-height: 150%;

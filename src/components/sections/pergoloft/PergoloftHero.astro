@@ -1,29 +1,53 @@
 ---
-import { Image } from "astro:assets";
+import { getImage } from "astro:assets";
 import SectionContainer from "../../ui/SectionContainer.astro";
-import heroImage from "../../../assets/images/pergoloft/pergoloft-hero.webp";
+import heroImage from "../../../assets/images/pergoloft/video-frame.webp";
+import heroVideo from "../../../assets/images/pergoloft/pergoloft.mp4";
+
+const poster = await getImage({
+  src: heroImage,
+  width: 1920,
+  format: "webp",
+});
+
+const videoSrc =
+  typeof heroVideo === "string"
+    ? heroVideo
+    : (heroVideo as { default?: string; src?: string }).default ??
+      (heroVideo as { src: string }).src;
 ---
 
 <section class="relative w-full min-h-screen flex items-center justify-center overflow-hidden">
-  <!-- Background Image -->
-  <div class="absolute inset-0">
-    <Image
-      src={heroImage}
-      alt="Pergoloft glass roof system on modern patio"
-      class="w-full h-full object-cover"
-      loading="eager"
-      fetchpriority="high"
-      quality={90}
-      format="webp"
-    />
-    <!-- Gradient overlay for better text contrast -->
+  <div class="absolute inset-0 z-0">
+    <video
+      class="pergoloft-hero-video h-full w-full object-cover object-center"
+      autoplay
+      muted
+      loop
+      playsinline
+      preload="auto"
+      poster={poster.src}
+      aria-label="Pergoloft glass roof system on modern patio"
+      tabindex="-1"
+      disablepictureinpicture
+      disableRemotePlayback
+    >
+      <source src={videoSrc} type="video/mp4" />
+    </video>
+
     <div
-      class="absolute inset-0 bg-gradient-to-r from-black/70 via-black/40 to-transparent"
+      class="pergoloft-hero-static absolute inset-0 h-full w-full bg-cover bg-center bg-no-repeat"
+      style={`background-image: url('${poster.src}')`}
+      aria-hidden="true"
+    >
+    </div>
+
+    <div
+      class="pointer-events-none absolute inset-0 bg-gradient-to-r from-black/70 via-black/40 to-transparent"
     >
     </div>
   </div>
 
-  <!-- Content -->
   <SectionContainer class="relative z-10 pt-32 sm:pt-40 md:pt-48 pb-20">
     <div class="mx-auto text-center">
       <h1
@@ -53,11 +77,25 @@ import heroImage from "../../../assets/images/pergoloft/pergoloft-hero.webp";
 
 <style>
   .hero-description {
-    font-family: "Inter", system-ui, sans-serif;
+    font-family: "Urbanist", system-ui, sans-serif;
     font-weight: 400;
     font-size: 26px;
     line-height: 140%;
     letter-spacing: -0.005em;
+  }
+
+  .pergoloft-hero-static {
+    display: none;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .pergoloft-hero-video {
+      display: none;
+    }
+
+    .pergoloft-hero-static {
+      display: block;
+    }
   }
 
   @keyframes fade-in {

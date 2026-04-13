@@ -12,6 +12,7 @@ export const NAV_ITEMS: NavItem[] = [
 	{ href: '/', label: 'Home' },
 	{ href: '/#products-section', label: 'Products' },
 	{ href: 'https://apexcanopies.com/', label: 'Commercial', isExternal: true },
+	{ href: '/project-gallery', label: 'Project Gallery' },
 	{ href: '/gallery', label: 'Gallery' },
 	{ href: '/#company-video-section', label: 'About us' },
 ];
