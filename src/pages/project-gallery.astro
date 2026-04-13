@@ -1,0 +1,195 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Header from "../components/sections/Header.astro";
+import Footer from "../components/sections/Footer.astro";
+import SectionContainer from "../components/ui/SectionContainer.astro";
+import { Image } from "astro:assets";
+import type { ImageMetadata } from "astro";
+import { Masonry } from "astro-masonry";
+
+import awning1 from "../assets/images/awnings/awning1.webp";
+import awning2 from "../assets/images/awnings/awning2.webp";
+import awning3 from "../assets/images/awnings/awning3.webp";
+import awning4 from "../assets/images/awnings/awning4.webp";
+import awning5 from "../assets/images/awnings/awning5.webp";
+import awning6 from "../assets/images/awnings/awning6.webp";
+import awning7 from "../assets/images/awnings/awning7.webp";
+import rightTsaAwning from "../assets/images/awnings/right-tsa-awning.webp";
+import standout from "../assets/images/awnings/standout.webp";
+import pergoloftHero from "../assets/images/pergoloft/pergoloft-hero.webp";
+import pergImageA from "../assets/images/pergoloft/pergoloft-image-a.webp";
+import pergImageB from "../assets/images/pergoloft/pergoloft-image-b.webp";
+import pergImageC from "../assets/images/pergoloft/pergoloft-image-c.webp";
+import pergImageD from "../assets/images/pergoloft/pergoloft-image-d.webp";
+import pergImageE from "../assets/images/pergoloft/pergoloft-image-e.webp";
+import pergImageF from "../assets/images/pergoloft/pergoloft-image-f.webp";
+import pergImageG from "../assets/images/pergoloft/pergoloft-image-g.webp";
+import rollUp from "../assets/images/roll_up_awning.png";
+import plexi from "../assets/images/plexi_awning.png";
+import vestibule from "../assets/images/vestibule.png";
+
+const APEX_PROJECT_GALLERY = "https://apexcanopies.com/project-gallery/";
+
+interface ProjectImage {
+  src: ImageMetadata;
+  alt: string;
+  aspectRatio: number;
+  width: number;
+  height: number;
+}
+
+const projectImages: ProjectImage[] = [
+  { src: pergoloftHero, alt: "Pergoloft glass roof installation" },
+  { src: rightTsaAwning, alt: "Commercial awning facade" },
+  { src: awning1, alt: "Roll-up awning project" },
+  { src: pergImageA, alt: "Pergoloft outdoor living space" },
+  { src: awning2, alt: "Residential awning installation" },
+  { src: pergImageB, alt: "Pergoloft patio enclosure" },
+  { src: awning3, alt: "Custom awning over deck" },
+  { src: standout, alt: "Featured awning installation" },
+  { src: pergImageC, alt: "Glass pergola detail" },
+  { src: awning4, alt: "Multi-panel roll-up awning" },
+  { src: rollUp, alt: "Roll-up awning product in situ" },
+  { src: pergImageD, alt: "Pergoloft structural view" },
+  { src: awning5, alt: "Awning over outdoor seating" },
+  { src: plexi, alt: "Plexi entrance canopy" },
+  { src: pergImageE, alt: "Pergoloft evening setting" },
+  { src: awning6, alt: "Large span awning project" },
+  { src: vestibule, alt: "Vestibule canopy installation" },
+  { src: pergImageF, alt: "Pergoloft from below" },
+  { src: awning7, alt: "Awning weather protection" },
+  { src: pergImageG, alt: "Pergoloft completed project" },
+].map((item) => {
+  const im = item.src;
+  const aspectRatio =
+    im.width && im.height ? im.width / im.height : 4 / 3;
+  return {
+    src: item.src,
+    alt: item.alt,
+    aspectRatio,
+    width: im.width,
+    height: im.height,
+  };
+});
+---
+
+<Layout title="Project Gallery">
+  <Header />
+
+  <section
+    class="relative border-b border-gray-200 bg-gradient-to-b from-gray-100 to-white py-16 sm:py-20 md:py-24"
+  >
+    <SectionContainer>
+      <div class="mx-auto max-w-4xl text-center">
+        <h1
+          class="scroll-fade-in font-sans text-4xl font-semibold tracking-tight text-gray-900 sm:text-5xl md:text-6xl"
+        >
+          Project Gallery
+        </h1>
+        <p
+          class="scroll-fade-in mt-5 text-lg leading-relaxed text-gray-600 sm:text-xl"
+          data-delay="1"
+        >
+          A selection of Tri-State installations across residential and
+          light-commercial work. For our full commercial canopy portfolio—retail,
+          hospitality, and architectural sun shades—visit our partner
+          <a
+            href={APEX_PROJECT_GALLERY}
+            class="font-medium text-primary underline decoration-primary/30 underline-offset-4 transition-colors hover:text-primary-dark"
+            target="_blank"
+            rel="noopener noreferrer"
+            >Apex Canopies</a
+          >.
+        </p>
+        <div class="scroll-fade-in mt-8 flex flex-wrap justify-center gap-4">
+          <a
+            href={APEX_PROJECT_GALLERY}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center justify-center rounded-lg bg-primary px-6 py-3 text-base font-medium text-white shadow-sm transition-colors hover:bg-primary-dark"
+          >
+            Apex project gallery
+          </a>
+          <a
+            href="/gallery"
+            class="inline-flex items-center justify-center rounded-lg border-2 border-gray-300 bg-white px-6 py-3 text-base font-medium text-gray-800 transition-colors hover:border-primary hover:text-primary"
+          >
+            Residential gallery
+          </a>
+        </div>
+      </div>
+    </SectionContainer>
+  </section>
+
+  <section class="bg-white py-12 sm:py-16 md:py-20">
+    <SectionContainer>
+      <Masonry
+        breakpointCols={{
+          default: 4,
+          1280: 4,
+          1024: 3,
+          640: 2,
+          500: 1,
+        }}
+        class="flex gap-3 sm:gap-4 md:gap-5"
+        columnClass="flex flex-col gap-3 sm:gap-4 md:gap-5"
+        sortByHeight={false}
+      >
+        {
+          projectImages.map((image, index) => (
+            <div
+              class="project-gallery-item scroll-fade-in w-full"
+              style={`animation-delay: ${index * 40}ms;`}
+            >
+              <figure
+                class="project-gallery-card group relative w-full overflow-hidden rounded-xl bg-gray-100 shadow-md ring-1 ring-black/5 transition-shadow duration-300 hover:shadow-xl"
+                style={`aspect-ratio: ${image.aspectRatio}; min-height: 200px;`}
+              >
+                <Image
+                  src={image.src}
+                  alt={image.alt}
+                  width={image.width}
+                  height={image.height}
+                  class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+                  loading={index < 6 ? "eager" : "lazy"}
+                  decoding="async"
+                  quality={85}
+                  format="webp"
+                />
+                <div class="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/45 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+              </figure>
+            </div>
+          ))
+        }
+      </Masonry>
+    </SectionContainer>
+  </section>
+
+  <Footer />
+</Layout>
+
+<script>
+  document.addEventListener("astro:page-load", () => {
+    window.dispatchEvent(new Event("resize"));
+  });
+</script>
+
+<style>
+  .project-gallery-item {
+    opacity: 0;
+    transform: translateY(24px);
+    transition:
+      opacity 0.65s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+      transform 0.65s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    width: 100%;
+  }
+
+  .project-gallery-item.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .project-gallery-card img {
+    will-change: transform;
+  }
+</style>

@@ -19,7 +19,7 @@ const benefits: Benefit[] = [
 	{
 		number: '02',
 		title: 'Space',
-		description: 'Exam expand your home in the easiest way to extend space through outdoor living and provide you with ample storage for things and relaxing with family and friends.',
+		description: 'Easily expand your home in the easiest way to extend space through outdoor living and provide you with ample storage for things and relaxing with family and friends.',
 	},
 	{
 		number: '03',
@@ -37,13 +37,13 @@ const benefits: Benefit[] = [
 <GreenBackgroundSection backgroundImage={tsaAwningBg} class="py-12 sm:py-16 md:py-20 lg:py-24">
 	<SectionContainer class="text-white">
 		<!-- Headline -->
-		<h2 class="benefits-headline text-center mb-12 sm:mb-16 md:mb-20">
+		<h2 class="benefits-headline text-center mb-8 sm:mb-12 md:mb-16 lg:mb-20">
 			The right TSA awning<br />
 			will do a lot for your property.
 		</h2>
 
 		<!-- Benefits Grid -->
-		<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
+		<div class="grid grid-cols-1 justify-items-stretch gap-4 sm:grid-cols-2 sm:justify-items-center sm:gap-6 lg:grid-cols-4 lg:gap-8 lg:justify-items-center">
 			{benefits.map((benefit, index) => (
 				<FeatureCard
 					number={benefit.number}
@@ -59,7 +59,7 @@ const benefits: Benefit[] = [
 <style>
 	/* Benefits Headline Typography */
 	.benefits-headline {
-		font-family: 'Inter', system-ui, sans-serif;
+		font-family: 'Urbanist', system-ui, sans-serif;
 		font-weight: 600; /* Semi Bold */
 		font-style: normal;
 		font-size: 2rem; /* 32px - responsive for mobile */

@@ -9,21 +9,19 @@ interface Props {
 const { number, title, description, delay = 0 } = Astro.props;
 ---
 
-<div 
-	class="w-[277px] h-[354px] bg-white/85 backdrop-blur-sm rounded-[24px] px-[38.54px] py-[21px] flex flex-col gap-[9px] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md shadow-sm"
+<div
+	class="feature-card bg-white/85 backdrop-blur-sm rounded-[24px] flex flex-col transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md shadow-sm w-full max-w-full px-5 py-6 gap-2 sm:w-[277px] sm:max-w-[277px] sm:shrink-0 sm:px-[38.54px] sm:py-[21px] sm:h-[354px] sm:gap-[9px] sm:justify-start"
 	style={`animation-delay: ${delay}ms;`}
 >
-	<!-- Number - Figma specs: Bold 40px #68C28C -->
-	<div class="text-[40px] leading-[40px] font-bold text-[#68C28C]">
+	<!-- Number / title: smaller on mobile, Figma 40px from sm -->
+	<div class="text-3xl leading-none font-bold text-[#68C28C] sm:text-[40px] sm:leading-[40px]">
 		{number}
 	</div>
-	
-	<!-- Title - Figma specs: Bold 40px #68C28C -->
-	<h3 class="text-[40px] leading-[40px] font-bold text-[#68C28C]">
+
+	<h3 class="text-3xl leading-tight font-bold text-[#68C28C] sm:text-[40px] sm:leading-[40px]">
 		{title}
 	</h3>
 
-	<!-- Description - Figma specs: Regular 16px #717972 -->
 	<p class="text-base font-normal text-[#717972] leading-relaxed">
 		{description}
 	</p>

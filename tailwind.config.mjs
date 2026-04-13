@@ -3,8 +3,12 @@ export default {
 	content: ['./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}'],
 	theme: {
 		extend: {
+			/* Track record stats, inline icons: one token → size-stat-icon / w-stat-icon / etc. */
+			spacing: {
+				'stat-icon': '2.5rem',
+			},
 			fontFamily: {
-				sans: ['Inter', 'system-ui', 'sans-serif'],
+				sans: ['Urbanist', 'system-ui', 'sans-serif'],
 			},
 			colors: {
 				primary: {

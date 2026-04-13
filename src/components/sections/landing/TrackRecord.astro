@@ -37,7 +37,7 @@ const stats: Stat[] = [
 ];
 ---
 
-<section class="relative w-screen h-screen min-h-[600px] flex items-center justify-center overflow-hidden">
+<section class="relative w-full min-h-screen flex items-center justify-center overflow-hidden py-10 sm:py-12 lg:py-16">
 	<!-- Background Image with zoom effect -->
 	<div class="absolute inset-0">
 		<Image 
@@ -56,20 +56,20 @@ const stats: Stat[] = [
 	<!-- Content -->
 	<SectionContainer class="relative z-10 text-white">
 		<!-- Headline -->
-		<h2 class="track-record-headline text-center mb-12 sm:mb-16 md:mb-20">
+		<h2 class="track-record-headline text-center mb-8 sm:mb-12 md:mb-16 lg:mb-20">
 			Our Track Record at a Glance
 		</h2>
 
 		<!-- Stats Grid -->
 		<div class="stats-grid grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
-			{stats.map((stat, index) => (
+			{stats.map((stat) => (
 				<div class="stat-card hover-focus-subtle rounded-[24px] text-center flex flex-col items-center justify-center">
-					<!-- Icon -->
-					<div class="stat-icon mb-3">
-						<Image 
-							src={stat.icon} 
+					<!-- Icon size from theme: spacing.stat-icon → size-stat-icon -->
+					<div class="mb-3 flex size-stat-icon shrink-0 items-center justify-center">
+						<Image
+							src={stat.icon}
 							alt={stat.label}
-							class="w-10 h-10"
+							class="block size-full object-contain"
 						/>
 					</div>
 
@@ -91,7 +91,7 @@ const stats: Stat[] = [
 <style>
 	/* Headline Typography */
 	.track-record-headline {
-		font-family: 'Inter', system-ui, sans-serif;
+		font-family: 'Urbanist', system-ui, sans-serif;
 		font-weight: 600; /* Semi Bold */
 		font-style: normal;
 		font-size: 2rem; /* 32px - responsive for mobile */
@@ -133,18 +133,28 @@ const stats: Stat[] = [
 		/* Nota: hover effect manejado por .hover-focus-subtle (global) */
 	}
 	
-	/* Responsive adjustments */
+	/* Mobile/tablet: full width of container so cards use horizontal space */
 	@media (max-width: 1023px) {
 		.stat-card {
 			width: 100%;
-			max-width: 240px;
-			margin: 0 auto;
+			max-width: 100%;
+			margin: 0;
+		}
+	}
+
+	@media (max-width: 639px) {
+		.stat-label {
+			max-width: 100%;
+		}
+
+		.stat-value {
+			font-size: clamp(2rem, 8vw, 2.75rem);
 		}
 	}
 
 	/* Stat Value Typography - Figma exact specs */
 	.stat-value {
-		font-family: 'Inter', system-ui, sans-serif;
+		font-family: 'Urbanist', system-ui, sans-serif;
 		font-weight: 500; /* Medium - from Figma */
 		font-style: normal;
 		font-size: 43.99px; /* Figma spec */
@@ -155,7 +165,7 @@ const stats: Stat[] = [
 
 	/* Stat Label Typography */
 	.stat-label {
-		font-family: 'Inter', system-ui, sans-serif;
+		font-family: 'Urbanist', system-ui, sans-serif;
 		font-weight: 500; /* Medium - from Figma */
 		font-style: normal;
 		font-size: 16px; /* Figma spec */
@@ -172,9 +182,17 @@ const stats: Stat[] = [
 	
 	/* Stats Grid Gap */
 	.stats-grid {
-		gap: 1rem; /* Mobile/tablet gap */
+		gap: 0.75rem;
+		justify-items: stretch;
 	}
-	
+
+	@media (min-width: 640px) {
+		.stats-grid {
+			gap: 1rem;
+			justify-items: center;
+		}
+	}
+
 	@media (min-width: 1024px) {
 		.stats-grid {
 			gap: 40.11px; /* Figma desktop gap */
