@@ -250,22 +250,40 @@ const descriptionHtml = description
             </label>
           </div>
 
-          <!-- SMS Consent Checkbox (optional, unchecked by default) -->
+          <!-- Transactional SMS Consent (optional, unchecked by default) -->
           <div>
             <div class="flex items-start gap-3">
               <input
                 type="checkbox"
-                id="smsConsent"
-                name="smsConsent"
+                id="smsConsentTransactional"
+                name="smsConsentTransactional"
                 value="yes"
-                aria-describedby="smsConsent-error"
+                aria-describedby="smsConsentTransactional-error"
                 class="mt-1 w-4 h-4 shrink-0 text-primary border-gray-300 rounded focus:ring-primary focus:ring-2 cursor-pointer"
               />
-              <label for="smsConsent" class="text-sm text-gray-600">
-                I agree to receive non-promotional SMS messages from Tri State Awnings regarding appointments, installations, project updates, service notifications, and customer support. Message frequency varies. Message and data rates may apply. Reply STOP to opt out or HELP for assistance. Consent is not a condition of purchase. View our <a href="/privacy-policy" target="_blank" rel="noopener" class="text-primary underline hover:text-primary-dark">Privacy Policy</a> and <a href="/sms-terms" target="_blank" rel="noopener" class="text-primary underline hover:text-primary-dark">SMS Terms and Conditions</a>.
+              <label for="smsConsentTransactional" class="text-sm text-gray-600">
+                I agree to receive non-promotional SMS messages from Tri State Awnings regarding appointments, installations, project updates, service notifications, and customer support. Message frequency varies. Message and data rates may apply. Reply STOP to opt out or HELP for assistance. Consent is not a condition of purchase. View our <a href="/privacy-policy" target="_blank" rel="noopener" class="text-primary underline hover:text-primary-dark">Privacy Policy</a> and <a href="/sms-terms" target="_blank" rel="noopener" class="text-primary underline hover:text-primary-dark">SMS Terms &amp; Conditions</a>.
               </label>
             </div>
-            <div id="smsConsent-error" class="field-error hidden" role="alert"></div>
+            <div id="smsConsentTransactional-error" class="field-error hidden" role="alert"></div>
+          </div>
+
+          <!-- Marketing SMS Consent (optional, unchecked by default, independent of the above) -->
+          <div>
+            <div class="flex items-start gap-3">
+              <input
+                type="checkbox"
+                id="smsConsentMarketing"
+                name="smsConsentMarketing"
+                value="yes"
+                aria-describedby="smsConsentMarketing-error"
+                class="mt-1 w-4 h-4 shrink-0 text-primary border-gray-300 rounded focus:ring-primary focus:ring-2 cursor-pointer"
+              />
+              <label for="smsConsentMarketing" class="text-sm text-gray-600">
+                I agree to receive recurring promotional and marketing SMS messages from Tri State Awnings, including special offers, seasonal discounts, promotions, and marketing updates, which may be sent using automated technology. Message frequency varies. Message and data rates may apply. Reply STOP to opt out or HELP for assistance. Consent is not a condition of purchase. View our <a href="/privacy-policy" target="_blank" rel="noopener" class="text-primary underline hover:text-primary-dark">Privacy Policy</a> and <a href="/sms-terms" target="_blank" rel="noopener" class="text-primary underline hover:text-primary-dark">SMS Terms &amp; Conditions</a>.
+              </label>
+            </div>
+            <div id="smsConsentMarketing-error" class="field-error hidden" role="alert"></div>
           </div>
 
           <!-- Submit Button -->
@@ -693,17 +711,19 @@ const descriptionHtml = description
         return;
       }
 
-      // SMS consent is optional; when given it requires a valid 10-digit US number
-      const smsConsentInput = document.getElementById("smsConsent") as HTMLInputElement | null;
-      const smsConsent = smsConsentInput?.checked === true;
+      // SMS consents are optional and independent; when given they require a valid 10-digit US number
+      const smsTransactional =
+        (document.getElementById("smsConsentTransactional") as HTMLInputElement | null)?.checked === true;
+      const smsMarketing =
+        (document.getElementById("smsConsentMarketing") as HTMLInputElement | null)?.checked === true;
       const isValidUsNumber =
         phoneDigits.length === 10 ||
         (phoneDigits.length === 11 && phoneDigits.startsWith("1"));
-      if (smsConsent && !isValidUsNumber) {
-        showFieldError(
-          "smsConsent",
-          "To receive text messages, enter a valid 10-digit US mobile number, or uncheck the SMS box."
-        );
+      if ((smsTransactional || smsMarketing) && !isValidUsNumber) {
+        const smsError =
+          "To receive text messages, enter a valid 10-digit US mobile number, or uncheck the SMS box.";
+        if (smsTransactional) showFieldError("smsConsentTransactional", smsError);
+        if (smsMarketing) showFieldError("smsConsentMarketing", smsError);
         phoneInput?.focus();
         return;
       }
@@ -738,8 +758,9 @@ const descriptionHtml = description
         zip_code: zipValue,
         source: "tristateawnings.com",
         products_interest: productsString,
-        sms_consent: smsConsent,
-        sms_consent_disclosure_version: "2026-11-25",
+        sms_consent: smsTransactional, // transactional SMS consent
+        sms_marketing_consent: smsMarketing,
+        sms_consent_disclosure_version: "2026-11-25-v2",
       });
 
       try {
