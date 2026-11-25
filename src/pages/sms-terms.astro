@@ -1,0 +1,178 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Header from "../components/sections/Header.astro";
+import Footer from "../components/sections/Footer.astro";
+import SectionContainer from "../components/ui/SectionContainer.astro";
+---
+
+<Layout
+  title="SMS Terms and Conditions"
+  description="Terms for the Tri State Awnings customer messaging program: message types, frequency, rates, how to opt out (STOP), how to get help (HELP), and privacy."
+>
+  <Header />
+
+  <!-- Hero Section -->
+  <section class="relative w-full bg-gradient-to-br from-slate-800 to-slate-700 pt-32 pb-16 sm:pt-40 sm:pb-20">
+    <div class="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent"></div>
+    <SectionContainer class="relative z-10 text-white">
+      <h1 class="font-semibold text-3xl sm:text-4xl md:text-5xl lg:text-[56px] leading-[110%] tracking-[-0.02em] mb-4">
+        SMS Terms and Conditions
+      </h1>
+      <p class="text-lg sm:text-xl text-white/90 max-w-3xl">
+        Last updated: November 25, 2026
+      </p>
+    </SectionContainer>
+  </section>
+
+  <!-- Content Section -->
+  <section class="py-16 sm:py-20 md:py-24 bg-white">
+    <SectionContainer>
+      <div class="max-w-4xl mx-auto">
+        <div class="terms-content">
+          <div class="content-section">
+            <h2>Tri State Awnings – Customer Messaging Program</h2>
+            <p>
+              These terms apply to SMS (text) messages sent by Tri State Awnings to customers who have opted in to our customer messaging program.
+            </p>
+          </div>
+
+          <div class="content-section">
+            <h2>Program Description</h2>
+            <p>
+              By opting in, you agree to receive non-promotional SMS messages from Tri State Awnings regarding appointments, installation schedules, project updates, service notifications, and customer support. You can opt in by checking the optional SMS consent box on our quote request form. We do not send marketing or promotional text messages through this program.
+            </p>
+          </div>
+
+          <div class="content-section">
+            <h2>Message Frequency</h2>
+            <p>
+              Message frequency varies depending on your project status and interactions with our team.
+            </p>
+          </div>
+
+          <div class="content-section">
+            <h2>Message and Data Rates</h2>
+            <p>
+              Message and data rates may apply.
+            </p>
+          </div>
+
+          <div class="content-section">
+            <h2>Opt-Out Instructions</h2>
+            <p>
+              You may unsubscribe from SMS communications at any time by replying <strong>STOP</strong>. You may receive a final confirmation message acknowledging your opt-out. No further program messages will be sent unless you provide consent again.
+            </p>
+          </div>
+
+          <div class="content-section">
+            <h2>Help and Customer Support</h2>
+            <p>
+              Reply <strong>HELP</strong> for assistance, or contact us directly:
+            </p>
+            <div class="contact-info">
+              <p><strong>Tri State Awnings</strong></p>
+              <p>100 Sterling Mine Rd., Sloatsburg, NY 10974</p>
+              <p>Phone: <a href="tel:+18453575718">845-357-5718</a></p>
+              <p>Email: <a href="mailto:sales@tristateawnings.com">sales@tristateawnings.com</a></p>
+            </div>
+          </div>
+
+          <div class="content-section">
+            <h2>Consent</h2>
+            <p>
+              Consent to receive SMS messages is voluntary and is not a condition of purchasing any product or service.
+            </p>
+          </div>
+
+          <div class="content-section">
+            <h2>Carrier Disclaimer</h2>
+            <p>
+              Carriers are not liable for delayed or undelivered messages.
+            </p>
+          </div>
+
+          <div class="content-section">
+            <h2>Privacy Policy</h2>
+            <p>
+              For information about how we collect, use, and protect your personal information, please review our <a href="/privacy-policy">Privacy Policy</a>.
+            </p>
+          </div>
+        </div>
+      </div>
+    </SectionContainer>
+  </section>
+
+  <Footer />
+</Layout>
+
+<style>
+  .terms-content {
+    font-family: 'Urbanist', system-ui, sans-serif;
+    color: #374151;
+    line-height: 1.7;
+  }
+
+  .content-section {
+    margin-bottom: 3rem;
+  }
+
+  .content-section:last-child {
+    margin-bottom: 0;
+  }
+
+  .terms-content h2 {
+    font-family: 'Urbanist', system-ui, sans-serif;
+    font-weight: 600;
+    font-size: 1.875rem;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+    color: #111827;
+    margin-bottom: 1rem;
+    margin-top: 2rem;
+  }
+
+  .content-section:first-child h2 {
+    margin-top: 0;
+  }
+
+  .terms-content p {
+    font-size: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .terms-content a {
+    color: #68c28c;
+    text-decoration: underline;
+    transition: color 0.2s;
+  }
+
+  .terms-content a:hover {
+    color: #5aad7a;
+  }
+
+  .contact-info {
+    background-color: #f9fafb;
+    border-left: 4px solid #68c28c;
+    padding: 1.5rem;
+    border-radius: 0.5rem;
+    margin-top: 1rem;
+  }
+
+  .contact-info p {
+    margin-bottom: 0.5rem;
+  }
+
+  .contact-info p:last-child {
+    margin-bottom: 0;
+  }
+
+  @media (max-width: 640px) {
+    .terms-content h2 {
+      font-size: 1.5rem;
+    }
+
+    .terms-content p {
+      font-size: 0.9375rem;
+    }
+  }
+</style>

@@ -250,6 +250,24 @@ const descriptionHtml = description
             </label>
           </div>
 
+          <!-- SMS Consent Checkbox (optional, unchecked by default) -->
+          <div>
+            <div class="flex items-start gap-3">
+              <input
+                type="checkbox"
+                id="smsConsent"
+                name="smsConsent"
+                value="yes"
+                aria-describedby="smsConsent-error"
+                class="mt-1 w-4 h-4 shrink-0 text-primary border-gray-300 rounded focus:ring-primary focus:ring-2 cursor-pointer"
+              />
+              <label for="smsConsent" class="text-sm text-gray-600">
+                I agree to receive non-promotional SMS messages from Tri State Awnings regarding appointments, installations, project updates, service notifications, and customer support. Message frequency varies. Message and data rates may apply. Reply STOP to opt out or HELP for assistance. Consent is not a condition of purchase. View our <a href="/privacy-policy" target="_blank" rel="noopener" class="text-primary underline hover:text-primary-dark">Privacy Policy</a> and <a href="/sms-terms" target="_blank" rel="noopener" class="text-primary underline hover:text-primary-dark">SMS Terms and Conditions</a>.
+              </label>
+            </div>
+            <div id="smsConsent-error" class="field-error hidden" role="alert"></div>
+          </div>
+
           <!-- Submit Button -->
           <button
             type="submit"
@@ -633,6 +651,10 @@ const descriptionHtml = description
 
      if (!form) return;
 
+     // Runs on both DOMContentLoaded and astro:page-load; bind once to avoid duplicate submissions
+     if (form.dataset.initialized === "true") return;
+     form.dataset.initialized = "true";
+
      // Initialize phone input
      initPhoneInput();
      initZipcodeInput();
@@ -671,6 +693,21 @@ const descriptionHtml = description
         return;
       }
 
+      // SMS consent is optional; when given it requires a valid 10-digit US number
+      const smsConsentInput = document.getElementById("smsConsent") as HTMLInputElement | null;
+      const smsConsent = smsConsentInput?.checked === true;
+      const isValidUsNumber =
+        phoneDigits.length === 10 ||
+        (phoneDigits.length === 11 && phoneDigits.startsWith("1"));
+      if (smsConsent && !isValidUsNumber) {
+        showFieldError(
+          "smsConsent",
+          "To receive text messages, enter a valid 10-digit US mobile number, or uncheck the SMS box."
+        );
+        phoneInput?.focus();
+        return;
+      }
+
       // Get form data
       const formData = new FormData(form);
 
@@ -701,6 +738,8 @@ const descriptionHtml = description
         zip_code: zipValue,
         source: "tristateawnings.com",
         products_interest: productsString,
+        sms_consent: smsConsent,
+        sms_consent_disclosure_version: "2026-11-25",
       });
 
       try {
